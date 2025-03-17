@@ -1,0 +1,28 @@
+/* Reset focus and active states */
+.btn:focus,
+.btn:active,
+.nav-links li a:focus,
+.nav-links li a:active {
+    outline: none !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+}
+
+/* Only apply hover effects when actually hovering */
+.btn:not(:hover),
+.nav-links li a:not(:hover):not(.active) {
+    transition: all var(--transition-med) !important;
+}
+
+/* Force buttons to their default state when not hovered */
+.btn-primary:not(:hover) {
+    background-color: var(--primary) !important;
+    color: var(--white) !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Force links to their default state when not hovered or active */
+.nav-links li a:not(:hover):not(.active)::after {
+    width: 0 !important;
+}

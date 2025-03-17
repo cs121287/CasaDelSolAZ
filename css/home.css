@@ -68,6 +68,25 @@
   justify-content: center;
 }
 
+/* Fix for Book Now button highlight issue */
+.hero-buttons .btn-primary {
+  background-color: var(--primary);
+  color: var(--white);
+  border: 1px solid var(--primary);
+  transition: all var(--transition-med);
+}
+
+.hero-buttons .btn-primary:hover {
+  background-color: var(--primary-light);
+  color: var(--white);
+}
+
+/* If there's a highlighted class being applied incorrectly, override it */
+.btn-primary.highlighted,
+.btn.highlighted {
+  background-color: var(--primary) !important; /* Same as default state */
+}
+
 /* ===== FEATURES SECTION ===== */
 .features {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/cta-bg.jpg') center/cover no-repeat;

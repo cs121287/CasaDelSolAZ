@@ -1,0 +1,79 @@
+/* 
+ * Casa Del Sol AZ - Direct Style Override Fix
+ * Uses high specificity selectors to force correct hover behavior
+ */
+
+/* FORCE default state for nav links when NOT hovered */
+body .header .container .main-nav .nav-links li a:not(:hover):not(.active) {
+    text-decoration: none !important;
+    color: var(--white) !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+
+/* FORCE underline to be hidden when NOT hovered and NOT active */
+body .header .container .main-nav .nav-links li a:not(:hover):not(.active)::after {
+    width: 0 !important;
+    opacity: 0 !important;
+}
+
+/* FORCE Button primary state when NOT hovered */
+body .btn.btn-primary:not(:hover),
+body .hero-buttons .btn.btn-primary:not(:hover),
+body .hero-content .hero-buttons .btn.btn-primary:not(:hover),
+body main .container .hero-content .hero-buttons .btn.btn-primary:not(:hover) {
+    background-color: var(--primary) !important;
+    color: var(--white) !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border: 1px solid var(--primary) !important;
+    text-decoration: none !important;
+}
+
+/* FORCE Button secondary state when NOT hovered */
+body .btn.btn-secondary:not(:hover),
+body .hero-buttons .btn.btn-secondary:not(:hover),
+body .hero-content .hero-buttons .btn.btn-secondary:not(:hover) {
+    background-color: transparent !important;
+    color: var(--primary) !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border: 1px solid var(--primary) !important;
+    text-decoration: none !important;
+}
+
+/* Override any focus states that might persist */
+*:focus {
+    outline: none !important;
+}
+
+/* Apply correct hover effects only when actually hovering */
+body .header .container .main-nav .nav-links li a:hover::after {
+    width: 100% !important;
+}
+
+body .btn.btn-primary:hover,
+body .hero-buttons .btn.btn-primary:hover {
+    background-color: var(--primary-light) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+body .btn.btn-secondary:hover {
+    background-color: var(--primary) !important;
+    color: var(--white) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+/* Force normal state after clicking (resolves persistent active state) */
+body .header .container .main-nav .nav-links li a:active:not(:hover):not(.active)::after {
+    width: 0 !important;
+    transition: none !important;
+}
+
+body .btn:active:not(:hover) {
+    transform: none !important;
+    transition: none !important;
+}
