@@ -1,6 +1,6 @@
 /**
  * Casa Del Sol AZ - Form Effects
- * Version: 2.0.0
+ * Version: 2.0.1
  * Enhances form interaction with animations and validations
  */
 document.addEventListener('DOMContentLoaded', function() {
@@ -18,6 +18,41 @@ document.addEventListener('DOMContentLoaded', function() {
         const label = group.querySelector('label');
         
         if (!input || !label) return;
+        
+        // Skip special handling for date and select inputs
+        if (group.classList.contains('date-input') || group.classList.contains('select-input')) {
+            // Special logic for select fields
+            if (input.tagName === 'SELECT') {
+                input.addEventListener('change', function() {
+                    if (this.value) {
+                        group.classList.add('has-value');
+                    } else {
+                        group.classList.remove('has-value');
+                    }
+                });
+            }
+            
+            // We still want to track focus state
+            input.addEventListener('focus', () => {
+                group.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', () => {
+                group.classList.remove('focused');
+                if (input.value) {
+                    group.classList.add('has-value');
+                } else {
+                    group.classList.remove('has-value');
+                }
+            });
+            
+            // Set initial state
+            if (input.value) {
+                group.classList.add('has-value');
+            }
+            
+            return;
+        }
         
         // Set initial state if value exists
         if (input.value.trim() !== '') {
