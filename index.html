@@ -7,7 +7,11 @@
     <title>Casa Del Sol AZ | Premier Event Venue</title>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/home.css">
+	<link rel="stylesheet" href="css/fix-hover.css">
+	<link rel="stylesheet" href="css/reset-states.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/effects.css">
+	<link rel="stylesheet" href="css/style-fix.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,7 +52,7 @@
     <main>
         <section class="hero">
             <div class="container">
-                <div class="hero-content">
+                <div class="hero-content reveal-element" data-reveal-animation="fade-up">
                     <h2 class="fade-in">Your Dream Event Awaits</h2>
                     <p class="fade-in delay-1">Elegant. Memorable. Extraordinary.</p>
                     <div class="hero-buttons fade-in delay-2">
@@ -59,32 +63,32 @@
             </div>
         </section>
 
-        <section class="features features-with-bg">
+        <section class="features parallax-bg" data-speed="0.1">
             <div class="container">
-                <h2 class="section-title">Why Choose Casa Del Sol</h2>
+                <h2 class="section-title reveal-element" data-reveal-animation="fade-up">Why Choose Casa Del Sol</h2>
                 <div class="feature-grid">
-                    <div class="feature-item" data-aos="fade-up">
+                    <div class="feature-item reveal-element" data-reveal-animation="fade-up" data-reveal-delay="0.1">
                         <div class="feature-icon">
                             <i class="fas fa-mountain"></i>
                         </div>
                         <h3>Breathtaking Views</h3>
                         <p>Nestled against Arizona's scenic landscape, our venue offers spectacular panoramic views</p>
                     </div>
-                    <div class="feature-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-item reveal-element" data-reveal-animation="fade-up" data-reveal-delay="0.2">
                         <div class="feature-icon">
                             <i class="fas fa-star"></i>
                         </div>
                         <h3>Luxury Experience</h3>
                         <p>Premium amenities and five-star service to make your event truly exceptional</p>
                     </div>
-                    <div class="feature-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-item reveal-element" data-reveal-animation="fade-up" data-reveal-delay="0.3">
                         <div class="feature-icon">
                             <i class="fas fa-glass-cheers"></i>
                         </div>
                         <h3>Versatile Spaces</h3>
                         <p>Indoor and outdoor venues adaptable for intimate gatherings or grand celebrations</p>
                     </div>
-                    <div class="feature-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-item reveal-element" data-reveal-animation="fade-up" data-reveal-delay="0.4">
                         <div class="feature-icon">
                             <i class="fas fa-utensils"></i>
                         </div>
@@ -99,12 +103,12 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-logo">
+                <div class="footer-logo reveal-element" data-reveal-animation="fade-right">
                     <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="150" height="60">
                     <p>Where Memories Are Made</p>
                 </div>
                 <div class="footer-links">
-                    <div class="footer-column">
+                    <div class="footer-column reveal-element" data-reveal-animation="fade-up" data-reveal-delay="0.1">
                         <h4>Quick Links</h4>
                         <ul>
                             <li><a href="index.html">Home</a></li>
@@ -113,7 +117,7 @@
                             <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </div>
-                    <div class="footer-column">
+                    <div class="footer-column reveal-element" data-reveal-animation="fade-up" data-reveal-delay="0.2">
                         <h4>Services</h4>
                         <ul>
                             <li><a href="#">Weddings</a></li>
@@ -122,10 +126,10 @@
                             <li><a href="#">Private Parties</a></li>
                         </ul>
                     </div>
-                    <div class="footer-column">
+                    <div class="footer-column reveal-element" data-reveal-animation="fade-up" data-reveal-delay="0.3">
                         <h4>Contact Us</h4>
                         <ul class="contact-info">
-                            <li><i class="fas fa-map-marker-alt"></i> 1234 Desert View Road, Phoenix, AZ 85001</li>
+                            <li><i class="fas fa-map-marker-alt"></i> 18401 W Moreland St, Goodyear, AZ 85338</li>
                             <li><i class="fas fa-phone"></i> (480) 123-4567</li>
                             <li><i class="fas fa-envelope"></i> info@casadesolaz.com</li>
                         </ul>
@@ -149,5 +153,10 @@
     </a>
 
     <script src="js/main.js"></script>
+    <script src="js/parallax.js"></script>
+    <script src="js/reveal.js"></script>
+	<script src="js/hover-fix.js"></script>
+	<script src="js/style-inspector.js"></script>
+	<script src="js/focus-fix.js"></script>
 </body>
 </html>
