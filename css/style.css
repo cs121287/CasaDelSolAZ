@@ -704,6 +704,98 @@ p {
   margin-bottom: var(--spacing-sm);
 }
 
+/* Services Page Styles */
+.services-intro {
+    padding: var(--spacing-lg) 0;
+    text-align: center;
+}
+
+.intro-text {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+.services-grid {
+    background-color: var(--light);
+    padding: var(--spacing-xl) 0;
+}
+
+.services-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.service-item {
+    background-color: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-med), box-shadow var(--transition-med);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.service-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.service-icon {
+    background-color: var(--primary);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    font-size: 3rem;
+}
+
+.service-content {
+    padding: var(--spacing-md);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-content h3 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--dark);
+}
+
+.service-content p {
+    margin-bottom: var(--spacing-md);
+    flex-grow: 1;
+}
+
+.service-content .btn {
+    align-self: flex-start;
+}
+
+/* Responsive styles for services */
+@media only screen and (max-width: 991px) {
+    .services-list {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: var(--spacing-md);
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .service-icon {
+        height: 80px;
+        font-size: 2.5rem;
+    }
+    
+    .services-list {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
 /* ===== GALLERY PAGE STYLES ===== */
 /* Gallery Categories */
 .gallery-categories {
@@ -1058,6 +1150,62 @@ input:focus, select:focus, textarea:focus {
   margin-bottom: var(--spacing-sm);
 }
 
+/* Add this to the form styling section of style.css */
+
+/* Special handling for date inputs and selects to prevent label overlap */
+.form-group.date-input,
+.form-group.select-input {
+    position: relative;
+}
+
+.form-group.date-input label,
+.form-group.select-input label {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    font-size: 0.85rem;
+    color: var(--gray);
+    background: transparent;
+    transform: none;
+    transform-origin: left top;
+    transition: none;
+    pointer-events: none;
+}
+
+.form-group.date-input input,
+.form-group.select-input select {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.form-group.date-input.focused label,
+.form-group.date-input.has-value label,
+.form-group.select-input.focused label,
+.form-group.select-input.has-value label {
+    transform: none;
+    top: -20px;
+}
+
+/* Fix for form height alignment */
+.form-row {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+}
+
+/* Empty state for select */
+select:required:invalid {
+  color: var(--gray);
+}
+
+option {
+  color: var(--dark);
+}
+
+option[value=""][disabled] {
+  display: none;
+}
+
 /* Map */
 .location-map {
   height: 450px;
@@ -1073,37 +1221,66 @@ input:focus, select:focus, textarea:focus {
   box-shadow: var(--shadow-md);
 }
 
-/* FAQs */
+/* FAQ Section Styles */
+.faq-section {
+    padding: 0 0 var(--spacing-xl);
+}
+
+.faq-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--gray-light);
+    margin-bottom: var(--spacing-sm);
+}
+
+.faq-question {
+    width: 100%;
+    text-align: left;
+    padding: var(--spacing-sm) 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.1rem;
+    background: none;
+    border: none;
+}
+
+.faq-question span {
+    flex: 1;
+    text-align: left;
+}
+
+.faq-question i {
+    margin-left: 10px;
+}
+
 .faq-question i.fa-minus {
-  display: none;
+    display: none;
 }
 
 .faq-question.active i.fa-plus {
-  display: none;
+    display: none;
 }
 
 .faq-question.active i.fa-minus {
-  display: inline-block;
-  color: var(--primary);
+    display: inline-block;
+    color: var(--primary);
 }
 
 .faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height var(--transition-med);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
 }
 
 .faq-answer p {
-  padding: 0 0 var(--spacing-sm);
-}
-
-/* ===== UTILITIES ===== */
-.hidden {
-  display: none;
-}
-
-.reveal-element {
-  visibility: visible !important;
+    padding: 0 0 var(--spacing-sm);
+    margin-top: 0;
 }
 
 /* ===== RESPONSIVE STYLES ===== */
