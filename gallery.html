@@ -5,14 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="View our gallery of past events at Casa Del Sol AZ - Arizona's premier event venue for weddings and special occasions">
     <title>Gallery | Casa Del Sol AZ</title>
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/gallery.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/effects.css">
-	<link rel="stylesheet" href="css/fix-hover.css">
-	<link rel="stylesheet" href="css/reset-states.css">
-	<link rel="stylesheet" href="css/style-fix.css">
+    <!-- Consolidated CSS file -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
@@ -44,11 +41,11 @@
     <main>
         <section class="page-banner">
             <div class="container">
-                <h1 class="reveal-element" data-reveal-animation="fade-up">Our Gallery</h1>
+                <h1>Our Gallery</h1>
             </div>
         </section>
 
-        <section class="gallery-categories reveal-element" data-reveal-animation="fade-up">
+        <section class="gallery-categories">
             <div class="container">
                 <div class="filter-buttons">
                     <button class="filter-btn active" data-category="all">All</button>
@@ -64,7 +61,7 @@
             <div class="container">
                 <div class="gallery-grid">
                     <!-- Weddings -->
-                    <div class="gallery-item reveal-element" data-reveal-animation="fade-up" data-reveal-delay="0.1" data-category="weddings">
+                    <div class="gallery-item" data-category="weddings">
                         <div class="gallery-image">
                             <img src="img/wedding-1.jpg" alt="Wedding ceremony at Casa Del Sol" loading="lazy">
                             <div class="gallery-overlay">
@@ -76,7 +73,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="gallery-item reveal-element" data-reveal-animation="fade-up" data-reveal-delay="0.2" data-category="weddings">
+                    <div class="gallery-item" data-category="weddings">
                         <div class="gallery-image">
                             <img src="img/wedding-2.jpg" alt="Wedding reception at Casa Del Sol" loading="lazy">
                             <div class="gallery-overlay">
@@ -88,7 +85,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="gallery-item reveal-element" data-reveal-animation="fade-up" data-reveal-delay="0.3" data-category="weddings">
+                    <div class="gallery-item" data-category="weddings">
                         <div class="gallery-image">
                             <img src="img/wedding-3.jpg" alt="Sunset wedding at Casa Del Sol" loading="lazy">
                             <div class="gallery-overlay">
@@ -100,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="gallery-item reveal-element" data-reveal-animation="fade-up" data-reveal-delay="0.4" data-category="weddings">
+                    <div class="gallery-item" data-category="weddings">
                         <div class="gallery-image">
                             <img src="img/wedding-4.jpg" alt="Wedding table decorations" loading="lazy">
                             <div class="gallery-overlay">
@@ -114,7 +111,7 @@
                     </div>
 
                     <!-- Corporate -->
-                    <div class="gallery-item reveal-element" data-reveal-animation="fade-up" data-category="corporate">
+                    <div class="gallery-item" data-category="corporate">
                         <div class="gallery-image">
                             <img src="img/corporate-1.jpg" alt="Corporate conference setup" loading="lazy">
                             <div class="gallery-overlay">
@@ -126,7 +123,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="gallery-item reveal-element" data-reveal-animation="fade-up" data-category="corporate">
+                    <div class="gallery-item" data-category="corporate">
                         <div class="gallery-image">
                             <img src="img/corporate-2.jpg" alt="Team building event" loading="lazy">
                             <div class="gallery-overlay">
@@ -138,7 +135,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="gallery-item reveal-element" data-reveal-animation="fade-up" data-category="corporate">
+                    <div class="gallery-item" data-category="corporate">
                         <div class="gallery-image">
                             <img src="img/corporate-3.jpg" alt="Corporate gala dinner" loading="lazy">
                             <div class="gallery-overlay">
@@ -152,7 +149,7 @@
                     </div>
 
                     <!-- Special Events -->
-                    <div class="gallery-item reveal-element" data-reveal-animation="fade-up" data-category="special">
+                    <div class="gallery-item" data-category="special">
                         <div class="gallery-image">
                             <img src="img/special-1.jpg" alt="Birthday celebration" loading="lazy">
                             <div class="gallery-overlay">
@@ -164,7 +161,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="gallery-item reveal-element" data-reveal-animation="fade-up" data-category="special">
+                    <div class="gallery-item" data-category="special">
                         <div class="gallery-image">
                             <img src="img/special-2.jpg" alt="Anniversary party" loading="lazy">
                             <div class="gallery-overlay">
@@ -176,7 +173,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="gallery-item reveal-element" data-reveal-animation="fade-up" data-category="special">
+                    <div class="gallery-item" data-category="special">
                         <div class="gallery-image">
                             <img src="img/special-3.jpg" alt="Graduation celebration" loading="lazy">
                             <div class="gallery-overlay">
@@ -190,7 +187,7 @@
                     </div>
 
                     <!-- Venue -->
-                    <div class="gallery-item reveal-element" data-reveal-animation="fade-up" data-category="venue">
+                    <div class="gallery-item" data-category="venue">
                         <div class="gallery-image">
                             <img src="img/venue-1.jpg" alt="Main hall interior" loading="lazy">
                             <div class="gallery-overlay">
@@ -202,7 +199,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="gallery-item reveal-element" data-reveal-animation="fade-up" data-category="venue">
+                    <div class="gallery-item" data-category="venue">
                         <div class="gallery-image">
                             <img src="img/venue-2.jpg" alt="Garden area" loading="lazy">
                             <div class="gallery-overlay">
@@ -214,7 +211,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="gallery-item reveal-element" data-reveal-animation="fade-up" data-category="venue">
+                    <div class="gallery-item" data-category="venue">
                         <div class="gallery-image">
                             <img src="img/venue-3.jpg" alt="Sunset Terrace" loading="lazy">
                             <div class="gallery-overlay">
@@ -226,7 +223,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="gallery-item reveal-element" data-reveal-animation="fade-up" data-category="venue">
+                    <div class="gallery-item" data-category="venue">
                         <div class="gallery-image">
                             <img src="img/venue-4.jpg" alt="Bridal Suite" loading="lazy">
                             <div class="gallery-overlay">
@@ -258,7 +255,7 @@
 
         <section class="cta parallax-bg" data-speed="0.15">
             <div class="container">
-                <div class="cta-content reveal-element" data-reveal-animation="fade-up">
+                <div class="cta-content">
                     <h2>Ready to Create Your Own Memories?</h2>
                     <p>Contact us today to begin planning your perfect event at Casa Del Sol.</p>
                     <a href="contact.html" class="btn btn-primary">Get Started</a>
@@ -319,12 +316,8 @@
         <i class="fas fa-chevron-up"></i>
     </a>
 
+    <!-- Essential JavaScript Files -->
     <script src="js/main.js"></script>
-    <script src="js/parallax.js"></script>
-    <script src="js/reveal.js"></script>
-    <script src="js/gallery-effects.js"></script>
-	<script src="js/hover-fix.js"></script>
-	<script src="js/style-inspector.js"></script>
-	<script src="js/focus-fix.js"></script>
+    <script src="js/gallery.js"></script>
 </body>
 </html>
