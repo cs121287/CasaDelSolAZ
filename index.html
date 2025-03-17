@@ -23,7 +23,7 @@
         <div class="video-overlay"></div>
     </div>
 
-    <header class="header" id="header">
+    <header class="header transparent" id="header">
         <div class="container">
             <div class="logo">
                 <a href="index.html">
@@ -38,6 +38,7 @@
                 </button>
                 <ul class="nav-links">
                     <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="services.html">Our Services</a></li>
                     <li><a href="about.html">About Us</a></li>
                     <li><a href="gallery.html">Gallery</a></li>
                     <li><a href="contact.html">Contact</a></li>
@@ -60,7 +61,7 @@
             </div>
         </section>
 
-        <section class="features parallax-bg" data-speed="0.1">
+        <section class="features dark-section" data-speed="0.1">
             <div class="container">
                 <h2 class="section-title">Why Choose Casa Del Sol</h2>
                 <div class="feature-grid">
@@ -95,6 +96,50 @@
                 </div>
             </div>
         </section>
+
+        <!-- Map Section with Updated Styling -->
+        <section class="location-section">
+            <div class="container">
+                <h2 class="section-title">Our Location</h2>
+                <div class="location-flex">
+                    <div class="location-map">
+                        <div class="map-container">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3327.076467301343!2d-112.46596908479844!3d33.45144558077596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x872b47163b42ae45%3A0x23c0e45c2243cda3!2s18401%20W%20Moreland%20St%2C%20Goodyear%2C%20AZ%2085338!5e0!3m2!1sen!2sus!4v1616625673047!5m2!1sen!2sus" 
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="location-info">
+                        <h3>Conveniently Located</h3>
+                        <p>Casa Del Sol AZ is ideally situated just a few miles West of the intersection of Highways 10 and 303, providing easy access for guests coming from all over Phoenix and surrounding areas.</p>
+                        <p>Ample parking for all of your guests.</p>
+                        <p>Finding your way to our venue is effortless, ensuring a stress-free arrival for you and your guests on your special day.</p>
+                        <div class="location-address">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Address:</h4>
+                                <p>18401 W Moreland St<br>Goodyear, AZ 85338</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta dark-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Plan Your Perfect Event?</h2>
+                    <p>Schedule a personal tour to see Casa Del Sol in person.</p>
+                    <a href="contact.html" class="btn btn-primary">Book a Tour Today</a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
@@ -109,6 +154,7 @@
                         <h4>Quick Links</h4>
                         <ul>
                             <li><a href="index.html">Home</a></li>
+                            <li><a href="services.html">Our Services</a></li>
                             <li><a href="about.html">About Us</a></li>
                             <li><a href="gallery.html">Gallery</a></li>
                             <li><a href="contact.html">Contact</a></li>
@@ -117,10 +163,10 @@
                     <div class="footer-column">
                         <h4>Services</h4>
                         <ul>
-                            <li><a href="#">Weddings</a></li>
-                            <li><a href="#">Corporate Events</a></li>
-                            <li><a href="#">Special Celebrations</a></li>
-                            <li><a href="#">Private Parties</a></li>
+                            <li><a href="services.html#weddings">Weddings</a></li>
+                            <li><a href="services.html#corporate">Corporate Events</a></li>
+                            <li><a href="services.html#quinceaneras">Quinceañeras</a></li>
+                            <li><a href="services.html#life-celebrations">Special Celebrations</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
@@ -152,5 +198,6 @@
     <!-- Simplified JavaScript Files -->
     <script src="js/main.js"></script>
     <script src="js/parallax.js"></script>
+    <script src="js/header-scroll.js"></script>
 </body>
 </html>
