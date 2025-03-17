@@ -1,6 +1,6 @@
 /**
  * Casa Del Sol AZ - Main JavaScript
- * Version: 1.0.1
+ * Version: 1.0.2
  */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -35,9 +35,30 @@ document.addEventListener('DOMContentLoaded', function() {
      * Initialize all functions
      */
     function init() {
+        fixLinkHoverIssues(); // Add link hover fix first
         setupEventListeners();
         checkScroll();
         initAnimations();
+    }
+    
+    /**
+     * Fix link hover issues
+     * Ensures proper hover behavior for links and buttons
+     */
+    function fixLinkHoverIssues() {
+        // Remove any highlighted classes that might be applied incorrectly
+        const buttons = document.querySelectorAll('.btn-primary');
+        buttons.forEach(button => {
+            button.classList.remove('highlighted');
+        });
+        
+        // Ensure links in the header don't have unwanted classes
+        const navLinks = document.querySelectorAll('.nav-links li a');
+        navLinks.forEach(link => {
+            if (!link.classList.contains('active')) {
+                link.classList.remove('highlighted', 'underlined');
+            }
+        });
     }
     
     /**
@@ -104,6 +125,40 @@ document.addEventListener('DOMContentLoaded', function() {
         if (scrollToFormBtn) {
             scrollToFormBtn.addEventListener('click', scrollToContactForm);
         }
+        
+        // Monitor buttons and links for hover effects
+        setupHoverMonitoring();
+    }
+    
+    /**
+     * Setup monitoring for hover states on buttons and links
+     */
+    function setupHoverMonitoring() {
+        // Monitor primary buttons
+        const primaryButtons = document.querySelectorAll('.btn-primary');
+        primaryButtons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.classList.add('hover');
+            });
+            button.addEventListener('mouseleave', function() {
+                this.classList.remove('hover');
+            });
+        });
+        
+        // Monitor navigation links
+        const navLinkElements = document.querySelectorAll('.nav-links li a');
+        navLinkElements.forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.classList.add('hover');
+            });
+            link.addEventListener('mouseleave', function() {
+                this.classList.remove('hover');
+                // Ensure only active links keep their underline
+                if (!this.classList.contains('active')) {
+                    this.classList.remove('highlighted', 'underlined');
+                }
+            });
+        });
     }
     
     /**
@@ -148,13 +203,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleMenu() {
         menuToggle.classList.toggle('active');
         navLinks.classList.toggle('show');
-    }
-    
-    /**
-     * Toggle back to top button visibility - merged into handleScroll
-     */
-    function toggleBackToTopButton() {
-        // Functionality now handled in handleScroll
     }
     
     /**
