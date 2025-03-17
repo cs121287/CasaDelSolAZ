@@ -124,15 +124,15 @@
                             </div>
                             
                             <div class="form-row">
-                                <div class="form-group half">
-                                    <label for="event-date" class="floating-label">Event Date</label>
+                                <div class="form-group half date-input">
+                                    <label for="event-date">Event Date</label>
                                     <input type="date" id="event-date" name="event-date">
                                 </div>
                                 
-                                <div class="form-group half">
-                                    <label for="event-type" class="floating-label">Event Type</label>
+                                <div class="form-group half select-input">
+                                    <label for="event-type">Event Type</label>
                                     <select id="event-type" name="event-type">
-                                        <option value="">Select...</option>
+                                        <option value="" disabled selected hidden>Select event type...</option>
                                         <option value="wedding">Wedding</option>
                                         <option value="corporate">Corporate Event</option>
                                         <option value="birthday">Birthday Party</option>
@@ -170,7 +170,6 @@
 
         <section class="location-map">
             <div class="map-container" id="map-container">
-                <!-- Map will be inserted here by JavaScript -->
                 <iframe 
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3327.076467301343!2d-112.46596908479844!3d33.45144558077596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x872b47163b42ae45%3A0x23c0e45c2243cda3!2s18401%20W%20Moreland%20St%2C%20Goodyear%2C%20AZ%2085338!5e0!3m2!1sen!2sus!4v1616625673047!5m2!1sen!2sus" 
                     width="100%" 
@@ -179,54 +178,6 @@
                     allowfullscreen="" 
                     loading="lazy">
                 </iframe>
-            </div>
-        </section>
-
-        <section class="faq-section">
-            <div class="container">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-                <div class="faq-container">
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            <span>How far in advance should I book my event?</span>
-                            <i class="fas fa-plus"></i>
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <div class="faq-answer">
-                            <p>We recommend booking your event at least 6-12 months in advance, especially for weddings and events during peak season (March-June and October-November). However, we occasionally have dates available for more immediate bookings, so please inquire even if your timeframe is shorter.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            <span>Can I bring my own vendors?</span>
-                            <i class="fas fa-plus"></i>
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Yes, we offer flexibility with vendors. We have a list of trusted preferred vendors who are familiar with our venue, but you're welcome to bring in outside vendors with prior approval. All vendors must provide proof of insurance and be licensed as required by law.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            <span>Is there a minimum guest count?</span>
-                            <i class="fas fa-plus"></i>
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Our venue can comfortably accommodate events of various sizes. For our Main Hall, we typically recommend a minimum of 50 guests, while our more intimate spaces can accommodate smaller gatherings. There may be minimum spending requirements depending on the date and season.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            <span>Do you offer on-site accommodations?</span>
-                            <i class="fas fa-plus"></i>
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <div class="faq-answer">
-                            <p>We do not offer on-site accommodations, but we partner with several nearby hotels that provide special rates for Casa Del Sol events. Our team can help coordinate room blocks and transportation for your guests. The closest hotel is just 5 minutes away by car.</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
