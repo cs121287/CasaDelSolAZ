@@ -537,10 +537,9 @@ p {
   justify-content: center;
 }
 
-/* Features Section */
+/* Features Section - Updated to Dark Background */
 .features {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/cta-bg.jpg') center/cover no-repeat;
-  background-attachment: fixed;
+  background-color: var(--dark);
   padding: var(--spacing-xl) 0;
   color: var(--white);
 }
@@ -550,7 +549,7 @@ p {
 }
 
 .features .section-title:after {
-  background-color: var(--white);
+  background-color: var(--primary);
 }
 
 .feature-grid {
@@ -563,29 +562,234 @@ p {
   text-align: center;
   padding: var(--spacing-md);
   border-radius: 8px;
-  background-color: var(--overlay-light);
+  background-color: rgba(255, 255, 255, 0.05);
   transition: transform var(--transition-med), box-shadow var(--transition-med);
 }
 
 .feature-item:hover {
   transform: translateY(-10px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .feature-icon {
-  font-size: 2.5rem;
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
+  font-size: 2rem;
+  margin: 0 auto var(--spacing-sm);
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
   color: var(--primary);
-  margin-bottom: var(--spacing-sm);
 }
 
 .feature-item h3 {
   font-size: 1.3rem;
   margin-bottom: var(--spacing-xs);
-  color: var(--dark);
+  color: var(--white);
 }
 
 .feature-item p {
+  color: var(--light);
+}
+
+/* Transparent Header Styles */
+.header.transparent {
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  box-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.header.transparent.scrolled {
+  background-image: url("../img/cta-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure text is visible on transparent backgrounds */
+.header.transparent .nav-links a {
+  color: var(--white);
+  font-weight: 500;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark Section Styles (for CTA and similar sections) */
+.dark-section {
+  background-color: var(--dark);
+  color: var(--white);
+  padding: var(--spacing-xl) 0;
+}
+
+.dark-section .section-title {
+  color: var(--white);
+}
+
+.dark-section .section-title:after {
+  background-color: var(--primary);
+}
+
+/* CTA Section - Updated to Dark Background */
+.cta.dark-section {
+  text-align: center;
+}
+
+.cta.dark-section .cta-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta.dark-section h2 {
+  font-size: 2.5rem;
+  color: var(--white);
+  margin-bottom: var(--spacing-sm);
+}
+
+.cta.dark-section p {
+  font-size: 1.2rem;
+  margin-bottom: var(--spacing-md);
+  color: var(--light);
+}
+
+/* Location Section Styles */
+.location-section {
+  padding: var(--spacing-xl) 0;
+  background-color: var(--dark);
+}
+
+.location-section .section-title {
+  color: var(--white);
+  position: relative;
+  margin-bottom: var(--spacing-lg);
+}
+
+.location-section .section-title:after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  background-color: var(--white);
+  margin: var(--spacing-xs) auto 0;
+}
+
+.location-flex {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+.location-map {
+  flex: 0 0 450px;
+  height: 450px;
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 4px solid var(--white);
+}
+
+.location-info {
+  flex: 1;
+  padding: var(--spacing-md);
+  background-color: var(--white);
   color: var(--dark);
+  border-radius: 8px;
+  border: 4px solid var(--white);
+  box-shadow: var(--shadow-md);
+}
+
+.location-info h3 {
+  font-size: 1.8rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--secondary);
+}
+
+.location-info p {
+  margin-bottom: var(--spacing-sm);
+  color: var(--dark);
+}
+
+.location-address {
+  display: flex;
+  align-items: flex-start;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--gray-light);
+}
+
+.location-address i {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-right: var(--spacing-sm);
+}
+
+.location-address h4 {
+  margin-bottom: var(--spacing-xs);
+  color: var(--dark);
+  font-weight: 600;
+}
+
+/* Mobile menu adjustments for transparent header */
+@media only screen and (max-width: 991px) {
+  .header.transparent.menu-open {
+    background-color: var(--dark);
+  }
+  
+  .header.transparent .menu-toggle span {
+    background-color: var(--white);
+  }
+  
+  .location-flex {
+    flex-direction: column;
+  }
+  
+  .location-map {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .location-info {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .hero h2 {
+    font-size: 2.5rem;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+  
+  .location-map {
+    height: 350px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .hero h2 {
+    font-size: 2rem;
+  }
 }
 
 /* ===== ABOUT PAGE STYLES ===== */
@@ -1086,6 +1290,7 @@ p {
 .form-row {
   display: flex;
   gap: var(--spacing-md);
+  align-items: flex-start;
 }
 
 .form-group.half {
@@ -1113,6 +1318,7 @@ input:focus, select:focus, textarea:focus {
   border-color: var(--primary);
 }
 
+/* Floating label animations */
 .form-group.focused {
   transform: translateY(-5px);
 }
@@ -1135,6 +1341,41 @@ input:focus, select:focus, textarea:focus {
   color: var(--primary);
 }
 
+/* Special handling for date and select inputs */
+.form-group.date-input,
+.form-group.select-input {
+  position: relative;
+}
+
+.form-group.date-input label,
+.form-group.select-input label {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  font-size: 0.85rem;
+  color: var(--gray);
+  background: transparent;
+  transform: none;
+  transform-origin: left top;
+  transition: none;
+  pointer-events: none;
+}
+
+.form-group.date-input input,
+.form-group.select-input select {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.form-group.date-input.focused label,
+.form-group.date-input.has-value label,
+.form-group.select-input.focused label,
+.form-group.select-input.has-value label {
+  transform: none;
+  top: -20px;
+}
+
+/* Form success styling */
 .form-success {
   text-align: center;
   padding: var(--spacing-md);
@@ -1150,55 +1391,16 @@ input:focus, select:focus, textarea:focus {
   margin-bottom: var(--spacing-sm);
 }
 
-/* Add this to the form styling section of style.css */
-
-/* Special handling for date inputs and selects to prevent label overlap */
-.form-group.date-input,
-.form-group.select-input {
-    position: relative;
+/* Select input placeholder and option colors */
+select option:first-of-type {
+  color: var(--gray);
 }
 
-.form-group.date-input label,
-.form-group.select-input label {
-    position: absolute;
-    top: -20px;
-    left: 0;
-    font-size: 0.85rem;
-    color: var(--gray);
-    background: transparent;
-    transform: none;
-    transform-origin: left top;
-    transition: none;
-    pointer-events: none;
-}
-
-.form-group.date-input input,
-.form-group.select-input select {
-    padding-top: 12px;
-    padding-bottom: 12px;
-}
-
-.form-group.date-input.focused label,
-.form-group.date-input.has-value label,
-.form-group.select-input.focused label,
-.form-group.select-input.has-value label {
-    transform: none;
-    top: -20px;
-}
-
-/* Fix for form height alignment */
-.form-row {
-    display: flex;
-    gap: var(--spacing-md);
-    align-items: flex-start;
-}
-
-/* Empty state for select */
 select:required:invalid {
   color: var(--gray);
 }
 
-option {
+select option {
   color: var(--dark);
 }
 
@@ -1206,11 +1408,55 @@ option[value=""][disabled] {
   display: none;
 }
 
-/* Map */
+/* Date input placeholder text color fixes */
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+  color: var(--gray);
+}
+
+input[type="date"]:focus::-webkit-datetime-edit-text,
+input[type="date"]:focus::-webkit-datetime-edit-month-field,
+input[type="date"]:focus::-webkit-datetime-edit-day-field,
+input[type="date"]:focus::-webkit-datetime-edit-year-field,
+input[type="date"]:valid::-webkit-datetime-edit-text,
+input[type="date"]:valid::-webkit-datetime-edit-month-field,
+input[type="date"]:valid::-webkit-datetime-edit-day-field,
+input[type="date"]:valid::-webkit-datetime-edit-year-field {
+  color: var(--dark);
+}
+
+/* Updated Location Section Styles */
+.location-section {
+  padding: var(--spacing-xl) 0;
+  background-color: var(--dark);
+}
+
+.location-section .section-title {
+  color: var(--light);
+  position: relative;
+  margin-bottom: var(--spacing-lg);
+}
+
+.location-section .section-title:after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  background-color: var(--light);  /* White line under Our Location */
+  margin: var(--spacing-xs) auto 0;
+}
+
+.location-flex {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
 .location-map {
+  flex: 0 0 450px; /* Square map: width = height */
   height: 450px;
-  width: 100%;
-  margin-bottom: var(--spacing-xl);
 }
 
 .map-container {
@@ -1219,6 +1465,79 @@ option[value=""][disabled] {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: var(--shadow-md);
+  border: 4px solid var(--light);
+}
+
+.location-info {
+  flex: 1;
+  padding: var(--spacing-md);
+  background-color: var(--light);
+  color: var(--dark);
+  border-radius: 8px;
+  border: 4px solid var(--light);
+  box-shadow: var(--shadow-md);
+}
+
+.location-info h3 {
+  font-size: 1.8rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--dark);
+}
+
+.location-info p {
+  margin-bottom: var(--spacing-sm);
+  color: var(--dark);
+}
+
+.location-address {
+  display: flex;
+  align-items: flex-start;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--gray-light);
+}
+
+.location-address i {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-right: var(--spacing-sm);
+}
+
+.location-address h4 {
+  margin-bottom: var(--spacing-xs);
+  color: var(--dark);
+  font-weight: 600;
+}
+
+.location-address p {
+  color: var(--dark);
+}
+
+/* Responsive Styles for Location Section */
+@media only screen and (max-width: 991px) {
+  .location-flex {
+    flex-direction: column;
+  }
+  
+  .location-map {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .location-info {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .location-map {
+    height: 350px;
+  }
 }
 
 /* FAQ Section Styles */
