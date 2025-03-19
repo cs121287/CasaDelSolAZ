@@ -5,19 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Casa Del Sol AZ - Premier event venue services in Arizona for weddings, corporate events, and special occasions">
     <title>Our Services | Casa Del Sol AZ</title>
-    <!-- Consolidated CSS with minimal HTTP requests -->
     <link rel="stylesheet" href="css/style.css">
-    <!-- Preload critical icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Optimized font loading with preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body class="services-page">
-    <!-- Video background container -->
     <div class="video-container">
-        <!-- Static background image for faster loading -->
         <div class="bg-image" style="background-image: url('img/bg2.jpg');"></div>
         <div class="video-overlay"></div>
     </div>
@@ -58,145 +53,82 @@
             </div>
         </section>
 
-        <section class="services-grid">
+        <section class="services-section">
             <div class="container">
-                <div class="services-list">
-                    <!-- Weddings -->
-                    <article class="service-item" id="weddings">
-                        <div class="service-icon">
+                <div class="services-container">
+                    <h3 class="services-title">We Host All Types of Events</h3>
+                    
+                    <div class="services-horizontal">
+                        <a href="#weddings" class="service-link" id="weddings">
                             <i class="fas fa-ring"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Weddings</h3>
-                            <p>Your dream wedding awaits at Casa Del Sol. Our picturesque venue offers the perfect backdrop for your special day with indoor and outdoor ceremony options, elegant reception spaces, and comprehensive wedding packages.</p>
-                        </div>
-                    </article>
-
-                    <!-- Quinceañeras -->
-                    <article class="service-item" id="quinceaneras">
-                        <div class="service-icon">
+                            <span>Weddings</span>
+                        </a>
+                        
+                        <a href="#quinceaneras" class="service-link" id="quinceaneras">
                             <i class="fas fa-crown"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Quinceañeras</h3>
-                            <p>Celebrate this important milestone in true style. Our quinceañera packages include stunning decoration options, dance floor facilities, catering services, and coordination assistance to create an unforgettable celebration.</p>
-                        </div>
-                    </article>
-
-                    <!-- Combined Baptisms & First Communions - with both IDs for proper anchoring -->
-                    <article class="service-item" id="baptisms-and-communions">
-                        <div class="service-icon">
+                            <span>Quinceañeras</span>
+                        </a>
+                        
+                        <a href="#baptisms-and-communions" class="service-link" id="baptisms-and-communions">
                             <i class="fas fa-church"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Baptisms & First Communions</h3>
-                            <p>Celebrate these sacred religious milestones in our serene setting. We provide elegant spaces for post-ceremony gatherings with customizable catering options, creating memorable experiences for family and guests.</p>
-                        </div>
-                    </article>
-                    <!-- Hidden anchors to maintain backward compatibility with existing links -->
-                    <span id="baptisms" class="anchor-target"></span>
-                    <span id="first-communions" class="anchor-target"></span>
-
-                    <!-- Confirmation Parties -->
-                    <article class="service-item" id="confirmation-parties">
-                        <div class="service-icon">
+                            <span>Baptisms & Communions</span>
+                        </a>
+                        
+                        <a href="#confirmation-parties" class="service-link" id="confirmation-parties">
                             <i class="fas fa-dove"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Confirmation Parties</h3>
-                            <p>Honor this important religious milestone with a thoughtfully planned celebration. Our venue provides the perfect setting for family and friends to gather after the ceremony in a joyful, accommodating atmosphere.</p>
-                        </div>
-                    </article>
-
-                    <!-- Birthday Parties -->
-                    <article class="service-item" id="birthday-parties">
-                        <div class="service-icon">
+                            <span>Confirmations</span>
+                        </a>
+                        
+                        <a href="#birthday-parties" class="service-link" id="birthday-parties">
                             <i class="fas fa-birthday-cake"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Birthday Parties</h3>
-                            <p>From children's themed celebrations to milestone adult birthdays, our versatile spaces can be transformed to match your vision. We offer customizable packages for parties of all sizes and age groups.</p>
-                        </div>
-                    </article>
-
-                    <!-- Anniversaries -->
-                    <article class="service-item" id="anniversaries">
-                        <div class="service-icon">
+                            <span>Birthdays</span>
+                        </a>
+                        
+                        <a href="#anniversaries" class="service-link" id="anniversaries">
                             <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Anniversaries</h3>
-                            <p>Celebrate years of love and commitment in our romantic venue. Whether it's your first anniversary or your fiftieth, we can help create a memorable event that honors your unique journey together.</p>
-                        </div>
-                    </article>
-
-                    <!-- Graduations -->
-                    <article class="service-item" id="graduations">
-                        <div class="service-icon">
+                            <span>Anniversaries</span>
+                        </a>
+                        
+                        <a href="#graduations" class="service-link" id="graduations">
                             <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Graduations</h3>
-                            <p>Commemorate academic achievements with a celebration that recognizes this important milestone. Our flexible spaces accommodate both intimate family gatherings and larger graduation parties.</p>
-                        </div>
-                    </article>
-
-                    <!-- Engagement Parties -->
-                    <article class="service-item" id="engagement-parties">
-                        <div class="service-icon">
+                            <span>Graduations</span>
+                        </a>
+                        
+                        <a href="#engagement-parties" class="service-link" id="engagement-parties">
                             <i class="fas fa-glass-cheers"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Engagement Parties</h3>
-                            <p>Begin your wedding journey with an engagement celebration at our elegant venue. We offer intimate settings that provide the perfect backdrop for announcing your commitment and future plans.</p>
-                        </div>
-                    </article>
-
-                    <!-- Bridal Showers -->
-                    <article class="service-item" id="bridal-showers">
-                        <div class="service-icon">
+                            <span>Engagement Parties</span>
+                        </a>
+                        
+                        <a href="#bridal-showers" class="service-link" id="bridal-showers">
                             <i class="fas fa-gift"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Bridal Showers</h3>
-                            <p>Host a sophisticated bridal shower in our charming spaces. We offer customizable packages featuring elegant decor, delicious catering options, and attentive service to honor the bride-to-be.</p>
-                        </div>
-                    </article>
-
-                    <!-- Baby Showers -->
-                    <article class="service-item" id="baby-showers">
-                        <div class="service-icon">
+                            <span>Bridal Showers</span>
+                        </a>
+                        
+                        <a href="#baby-showers" class="service-link" id="baby-showers">
                             <i class="fas fa-baby"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Baby Showers</h3>
-                            <p>Welcome your little one with a joyful celebration. Our versatile spaces can be decorated to match any theme, with packages that include catering, seating arrangements, and special accommodations for guests.</p>
-                        </div>
-                    </article>
-
-                    <!-- Corporate Events -->
-                    <article class="service-item" id="corporate">
-                        <div class="service-icon">
+                            <span>Baby Showers</span>
+                        </a>
+                        
+                        <a href="#corporate" class="service-link" id="corporate">
                             <i class="fas fa-briefcase"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Corporate Events</h3>
-                            <p>Elevate your business gatherings with our professional spaces. From conferences and meetings to team-building retreats and holiday parties, we provide the technology, catering, and ambiance for successful business events.</p>
-                        </div>
-                    </article>
-
-                    <!-- Memorial Services -->
-                    <article class="service-item" id="memorial-services">
-                        <div class="service-icon">
+                            <span>Corporate Events</span>
+                        </a>
+                        
+                        <a href="#memorial-services" class="service-link" id="memorial-services">
                             <i class="fas fa-praying-hands"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Memorial Services</h3>
-                            <p>Honor and celebrate the life of your loved one in a dignified and comforting environment. Our compassionate staff will assist with arrangements to create a meaningful tribute with respect and care.</p>
-                        </div>
-                    </article>
+                            <span>Memorial Services</span>
+                        </a>
+                    </div>
+                    
+                    <p class="services-description">
+                        Contact us to learn more about our customizable packages for any event type. Our experienced team will work with you to create a memorable experience tailored to your specific needs and preferences.
+                    </p>
                 </div>
             </div>
+            
+            <!-- Hidden anchors to maintain backward compatibility with existing links -->
+            <span id="baptisms" class="anchor-target"></span>
+            <span id="first-communions" class="anchor-target"></span>
         </section>
 
         <section class="faq-section">
@@ -307,7 +239,7 @@
         <i class="fas fa-chevron-up"></i>
     </a>
 
-    <!-- Scripts placed at end of body for faster initial page load -->
+    <!-- Scripts at end for faster initial page load -->
     <script src="js/main.js"></script>
     <script src="js/parallax.js"></script>
     <script src="js/header-scroll.js"></script>
