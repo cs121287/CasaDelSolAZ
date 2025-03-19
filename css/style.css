@@ -589,36 +589,44 @@ p {
   color: var(--white);
   padding: var(--spacing-lg) 0;
   border-top: 3px solid #000;
-  position: relative;
-  z-index: 1;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  overflow: hidden; /* Ensures the background stays within rounded corners */
+  overflow: hidden;
 }
 
-.footer::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none; /* Allows clicks to pass through */
-  z-index: -1;
+/* Fix for Contact Us section background */
+.contact-info,
+.contact-info li,
+.footer-column:nth-child(3),
+.footer-column:nth-child(3) * {
+  background-color: transparent !important;
+  background: transparent !important;
 }
 
+.contact-info li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.contact-info li i {
+  color: var(--primary);
+  margin-right: 10px;
+  width: 16px;
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+/* Rest of the footer styles remain unchanged */
 .footer-content {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: var(--spacing-md);
-  position: relative;
-  background-color: transparent;
 }
 
 .footer-logo {
   flex: 1 1 300px;
   margin-bottom: var(--spacing-md);
-  background-color: transparent;
 }
 
 .footer-logo h3 {
@@ -634,14 +642,12 @@ p {
   flex: 2 1 600px;
   display: flex;
   flex-wrap: wrap;
-  background-color: transparent;
 }
 
 .footer-column {
   flex: 1;
   min-width: 200px;
   margin-bottom: var(--spacing-md);
-  background-color: transparent;
 }
 
 .footer-column h4 {
@@ -663,7 +669,6 @@ p {
 
 .footer-column ul li {
   margin-bottom: 8px;
-  background-color: transparent;
 }
 
 .footer-column ul li a {
@@ -675,23 +680,11 @@ p {
   color: var(--primary);
 }
 
-.contact-info li {
-  background-color: transparent;
-}
-
-.contact-info i {
-  color: var(--primary);
-  margin-right: 10px;
-  width: 16px;
-  text-align: center;
-}
-
 .social-links {
   display: flex;
   justify-content: center;
   gap: var(--spacing-sm);
   margin-bottom: var(--spacing-md);
-  background-color: transparent;
 }
 
 .social-links a {
@@ -715,7 +708,6 @@ p {
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: var(--spacing-md);
-  background-color: transparent;
 }
 
 /* ===== BACK TO TOP BUTTON ===== */
