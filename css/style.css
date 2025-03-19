@@ -1,6 +1,6 @@
 /*
  * Casa Del Sol AZ - Consolidated Stylesheet
- * Version: 2.1.3
+ * Version: 2.1.4
  * Description: Core styles, reset, typography, and shared components
  */
 
@@ -1052,6 +1052,7 @@ p {
 .services-intro {
   padding: var(--spacing-lg) 0;
   text-align: center;
+  color: var(--white);
 }
 
 .intro-text {
@@ -1062,61 +1063,75 @@ p {
 }
 
 .services-grid {
-  background-color: var(--light);
+  background-color: rgba(18, 18, 18, 0);
   padding: var(--spacing-xl) 0;
 }
 
 .services-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-md);
 }
 
 .service-item {
-  background-color: var(--white);
+  text-align: center;
+  padding: var(--spacing-md);
   border-radius: 8px;
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
   transition: transform var(--transition-med), box-shadow var(--transition-med);
+  /* Fading shadow border effect */
+  box-shadow: 
+    0 0 0 2px rgba(0, 0, 0, 1),
+    0 0 4px 2px rgba(0, 0, 0, 0.7),
+    0 0 8px 2px rgba(0, 0, 0, 0.4),
+    0 0 12px 2px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: hidden;
 }
 
 .service-item:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-10px);
+  /* Enhanced hover effect that preserves the fading border while adding elevation */
+  box-shadow: 
+    0 0 0 2px rgba(0, 0, 0, 1),
+    0 0 4px 2px rgba(0, 0, 0, 0.7),
+    0 0 8px 2px rgba(0, 0, 0, 0.4),
+    0 0 12px 2px rgba(0, 0, 0, 0.1),
+    0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .service-icon {
-  background-color: var(--primary);
-  color: var(--white);
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
+  font-size: 2rem;
+  margin: 0 auto var(--spacing-sm);
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100px;
-  font-size: 3rem;
 }
 
 .service-content {
-  padding: var(--spacing-md);
+  padding: var(--spacing-sm);
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
 
 .service-content h3 {
-  margin-bottom: var(--spacing-sm);
-  color: var(--dark);
+  font-size: 1.3rem;
+  margin-bottom: var(--spacing-xs);
+  color: var(--white);
 }
 
 .service-content p {
-  margin-bottom: var(--spacing-md);
-  flex-grow: 1;
-}
-
-.service-content .btn {
-  align-self: flex-start;
+  color: var(--light);
+  margin-bottom: 0; /* Removed extra bottom margin since we don't have buttons */
 }
 
 /* ===== FAQ SECTION ===== */
