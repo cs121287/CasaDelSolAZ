@@ -1,6 +1,6 @@
 /*
  * Casa Del Sol AZ - Consolidated Stylesheet
- * Version: 2.1.1
+ * Version: 2.1.2
  * Description: Core styles, reset, typography, and shared components
  */
 
@@ -428,6 +428,7 @@ p {
   padding: var(--spacing-lg);
   border-radius: 8px;
   box-shadow: var(--shadow-md);
+  border: 3px solid #000; /* Added efficient black border */
 }
 
 .cta.dark-section h2 {
@@ -497,16 +498,16 @@ p {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: var(--shadow-md);
-  border: 4px solid var(--dark);
+  border: 3px solid black;
 }
 
 .location-info {
   flex: 1;
   padding: var(--spacing-md);
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
-  color: var(--dark);
+  color: #000;
   border-radius: 8px;
-  border: 4px solid var(--dark);
+  border: 3px solid black;
   box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column; /* Ensure content fills the container height */
@@ -858,6 +859,7 @@ p {
   border-radius: 8px;
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
   transition: transform var(--transition-med), box-shadow var(--transition-med);
+  border: 2px solid #000; /* Added black border - using the shorthand property for efficiency */
 }
 
 .feature-item:hover {
@@ -885,7 +887,6 @@ p {
 .feature-item p {
   color: var(--light);
 }
-
 /* ===== ABOUT PAGE STYLES ===== */
 /* About Intro */
 .about-intro {
