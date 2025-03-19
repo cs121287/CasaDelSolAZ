@@ -5,17 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Casa Del Sol AZ - Premier event venue services in Arizona for weddings, corporate events, and special occasions">
     <title>Our Services | Casa Del Sol AZ</title>
-    <!-- Consolidated CSS file for faster loading -->
+    <!-- Consolidated CSS with minimal HTTP requests -->
     <link rel="stylesheet" href="css/style.css">
-    <!-- Preloaded critical Font Awesome icons -->
+    <!-- Preload critical icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Preconnect to Google Fonts to reduce latency -->
+    <!-- Optimized font loading with preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body class="services-page">
-    <header class="header" id="header">
+    <!-- Video background container -->
+    <div class="video-container">
+        <!-- Static background image for faster loading -->
+        <div class="bg-image" style="background-image: url('img/bg2.jpg');"></div>
+        <div class="video-overlay"></div>
+    </div>
+
+    <header class="header transparent" id="header">
         <div class="container">
             <div class="logo">
                 <a href="index.html">
@@ -40,7 +47,6 @@
     </header>
 
     <main>
-        <!-- Services Intro Section - No Page Banner for faster loading -->
         <section class="services-intro">
             <div class="container">
                 <h2 class="section-title">Our Services</h2>
@@ -52,188 +58,196 @@
             </div>
         </section>
 
-        <!-- Services Grid Section -->
         <section class="services-grid">
             <div class="container">
                 <div class="services-list">
-                    <!-- Wedding Service -->
-                    <div class="service-item">
+                    <!-- Weddings -->
+                    <article class="service-item" id="weddings">
                         <div class="service-icon">
-                            <i class="fas fa-rings-wedding"></i>
+                            <i class="fas fa-ring"></i>
                         </div>
                         <div class="service-content">
                             <h3>Weddings</h3>
-                            <p>Your dream wedding awaits at Casa Del Sol. Our picturesque venue offers the perfect backdrop for your special day, with flexible indoor and outdoor spaces to accommodate ceremonies and receptions of all sizes.</p>
+                            <p>Your dream wedding awaits at Casa Del Sol. Our picturesque venue offers the perfect backdrop for your special day with indoor and outdoor ceremony options, elegant reception spaces, and comprehensive wedding packages.</p>
                         </div>
-                    </div>
-                    
-                    <!-- Corporate Events Service -->
-                    <div class="service-item">
-                        <div class="service-icon">
-                            <i class="fas fa-briefcase"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Corporate Events</h3>
-                            <p>Elevate your next corporate gathering in our sophisticated venue. From conferences and team-building events to holiday parties and product launches, we provide the perfect setting for your business needs.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Quinceañeras Service -->
-                    <div class="service-item">
+                    </article>
+
+                    <!-- Quinceañeras -->
+                    <article class="service-item" id="quinceaneras">
                         <div class="service-icon">
                             <i class="fas fa-crown"></i>
                         </div>
                         <div class="service-content">
                             <h3>Quinceañeras</h3>
-                            <p>Celebrate this important milestone in style. Our venue offers the perfect blend of elegance and functionality to create a memorable quinceañera celebration that honors tradition while creating new memories.</p>
+                            <p>Celebrate this important milestone in true style. Our quinceañera packages include stunning decoration options, dance floor facilities, catering services, and coordination assistance to create an unforgettable celebration.</p>
                         </div>
-                    </div>
-                    
-                    <!-- Special Celebrations Service -->
-                    <div class="service-item">
+                    </article>
+
+                    <!-- Combined Baptisms & First Communions - with both IDs for proper anchoring -->
+                    <article class="service-item" id="baptisms-and-communions">
+                        <div class="service-icon">
+                            <i class="fas fa-church"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Baptisms & First Communions</h3>
+                            <p>Celebrate these sacred religious milestones in our serene setting. We provide elegant spaces for post-ceremony gatherings with customizable catering options, creating memorable experiences for family and guests.</p>
+                        </div>
+                    </article>
+                    <!-- Hidden anchors to maintain backward compatibility with existing links -->
+                    <span id="baptisms" class="anchor-target"></span>
+                    <span id="first-communions" class="anchor-target"></span>
+
+                    <!-- Confirmation Parties -->
+                    <article class="service-item" id="confirmation-parties">
+                        <div class="service-icon">
+                            <i class="fas fa-dove"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Confirmation Parties</h3>
+                            <p>Honor this important religious milestone with a thoughtfully planned celebration. Our venue provides the perfect setting for family and friends to gather after the ceremony in a joyful, accommodating atmosphere.</p>
+                        </div>
+                    </article>
+
+                    <!-- Birthday Parties -->
+                    <article class="service-item" id="birthday-parties">
+                        <div class="service-icon">
+                            <i class="fas fa-birthday-cake"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Birthday Parties</h3>
+                            <p>From children's themed celebrations to milestone adult birthdays, our versatile spaces can be transformed to match your vision. We offer customizable packages for parties of all sizes and age groups.</p>
+                        </div>
+                    </article>
+
+                    <!-- Anniversaries -->
+                    <article class="service-item" id="anniversaries">
+                        <div class="service-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Anniversaries</h3>
+                            <p>Celebrate years of love and commitment in our romantic venue. Whether it's your first anniversary or your fiftieth, we can help create a memorable event that honors your unique journey together.</p>
+                        </div>
+                    </article>
+
+                    <!-- Graduations -->
+                    <article class="service-item" id="graduations">
+                        <div class="service-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Graduations</h3>
+                            <p>Commemorate academic achievements with a celebration that recognizes this important milestone. Our flexible spaces accommodate both intimate family gatherings and larger graduation parties.</p>
+                        </div>
+                    </article>
+
+                    <!-- Engagement Parties -->
+                    <article class="service-item" id="engagement-parties">
                         <div class="service-icon">
                             <i class="fas fa-glass-cheers"></i>
                         </div>
                         <div class="service-content">
-                            <h3>Special Celebrations</h3>
-                            <p>From anniversary parties and baby showers to retirement celebrations and family reunions, Casa Del Sol provides a stunning backdrop for all of life's special moments worth celebrating.</p>
+                            <h3>Engagement Parties</h3>
+                            <p>Begin your wedding journey with an engagement celebration at our elegant venue. We offer intimate settings that provide the perfect backdrop for announcing your commitment and future plans.</p>
                         </div>
-                    </div>
+                    </article>
+
+                    <!-- Bridal Showers -->
+                    <article class="service-item" id="bridal-showers">
+                        <div class="service-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Bridal Showers</h3>
+                            <p>Host a sophisticated bridal shower in our charming spaces. We offer customizable packages featuring elegant decor, delicious catering options, and attentive service to honor the bride-to-be.</p>
+                        </div>
+                    </article>
+
+                    <!-- Baby Showers -->
+                    <article class="service-item" id="baby-showers">
+                        <div class="service-icon">
+                            <i class="fas fa-baby"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Baby Showers</h3>
+                            <p>Welcome your little one with a joyful celebration. Our versatile spaces can be decorated to match any theme, with packages that include catering, seating arrangements, and special accommodations for guests.</p>
+                        </div>
+                    </article>
+
+                    <!-- Corporate Events -->
+                    <article class="service-item" id="corporate">
+                        <div class="service-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Corporate Events</h3>
+                            <p>Elevate your business gatherings with our professional spaces. From conferences and meetings to team-building retreats and holiday parties, we provide the technology, catering, and ambiance for successful business events.</p>
+                        </div>
+                    </article>
+
+                    <!-- Memorial Services -->
+                    <article class="service-item" id="memorial-services">
+                        <div class="service-icon">
+                            <i class="fas fa-praying-hands"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Memorial Services</h3>
+                            <p>Honor and celebrate the life of your loved one in a dignified and comforting environment. Our compassionate staff will assist with arrangements to create a meaningful tribute with respect and care.</p>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <!-- Additional Services Section -->
-        <section class="services-grid">
-            <div class="container">
-                <h2 class="section-title">Additional Services</h2>
-                <div class="services-list">
-                    <!-- Catering Service -->
-                    <div class="service-item">
-                        <div class="service-icon">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Catering</h3>
-                            <p>Our expert culinary team crafts customized menus featuring fresh, locally-sourced ingredients. From elegant plated dinners to casual buffets and cocktail receptions, we create dining experiences that delight.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Bar Service -->
-                    <div class="service-item">
-                        <div class="service-icon">
-                            <i class="fas fa-cocktail"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Bar Service</h3>
-                            <p>Enhance your event with our professional bar services. Choose from premium open bars, signature cocktails, or champagne toasts. Our experienced bartenders ensure seamless service throughout your event.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Event Planning Service -->
-                    <div class="service-item">
-                        <div class="service-icon">
-                            <i class="fas fa-clipboard-list"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Event Planning</h3>
-                            <p>Our dedicated event coordinators handle every detail, from vendor coordination to day-of execution. We work closely with you to bring your vision to life, ensuring a stress-free planning experience.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Décor & Design Service -->
-                    <div class="service-item">
-                        <div class="service-icon">
-                            <i class="fas fa-brush"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3>Décor & Design</h3>
-                            <p>Transform our versatile space with custom décor packages. Our design team creates personalized atmospheres through lighting, florals, table settings, and more to match your event theme and style.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FAQ Section -->
         <section class="faq-section">
             <div class="container">
                 <h2 class="section-title">Frequently Asked Questions</h2>
                 <div class="faq-container">
                     <div class="faq-item">
                         <button class="faq-question">
-                            What is the capacity of your venue?
-                            <span class="faq-icon">
-                                <i class="fas fa-plus"></i>
-                                <i class="fas fa-minus"></i>
-                            </span>
+                            What is included in your venue rental fee?
+                            <span class="icon"><i class="fas fa-plus"></i><i class="fas fa-minus"></i></span>
                         </button>
                         <div class="faq-answer">
-                            <p>Our venue can accommodate up to 250 guests for a seated dinner with dance floor, or up to 300 for a cocktail-style reception. Our outdoor spaces can host ceremonies for up to 275 guests.</p>
+                            <p>Our standard venue rental includes the use of the main hall for 8 hours, outdoor ceremony space, tables and chairs for up to 150 guests, basic sound system, on-site parking, and a venue coordinator. Additional services and extended hours are available for an extra fee.</p>
                         </div>
                     </div>
-                    
                     <div class="faq-item">
                         <button class="faq-question">
-                            Do you offer in-house catering?
-                            <span class="faq-icon">
-                                <i class="fas fa-plus"></i>
-                                <i class="fas fa-minus"></i>
-                            </span>
+                            Do you provide catering or can we bring our own?
+                            <span class="icon"><i class="fas fa-plus"></i><i class="fas fa-minus"></i></span>
                         </button>
                         <div class="faq-answer">
-                            <p>Yes, we provide full in-house catering services with customizable menu options. Our executive chef works with you to create a dining experience that perfectly complements your event.</p>
+                            <p>We offer premium in-house catering services with customizable menu options. You may also choose from our list of approved outside caterers for an additional fee. Outside catering not on our approved list may be subject to a higher fee and must meet our venue requirements.</p>
                         </div>
                     </div>
-                    
                     <div class="faq-item">
                         <button class="faq-question">
-                            What is your cancellation policy?
-                            <span class="faq-icon">
-                                <i class="fas fa-plus"></i>
-                                <i class="fas fa-minus"></i>
-                            </span>
+                            How far in advance should we book your venue?
+                            <span class="icon"><i class="fas fa-plus"></i><i class="fas fa-minus"></i></span>
                         </button>
                         <div class="faq-answer">
-                            <p>Our cancellation policy requires written notice at least 90 days prior to your event date for a partial refund. Cancellations within 90 days are subject to our full payment policy. Please refer to your contract for complete details.</p>
+                            <p>For weddings and large events, we recommend booking 9-12 months in advance, especially for peak season dates (March-June and September-November). Corporate events and smaller gatherings can often be accommodated with 3-6 months' notice, depending on availability.</p>
                         </div>
                     </div>
-                    
                     <div class="faq-item">
                         <button class="faq-question">
-                            Do you have preferred vendors?
-                            <span class="faq-icon">
-                                <i class="fas fa-plus"></i>
-                                <i class="fas fa-minus"></i>
-                            </span>
+                            What is your payment and cancellation policy?
+                            <span class="icon"><i class="fas fa-plus"></i><i class="fas fa-minus"></i></span>
                         </button>
                         <div class="faq-answer">
-                            <p>We maintain relationships with top local vendors and can provide recommendations for photographers, florists, DJs, and more. While you're welcome to bring in your own vendors, we ask that they be licensed and insured.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            What's included in your venue rental?
-                            <span class="faq-icon">
-                                <i class="fas fa-plus"></i>
-                                <i class="fas fa-minus"></i>
-                            </span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Our standard venue rental includes tables, chairs, basic linens, setup and teardown, cleaning, on-site parking, getting-ready suites, and a dedicated venue coordinator. Additional services and rentals are available for an extra fee.</p>
+                            <p>We require a 25% non-refundable deposit to secure your date, with 50% due 6 months before the event and the remaining balance due 30 days prior. Cancellations made more than 6 months in advance receive a 50% refund of payments made beyond the deposit. Cancellations within 6 months are non-refundable but may be applied to a future date within one year.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Call to Action Section -->
         <section class="cta dark-section">
             <div class="container">
                 <div class="cta-content">
-                    <h2>Ready to Plan Your Event?</h2>
-                    <p>Contact us today to schedule a tour and discuss how we can bring your vision to life.</p>
+                    <h2>Ready to Start Planning Your Event?</h2>
+                    <p>Contact us today to schedule a personal tour of Casa Del Sol.</p>
                     <a href="contact.html" class="btn btn-primary">Get in Touch</a>
                 </div>
             </div>
@@ -262,9 +276,9 @@
                         <h4>Services</h4>
                         <ul>
                             <li><a href="services.html#weddings">Weddings</a></li>
-                            <li><a href="services.html#corporate">Corporate Events</a></li>
                             <li><a href="services.html#quinceaneras">Quinceañeras</a></li>
-                            <li><a href="services.html#life-celebrations">Special Celebrations</a></li>
+                            <li><a href="services.html#baptisms-and-communions">Religious Celebrations</a></li>
+                            <li><a href="services.html#corporate">Corporate Events</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
@@ -293,8 +307,9 @@
         <i class="fas fa-chevron-up"></i>
     </a>
 
-    <!-- Combined and minified JavaScript for faster loading -->
+    <!-- Scripts placed at end of body for faster initial page load -->
     <script src="js/main.js"></script>
-    <script defer src="js/faq.js"></script>
+    <script src="js/parallax.js"></script>
+    <script src="js/header-scroll.js"></script>
 </body>
 </html>
