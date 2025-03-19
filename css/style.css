@@ -188,6 +188,11 @@ p {
 }
 
 /* ===== HEADER & NAVIGATION ===== */
+:root {
+  /* Updated transition with slower fades */
+  --transition-header: transform 0.4s ease, background-color 0.7s ease, background-image 2.5s ease, box-shadow 0.5s ease, padding 0.3s ease, opacity 2.5s ease;
+}
+
 .header {
   position: fixed;
   top: 0;
@@ -196,6 +201,9 @@ p {
   z-index: 1000;
   padding: 1.5rem 0;
   transition: var(--transition-header);
+  border-bottom: 3px solid black;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 /* Standard header when scrolled */
@@ -216,24 +224,59 @@ p {
 
 /* Transparent header (on index.html) */
 .header.transparent {
-  position: fixed; /* Changed from absolute to fixed to ensure consistent scrolling behavior */
+  position: fixed;
   background-color: transparent;
   box-shadow: none;
+  border-bottom: none; /* Remove border when transparent for clean look */
 }
 
-.header.transparent.scrolled {
+/* Use pseudo-element for better background transition */
+.header.transparent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-image: url("../img/cta-bg.jpg");
   background-size: cover;
   background-position: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 0.75rem 0;
+  opacity: 0;
+  transition: opacity 2.5s ease;
+  z-index: -1;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
-/* Header container layout */
+.header.transparent.scrolled::before {
+  opacity: 1;
+}
+
+.header.transparent.scrolled {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 0;
+  border-bottom: 3px solid black; /* Re-add border when scrolled */
+}
+
+/* We need to apply styling to the container to get proper border-radius effect */
 .header .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+/* Background element to ensure rounded corners work with solid backgrounds */
+.header:not(.transparent)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: inherit;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  z-index: -1;
 }
 
 /* Logo styling */
@@ -350,12 +393,12 @@ p {
 
 /* ===== CALL TO ACTION ===== */
 .cta {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/cta-bg.jpg') center/cover no-repeat;
+  background: transparent; /* Make main container transparent */
   padding: var(--spacing-xl) 0;
   text-align: center;
   color: var(--white);
   position: relative;
-  background-attachment: fixed;
+  /* Border-top removed for efficiency */
 }
 
 .cta h2 {
@@ -372,16 +415,19 @@ p {
   margin-right: auto;
 }
 
-/* CTA - Dark section variant that matches footer */
+/* CTA - Dark section variant with inner container styling */
 .cta.dark-section {
-  background: var(--dark); /* Solid background matching the footer */
-  background-image: none; /* Remove any gradient/image from parent */
+  background: transparent; /* Ensure transparency in dark variant */
   text-align: center;
 }
 
 .cta.dark-section .cta-content {
   max-width: 800px;
   margin: 0 auto;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
 }
 
 .cta.dark-section h2 {
@@ -396,7 +442,7 @@ p {
   color: var(--light);
 }
 
-/* Dark Section Styles */
+/* Dark Section Styles remain unchanged */
 .dark-section {
   background-color: var(--dark);
   color: var(--white);
@@ -410,11 +456,10 @@ p {
 .dark-section .section-title:after {
   background-color: var(--primary);
 }
-
 /* ===== LOCATION SECTION ===== */
 .location-section {
   padding: var(--spacing-xl) 0;
-  background-color: var(--dark);
+  background-color: rgba(18, 18, 18, 0);
 }
 
 .location-section .section-title {
@@ -428,19 +473,22 @@ p {
   display: block;
   width: 80px;
   height: 3px;
-  background-color: var(--light);
+  background-color: var(--primary);
   margin: var(--spacing-xs) auto 0;
 }
 
 .location-flex {
   display: flex;
   gap: var(--spacing-lg);
-  align-items: center;
+  align-items: stretch; /* Changed from center to stretch for equal height */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+/* Increased map size to match text container */
 .location-map {
-  flex: 0 0 450px;
-  height: 450px;
+  flex: 0 0 500px; /* Increased from 450px */
+  min-height: 480px; /* Set minimum height to ensure proper display */
 }
 
 .map-container {
@@ -449,70 +497,128 @@ p {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: var(--shadow-md);
-  border: 4px solid var(--light);
+  border: 4px solid var(--dark);
 }
 
 .location-info {
   flex: 1;
   padding: var(--spacing-md);
-  background-color: var(--light);
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
   color: var(--dark);
   border-radius: 8px;
-  border: 4px solid var(--light);
+  border: 4px solid var(--dark);
   box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column; /* Ensure content fills the container height */
+  justify-content: space-between; /* Distribute content evenly */
 }
 
 .location-info h3 {
   font-size: 1.8rem;
   margin-bottom: var(--spacing-sm);
-  color: var(--dark);
+  color: var(--light);
+  text-align: center;
 }
 
 .location-info p {
   margin-bottom: var(--spacing-sm);
-  color: var(--dark);
+  color: var(--light);
+  text-align: center;
 }
 
+/* Updated location-address to properly center content */
 .location-address {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   margin-top: var(--spacing-md);
   padding-top: var(--spacing-sm);
-  border-top: 1px solid var(--gray-light);
+  border-top: 1px solid var(--white);
+  text-align: center;
 }
 
 .location-address i {
   font-size: 2rem;
   color: var(--primary);
-  margin-right: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
 }
 
 .location-address h4 {
   margin-bottom: var(--spacing-xs);
-  color: var(--dark);
+  color: var(--light);
   font-weight: 600;
+  text-align: center;
 }
 
 .location-address p {
-  color: var(--dark);
+  color: var(--light);
+  text-align: center;
+}
+
+/* Responsive adjustments for location section */
+@media only screen and (max-width: 991px) {
+  .location-flex {
+    flex-direction: column;
+  }
+  
+  .location-map {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 600px;
+    height: 450px;
+    margin: 0 auto;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .location-info {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .location-map {
+    height: 350px;
+  }
 }
 
 /* ===== FOOTER ===== */
 .footer {
-  background-color: var(--dark);
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/cta-bg.jpg') center/cover no-repeat;
   color: var(--white);
   padding: var(--spacing-lg) 0;
+  border-top: 3px solid #000;
+  position: relative;
+  z-index: 1;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  overflow: hidden; /* Ensures the background stays within rounded corners */
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none; /* Allows clicks to pass through */
+  z-index: -1;
 }
 
 .footer-content {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: var(--spacing-md);
+  position: relative;
+  background-color: transparent;
 }
 
 .footer-logo {
   flex: 1 1 300px;
   margin-bottom: var(--spacing-md);
+  background-color: transparent;
 }
 
 .footer-logo h3 {
@@ -528,16 +634,18 @@ p {
   flex: 2 1 600px;
   display: flex;
   flex-wrap: wrap;
+  background-color: transparent;
 }
 
 .footer-column {
   flex: 1;
   min-width: 200px;
   margin-bottom: var(--spacing-md);
+  background-color: transparent;
 }
 
 .footer-column h4 {
-  color: var(--white);
+  color: var(--primary);
   margin-bottom: var(--spacing-sm);
   position: relative;
   padding-bottom: 10px;
@@ -555,6 +663,7 @@ p {
 
 .footer-column ul li {
   margin-bottom: 8px;
+  background-color: transparent;
 }
 
 .footer-column ul li a {
@@ -564,6 +673,10 @@ p {
 
 .footer-column ul li a:hover {
   color: var(--primary);
+}
+
+.contact-info li {
+  background-color: transparent;
 }
 
 .contact-info i {
@@ -578,6 +691,7 @@ p {
   justify-content: center;
   gap: var(--spacing-sm);
   margin-bottom: var(--spacing-md);
+  background-color: transparent;
 }
 
 .social-links a {
@@ -601,6 +715,7 @@ p {
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: var(--spacing-md);
+  background-color: transparent;
 }
 
 /* ===== BACK TO TOP BUTTON ===== */
@@ -634,6 +749,11 @@ p {
 }
 
 /* ===== HOME PAGE STYLES ===== */
+/* Add main background for home page content */
+.home-page {
+  background: url('../img/bg2.jpg') center/cover fixed no-repeat;
+}
+
 /* Video Background */
 .video-container {
   position: fixed;
@@ -663,6 +783,27 @@ p {
   width: 100%;
   height: 100%;
   background-color: var(--overlay-dark);
+}
+
+/* Ensure content sections with their own backgrounds render properly */
+.features, .location-section, .footer, .cta.dark-section {
+  position: relative; /* Create stacking context */
+  z-index: 1; /* Ensure they appear above the background */
+}
+
+/* Add a subtle gradient overlay where main content begins to improve transition */
+.home-page main::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  background: linear-gradient(to bottom, 
+                             var(--overlay-dark) 60%, 
+                             transparent 100%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Hero Section */
@@ -700,7 +841,7 @@ p {
 
 /* Features Section */
 .features {
-  background-color: var(--dark);
+  background-color: rgba(18, 18, 18, 0);
   padding: var(--spacing-xl) 0;
   color: var(--white);
 }
@@ -723,7 +864,7 @@ p {
   text-align: center;
   padding: var(--spacing-md);
   border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
   transition: transform var(--transition-med), box-shadow var(--transition-med);
 }
 
@@ -1261,7 +1402,7 @@ p {
 }
 
 .contact-info {
-  background-color: var(--white);
+  background-color: var(--dark);
   padding: var(--spacing-md);
   border-radius: 8px;
   box-shadow: var(--shadow-sm);
