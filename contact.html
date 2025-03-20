@@ -5,11 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Contact Casa Del Sol AZ to schedule a tour or inquire about hosting your event at our premier Arizona venue">
     <title>Contact Us | Casa Del Sol AZ</title>
+    
+    <!-- Critical CSS preloaded for faster rendering -->
+    <link rel="preload" href="css/style.css" as="style">
+    <link rel="preload" href="css/contact-form.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" as="style">
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/contact-form.css">
+    
+    <!-- Font optimization -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome optimized loading -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
 </head>
 <body class="contact-page">
     <div class="video-container">
@@ -64,7 +77,6 @@
     </header>
 
     <main>
-        <!-- Added Page Banner -->
         <section class="page-banner">
             <div class="container">
                 <h1></h1>
@@ -132,68 +144,86 @@
                             </div>
                         </div>
                         
+                        <!-- Enhanced Contact Form Container -->
                         <div id="contact-form" class="contact-form-container">
-<form id="contactForm" class="contact-form" action="#" method="post">
-    <input type="hidden" name="time" id="form_time">
-                            <h2>Inquire About Your Event</h2>
+                            <div class="form-header">
+                                <h2>Inquire About Your Event</h2>
+                                <div class="form-decoration"></div>
+                            </div>
+                            
                             <form id="contactForm" class="contact-form" action="#" method="post">
-                                <!-- Hidden timestamp field (properly placed) -->
                                 <input type="hidden" name="time" id="form_time">
                                 
                                 <div class="form-group">
-                                    <label for="name" class="floating-label">Name *</label>
-                                    <input type="text" id="name" name="name" required>
+                                    <input type="text" id="name" name="name" required autocomplete="name">
+                                    <label for="name" class="floating-label">Name <span class="required">*</span></label>
+                                    <div class="form-highlight"></div>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="email" class="floating-label">Email *</label>
-                                    <input type="email" id="email" name="email" required>
+                                    <input type="email" id="email" name="email" required autocomplete="email">
+                                    <label for="email" class="floating-label">Email <span class="required">*</span></label>
+                                    <div class="form-highlight"></div>
                                 </div>
                                 
                                 <div class="form-group">
+                                    <input type="tel" id="phone" name="phone" autocomplete="tel">
                                     <label for="phone" class="floating-label">Phone</label>
-                                    <input type="tel" id="phone" name="phone">
+                                    <div class="form-highlight"></div>
                                 </div>
                                 
                                 <div class="form-row">
                                     <div class="form-group half date-input">
                                         <label for="event-date">Event Date</label>
                                         <input type="date" id="event-date" name="event-date">
+                                        <div class="date-icon">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </div>
                                     </div>
                                     
                                     <div class="form-group half select-input">
                                         <label for="event-type">Event Type</label>
-                                        <select id="event-type" name="event-type">
-                                            <option value="" disabled selected hidden>Select event type...</option>
-                                            <option value="wedding">Wedding</option>
-                                            <option value="quinceanera">Quinceañera</option>
-                                            <option value="baptism">Baptism</option>
-                                            <option value="first-communion">First Communion</option>
-                                            <option value="confirmation">Confirmation Party</option>
-                                            <option value="birthday">Birthday Party</option>
-                                            <option value="anniversary">Anniversary</option>
-                                            <option value="graduation">Graduation</option>
-                                            <option value="engagement">Engagement Party</option>
-                                            <option value="bridal-shower">Bridal Shower</option>
-                                            <option value="baby-shower">Baby Shower</option>
-                                            <option value="corporate">Corporate Event</option>
-                                            <option value="memorial">Memorial Service</option>
-                                            <option value="other">Other</option>
-                                        </select>
+                                        <div class="select-wrapper">
+                                            <select id="event-type" name="event-type">
+                                                <option value="" disabled selected hidden>Select event type...</option>
+                                                <option value="wedding">Wedding</option>
+                                                <option value="quinceanera">Quinceañera</option>
+                                                <option value="baptism">Baptism</option>
+                                                <option value="first-communion">First Communion</option>
+                                                <option value="confirmation">Confirmation Party</option>
+                                                <option value="birthday">Birthday Party</option>
+                                                <option value="anniversary">Anniversary</option>
+                                                <option value="graduation">Graduation</option>
+                                                <option value="engagement">Engagement Party</option>
+                                                <option value="bridal-shower">Bridal Shower</option>
+                                                <option value="baby-shower">Baby Shower</option>
+                                                <option value="corporate">Corporate Event</option>
+                                                <option value="memorial">Memorial Service</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                            <div class="select-arrow">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="guests" class="floating-label">Estimated Guest Count</label>
                                     <input type="number" id="guests" name="guests" min="1">
+                                    <label for="guests" class="floating-label">Estimated Guest Count</label>
+                                    <div class="form-highlight"></div>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="message" class="floating-label">Message *</label>
                                     <textarea id="message" name="message" rows="5" required></textarea>
+                                    <label for="message" class="floating-label">Message <span class="required">*</span></label>
+                                    <div class="form-highlight"></div>
                                 </div>
                                 
-                                <button type="submit" class="btn btn-primary">Submit Inquiry</button>
+                                <button type="submit" class="btn btn-primary submit-button">
+                                    <span class="button-text">Submit Inquiry</span>
+                                    <span class="button-icon"><i class="fas fa-paper-plane"></i></span>
+                                </button>
                             </form>
                             
                             <div id="formSuccess" class="form-success hidden">
@@ -263,112 +293,241 @@
     <a href="#header" class="back-to-top" aria-label="Back to top">
         <i class="fas fa-chevron-up"></i>
     </a>
-	
-    <!-- Core site scripts with defer for performance -->
+    
+    <!-- Core scripts with performance optimization -->
     <script src="js/main.js" defer></script>
     <script src="js/header-scroll.js" defer></script>
     
-// EmailJS Integration - Highly optimized for speed
-(function() {
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize EmailJS
-        emailjs.init({
-            publicKey: "b3T2GoOXJmt08AM0y"
-        });
+    <!-- EmailJS library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+    <!-- Form handler with EmailJS integration -->
+    <script>
+    (function() {
+        // Preconnect to EmailJS domain for faster requests
+        const link = document.createElement('link');
+        link.rel = 'preconnect';
+        link.href = 'https://api.emailjs.com';
+        document.head.appendChild(link);
         
-        const contactForm = document.getElementById('contactForm');
-        const formSuccess = document.getElementById('formSuccess');
-        
-        if (!contactForm || !formSuccess) return;
-        
-        // Update hidden timestamp field
-        const formTime = document.getElementById('form_time');
-        if (formTime) {
-            formTime.value = new Date().toLocaleString('en-US');
-        }
-        
-        // Single form submission handler - more efficient
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Show processing state
-            const submitBtn = this.querySelector('button[type="submit"]');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner"></span>Processing...';
-            
-            // Send form data - using variable names that match the template
-            emailjs.send('service_vkdsa6d', 'template_q9f1rn2', {
-                user_name: document.getElementById('name').value,
-                user_email: document.getElementById('email').value,
-                user_phone: document.getElementById('phone').value || 'Not provided',
-                event_type: document.getElementById('event-type').value || 'Not specified',
-                event_date: document.getElementById('event-date').value || 'Not specified',
-                guests: document.getElementById('guests').value || 'Not specified',
-                message: document.getElementById('message').value,
-                time: formTime ? formTime.value : new Date().toLocaleString('en-US')
-            })
-            .then(function(response) {
-                console.log('SUCCESS!', response.status);
-                
-                // Show success message with optimized animations
-                contactForm.style.opacity = '0';
-                contactForm.style.transform = 'translateY(-20px)';
-                
-                setTimeout(function() {
-                    contactForm.style.display = 'none';
-                    formSuccess.classList.remove('hidden');
-                    
-                    requestAnimationFrame(function() {
-                        formSuccess.style.opacity = '1';
-                        formSuccess.style.transform = 'translateY(0)';
-                    });
-                }, 300);
-            })
-            .catch(function(error) {
-                console.error('EmailJS FAILED:', error);
-                alert('There was a problem sending your message. Please try again or contact us directly at (480) 123-4567.');
-                
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = 'Submit Inquiry';
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize EmailJS
+            emailjs.init({
+                publicKey: "b3T2GoOXJmt08AM0y"
             });
-        });
-        
-        // Reset form handler - Optimized for performance
-        const resetBtn = document.getElementById('resetForm');
-        if (resetBtn) {
-            resetBtn.addEventListener('click', function() {
-                formSuccess.style.opacity = '0';
-                formSuccess.style.transform = 'translateY(20px)';
+            
+            const contactForm = document.getElementById('contactForm');
+            const formSuccess = document.getElementById('formSuccess');
+            
+            if (!contactForm || !formSuccess) return;
+            
+            // Initialize form effects
+            initFormEffects();
+            
+            // Set current timestamp
+            const formTime = document.getElementById('form_time');
+            if (formTime) {
+                formTime.value = new Date().toLocaleString('en-US');
+            }
+            
+            // Form submission
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
                 
-                setTimeout(function() {
-                    formSuccess.classList.add('hidden');
-                    contactForm.reset();
+                // Validate form
+                if (!validateForm(this)) return;
+                
+                // Update button state
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const buttonText = submitBtn.querySelector('.button-text');
+                const buttonIcon = submitBtn.querySelector('.button-icon');
+                
+                submitBtn.disabled = true;
+                buttonText.textContent = 'Sending...';
+                buttonIcon.innerHTML = '<span class="spinner"></span>';
+                
+                // Prepare form data
+                const params = {
+                    user_name: document.getElementById('name').value,
+                    user_email: document.getElementById('email').value,
+                    user_phone: document.getElementById('phone').value || 'Not provided',
+                    event_type: document.getElementById('event-type').value || 'Not specified',
+                    event_date: document.getElementById('event-date').value || 'Not specified',
+                    guests: document.getElementById('guests').value || 'Not specified',
+                    message: document.getElementById('message').value,
+                    time: formTime ? formTime.value : new Date().toLocaleString('en-US')
+                };
+                
+                // Send with EmailJS
+                emailjs.send('service_vkdsa6d', 'template_q9f1rn2', params)
+                    .then(function() {
+                        // Show success message
+                        contactForm.classList.add('form-sent');
+                        
+                        setTimeout(function() {
+                            contactForm.style.display = 'none';
+                            formSuccess.classList.remove('hidden');
+                            
+                            requestAnimationFrame(function() {
+                                formSuccess.classList.add('show');
+                            });
+                        }, 600);
+                    })
+                    .catch(function(error) {
+                        console.error('EmailJS error:', error);
+                        alert('There was a problem sending your message. Please try again or contact us directly at (480) 123-4567.');
+                        
+                        // Reset button state
+                        submitBtn.disabled = false;
+                        buttonText.textContent = 'Submit Inquiry';
+                        buttonIcon.innerHTML = '<i class="fas fa-paper-plane"></i>';
+                    });
+            });
+            
+            // Reset form handler
+            const resetBtn = document.getElementById('resetForm');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    formSuccess.classList.remove('show');
                     
-                    // Update timestamp
-                    if (formTime) {
-                        formTime.value = new Date().toLocaleString('en-US');
-                    }
-                    
-                    // Efficiently reset form groups
-                    const formGroups = contactForm.querySelectorAll('.form-group');
-                    for (let i = 0; i < formGroups.length; i++) {
-                        formGroups[i].classList.remove('focused', 'has-value', 'has-error');
-                    }
-                    
-                    contactForm.style.display = 'block';
-                    
-                    requestAnimationFrame(function() {
-                        contactForm.style.opacity = '1';
-                        contactForm.style.transform = 'translateY(0)';
+                    setTimeout(function() {
+                        formSuccess.classList.add('hidden');
+                        contactForm.reset();
+                        
+                        // Update timestamp
+                        if (formTime) {
+                            formTime.value = new Date().toLocaleString('en-US');
+                        }
+                        
+                        // Reset form groups efficiently
+                        const formGroups = contactForm.querySelectorAll('.form-group');
+                        for (let i = 0; i < formGroups.length; i++) {
+                            formGroups[i].classList.remove('focused', 'has-value', 'has-error');
+                        }
+                        
+                        contactForm.style.display = 'block';
+                        contactForm.classList.remove('form-sent');
                         
                         const submitBtn = contactForm.querySelector('button[type="submit"]');
+                        const buttonText = submitBtn.querySelector('.button-text');
+                        const buttonIcon = submitBtn.querySelector('.button-icon');
+                        
                         submitBtn.disabled = false;
-                        submitBtn.innerHTML = 'Submit Inquiry';
+                        buttonText.textContent = 'Submit Inquiry';
+                        buttonIcon.innerHTML = '<i class="fas fa-paper-plane"></i>';
+                    }, 300);
+                });
+            }
+            
+            // Form validation function
+            function validateForm(form) {
+                const requiredFields = form.querySelectorAll('[required]');
+                let isValid = true;
+                
+                for (let i = 0; i < requiredFields.length; i++) {
+                    const field = requiredFields[i];
+                    const fieldGroup = field.closest('.form-group');
+                    
+                    if (!field.value.trim()) {
+                        fieldGroup.classList.add('has-error');
+                        isValid = false;
+                        
+                        // Add error message if needed
+                        if (!fieldGroup.querySelector('.error-message')) {
+                            const errorMsg = document.createElement('div');
+                            errorMsg.className = 'error-message';
+                            errorMsg.textContent = 'This field is required';
+                            fieldGroup.appendChild(errorMsg);
+                        }
+                    } else {
+                        fieldGroup.classList.remove('has-error');
+                        const errorMsg = fieldGroup.querySelector('.error-message');
+                        if (errorMsg) errorMsg.remove();
+                    }
+                }
+                
+                if (!isValid) {
+                    // Focus first invalid field
+                    form.querySelector('.has-error input, .has-error textarea').focus();
+                }
+                
+                return isValid;
+            }
+            
+            // Initialize form effects
+            function initFormEffects() {
+                const inputs = document.querySelectorAll('.form-group input, .form-group textarea, .form-group select');
+                
+                // Set initial state for inputs with values
+                inputs.forEach(input => {
+                    if (input.value) {
+                        input.parentElement.classList.add('has-value');
+                    }
+                    
+                    // Focus event
+                    input.addEventListener('focus', function() {
+                        this.parentElement.classList.add('focused');
                     });
-                }, 300);
-            });
-        }
-    });
-})();
+                    
+                    // Blur event
+                    input.addEventListener('blur', function() {
+                        this.parentElement.classList.remove('focused');
+                        
+                        if (this.value) {
+                            this.parentElement.classList.add('has-value');
+                        } else {
+                            this.parentElement.classList.remove('has-value');
+                        }
+                        
+                        // Validate required fields
+                        if (this.hasAttribute('required')) {
+                            const fieldGroup = this.closest('.form-group');
+                            
+                            if (!this.value.trim()) {
+                                fieldGroup.classList.add('has-error');
+                                
+                                if (!fieldGroup.querySelector('.error-message')) {
+                                    const errorMsg = document.createElement('div');
+                                    errorMsg.className = 'error-message';
+                                    errorMsg.textContent = 'This field is required';
+                                    fieldGroup.appendChild(errorMsg);
+                                }
+                            } else {
+                                fieldGroup.classList.remove('has-error');
+                                const errorMsg = fieldGroup.querySelector('.error-message');
+                                if (errorMsg) errorMsg.remove();
+                            }
+                        }
+                    });
+                    
+                    // Input validation
+                    input.addEventListener('input', function() {
+                        if (this.hasAttribute('required')) {
+                            const fieldGroup = this.closest('.form-group');
+                            
+                            if (this.value.trim()) {
+                                fieldGroup.classList.remove('has-error');
+                                const errorMsg = fieldGroup.querySelector('.error-message');
+                                if (errorMsg) errorMsg.remove();
+                            }
+                        }
+                    });
+                });
+                
+                // Submit button hover effects
+                const submitButton = document.querySelector('.submit-button');
+                if (submitButton) {
+                    submitButton.addEventListener('mouseover', function() {
+                        this.classList.add('hover');
+                    });
+                    
+                    submitButton.addEventListener('mouseout', function() {
+                        this.classList.remove('hover');
+                    });
+                }
+            }
+        });
+    })();
+    </script>
 </body>
 </html>
