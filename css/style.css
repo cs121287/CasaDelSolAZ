@@ -1110,9 +1110,16 @@ p {
   color: var(--light);
 }
 /* ===== ABOUT PAGE STYLES ===== */
+/* Main background for about page */
+.about-page {
+  background: url('../img/bg2.jpg') center/cover fixed no-repeat;
+}
+
 /* About Intro */
 .about-intro {
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-lg) 0;
+  text-align: center;
+  color: var(--white);
 }
 
 .about-grid {
@@ -1120,23 +1127,30 @@ p {
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-lg);
   align-items: center;
+  text-align: left;
 }
 
 .about-image img {
   border-radius: 8px;
-  box-shadow: var(--shadow-md);
+  box-shadow: 
+    0 0 0 2px rgba(0, 0, 0, 1),
+    0 0 8px 2px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: auto;
 }
 
-.about-content h2 {
-  margin-bottom: var(--spacing-md);
+.about-content p {
+  color: var(--light);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
 }
 
 /* Story Section */
 .story-section {
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('../img/venue-3.jpg') center/cover no-repeat;
-  background-attachment: fixed;
-  color: var(--white);
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-lg) 0;
+  background-color: transparent;
+  position: relative;
 }
 
 .story-section .section-title {
@@ -1144,34 +1158,47 @@ p {
 }
 
 .story-content {
-  max-width: 800px;
-  margin: 0 auto;
-  background-color: var(--overlay-dark);
-  padding: var(--spacing-md);
-  border-radius: 8px;
+  color: var(--light);
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+.story-content p {
+  margin-bottom: 1.5rem;
 }
 
 /* Team Section */
 .team-section {
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-lg) 0;
+  background-color: transparent;
+}
+
+.team-section .section-title {
+  color: var(--white);
 }
 
 .team-members {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md);
 }
 
 .team-member {
   text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: var(--spacing-md);
+  border-radius: 8px;
+  box-shadow: 
+    0 0 0 1px rgba(0, 0, 0, 1),
+    0 0 5px 1px rgba(0, 0, 0, 0.6);
 }
 
 .team-image {
-  width: 200px;
-  height: 200px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   overflow: hidden;
-  margin: 0 auto var(--spacing-md);
+  margin: 0 auto var(--spacing-sm);
   border: 3px solid var(--primary);
 }
 
@@ -1181,18 +1208,25 @@ p {
   object-fit: cover;
 }
 
+.team-info h3 {
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+
 .team-title {
   color: var(--primary);
   font-weight: 600;
   margin-bottom: var(--spacing-xs);
 }
 
+.team-info p {
+  color: var(--light);
+}
+
 /* Facilities Section */
 .facilities {
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../img/venue-1.jpg') center/cover no-repeat;
-  background-attachment: fixed;
-  color: var(--white);
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-lg) 0;
+  background-color: transparent;
 }
 
 .facilities .section-title {
@@ -1206,17 +1240,19 @@ p {
 }
 
 .facility {
-  background-color: var(--overlay-light);
+  background-color: rgba(255, 255, 255, 0.9);
   padding: var(--spacing-md);
   border-radius: 8px;
   text-align: center;
   color: var(--dark);
-  transition: transform var(--transition-med), box-shadow var(--transition-med);
+  transition: transform var(--transition-med);
+  box-shadow: 
+    0 0 0 1px rgba(0, 0, 0, 1),
+    0 0 5px 1px rgba(0, 0, 0, 0.6);
 }
 
 .facility:hover {
   transform: translateY(-10px);
-  box-shadow: var(--shadow-md);
 }
 
 .facility-icon {
@@ -1225,6 +1261,31 @@ p {
   margin-bottom: var(--spacing-sm);
 }
 
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .about-image {
+    grid-row: 1;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .about-content {
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-members {
+    grid-template-columns: 1fr;
+  }
+  
+  .facilities-grid {
+    grid-template-columns: 1fr;
+  }
+}
 /* ===== SERVICES PAGE STYLES ===== */
 .services-page {
   background: url('../img/bg2.jpg') center/cover fixed no-repeat;
