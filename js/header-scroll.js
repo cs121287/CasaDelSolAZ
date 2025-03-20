@@ -1,9 +1,9 @@
 /**
  * Casa Del Sol AZ - Enhanced Header Scroll Effect
- * Version: 2.2.0
+ * Version: 2.3.0
  * Features:
  * - Transparent header on index.html fades to background image when scrolling down
- * - Header hides when scrolling down and shows when scrolling up
+ * - Header hides when scrolling up and shows when scrolling down (reversed behavior)
  * - Smooth transitions between all states
  */
 document.addEventListener('DOMContentLoaded', function() {
@@ -45,29 +45,29 @@ document.addEventListener('DOMContentLoaded', function() {
             header.classList.remove('header-hidden');
             header.classList.add('header-visible');
             
-            // Reset header styles when at top
+            // Reset header styles when at top - ensure proper fade out
             if (header.classList.contains('transparent')) {
-                header.classList.remove('header-scrolled');
                 header.classList.remove('scrolled');
             } else {
                 header.classList.remove('scrolled');
             }
         } 
         else {
-            // Apply scrolled styles
+            // Apply scrolled styles with slow fade in
             if (header.classList.contains('transparent')) {
-                header.classList.add('header-scrolled');
+                header.classList.add('scrolled');
             } else {
                 header.classList.add('scrolled');
             }
             
-            // When scrolling down far enough, hide header
+            // REVERSED BEHAVIOR: Hide when scrolling up, show when scrolling down
             if (scrollTop > 200) {
-                if (isScrollingDown && !header.classList.contains('menu-open')) {
+                if (!isScrollingDown && !header.classList.contains('menu-open')) {
+                    // Scrolling UP - hide header
                     header.classList.add('header-hidden');
                     header.classList.remove('header-visible');
-                } else if (!isScrollingDown) {
-                    // When scrolling up, show header
+                } else if (isScrollingDown) {
+                    // Scrolling DOWN - show header
                     header.classList.remove('header-hidden');
                     header.classList.add('header-visible');
                 }
