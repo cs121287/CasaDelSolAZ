@@ -198,13 +198,13 @@
                                 <div class="form-row">
                                     <div class="form-group half date-input">
                                         <label for="event-date">Event Date</label>
-                                        <input type="date" id="event-date" name="event-date">
+                                        <input type="date" id="event-date" name="event-date" style="color: rgba(0, 0, 0, 0.6);">
                                     </div>
                                     
                                     <div class="form-group half select-input">
                                         <label for="event-type">Event Type</label>
                                         <div class="select-wrapper">
-                                            <select id="event-type" name="event-type">
+                                            <select id="event-type" name="event-type" style="color: rgba(0, 0, 0, 0.6);">
                                                 <option value="" disabled selected hidden>Select event type...</option>
                                                 <option value="wedding">Wedding</option>
                                                 <option value="quinceanera">Quinceañera</option>
@@ -404,6 +404,12 @@
                         if (dateContainer) dateContainer.classList.remove('has-value');
                         if (selectContainer) selectContainer.classList.remove('has-value');
                         
+                        // Reset input colors for date and select
+                        const dateInput = document.getElementById('event-date');
+                        const selectInput = document.getElementById('event-type');
+                        if (dateInput) dateInput.style.color = 'rgba(0, 0, 0, 0.6)';
+                        if (selectInput) selectInput.style.color = 'rgba(0, 0, 0, 0.6)';
+                        
                         contactForm.style.display = 'block';
                         contactForm.classList.remove('form-sent');
                         
@@ -428,14 +434,28 @@
                     // Set initial state if date has value
                     if (dateInput.value) {
                         dateContainer.classList.add('has-value');
+                        dateInput.style.color = 'var(--form-text)';
                     }
                     
                     // Add change event listener
                     dateInput.addEventListener('change', function() {
                         if (this.value) {
                             dateContainer.classList.add('has-value');
+                            this.style.color = 'var(--form-text)';
                         } else {
                             dateContainer.classList.remove('has-value');
+                            this.style.color = 'rgba(0, 0, 0, 0.6)';
+                        }
+                    });
+                    
+                    // Also handle the input event for better responsiveness
+                    dateInput.addEventListener('input', function() {
+                        if (this.value) {
+                            dateContainer.classList.add('has-value');
+                            this.style.color = 'var(--form-text)';
+                        } else {
+                            dateContainer.classList.remove('has-value');
+                            this.style.color = 'rgba(0, 0, 0, 0.6)';
                         }
                     });
                 }
@@ -448,14 +468,17 @@
                     // Set initial state if select has value
                     if (selectInput.value && selectInput.value !== '') {
                         selectContainer.classList.add('has-value');
+                        selectInput.style.color = 'var(--form-text)';
                     }
                     
                     // Add change event listener
                     selectInput.addEventListener('change', function() {
                         if (this.value && this.value !== '') {
                             selectContainer.classList.add('has-value');
+                            this.style.color = 'var(--form-text)';
                         } else {
                             selectContainer.classList.remove('has-value');
+                            this.style.color = 'rgba(0, 0, 0, 0.6)';
                         }
                     });
                 }
