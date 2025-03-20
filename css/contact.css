@@ -1,40 +1,37 @@
 /*
  * Casa Del Sol AZ - Contact Page Styles
- * Version: 3.0.1
- * Description: Specific styles for the contact page
+ * Version: 3.1.0
+ * Description: Specific styles for the contact page with optimized layout
  */
 
 .contact-page {
   background: url('../img/bg2.jpg') center/cover fixed no-repeat;
+  contain: paint; /* Optimize paint operations */
 }
 
+/* Contact Info Section Styles */
 .contact-info-section {
   padding: var(--spacing-lg) 0;
   color: var(--white);
+  contain: content; /* Performance optimization */
 }
 
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: var(--spacing-lg);
-  align-items: stretch; /* Changed from 'start' to 'stretch' to make heights equal */
-  contain: layout style; /* Performance optimization */
+.contact-info-container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .contact-info {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
   padding: var(--spacing-lg);
   border-radius: 8px;
-  /* Replaced border with optimized box-shadow for fade effect */
   box-shadow: 
     0 0 0 2px rgba(0, 0, 0, 1),
     0 0 5px 3px rgba(0, 0, 0, 0.7),
     0 0 10px 3px rgba(0, 0, 0, 0.4),
     0 0 15px 3px rgba(0, 0, 0, 0.1);
   color: var(--light);
-  display: flex;  /* Added flex display */
-  flex-direction: column; /* Stack children vertically */
-  justify-content: space-between; /* Distribute content evenly */
+  margin-bottom: var(--spacing-lg);
 }
 
 .contact-info p {
@@ -42,11 +39,22 @@
   font-size: 1.1rem;
   line-height: 1.7;
   margin-bottom: 1.5rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Info Items Grid Layout */
+.info-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
 }
 
 .info-item {
   display: flex;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
 }
 
 .info-item .icon {
@@ -74,7 +82,8 @@
 }
 
 .social-connect {
-  margin-top: var(--spacing-lg);
+  text-align: center;
+  margin-top: var(--spacing-md);
 }
 
 .social-connect h3 {
@@ -86,6 +95,7 @@
 .social-icons {
   display: flex;
   gap: var(--spacing-sm);
+  justify-content: center;
 }
 
 .social-icons a {
@@ -97,7 +107,7 @@
   border-radius: 50%;
   background-color: var(--primary);
   color: var(--white);
-  transition: all var(--transition-fast);
+  transition: transform var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
   will-change: transform; /* Hardware acceleration hint */
 }
 
@@ -108,7 +118,11 @@
   color: var(--primary);
 }
 
-/* Added styles to match contact form with contact info */
+/* Contact Form Section Styles */
+.contact-form-section {
+  padding: 0 0 var(--spacing-lg) 0;
+}
+
 .contact-form-container {
   background-color: var(--form-bg);
   border-radius: 8px;
@@ -120,35 +134,100 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  transform: translateZ(0); /* Performance optimization */
+  transform: translateZ(0); /* Force GPU acceleration */
   overflow: hidden;
-  height: 100%; /* Ensure full height */
+  max-width: 800px;
+  margin: 0 auto;
+  contain: layout style; /* Optimize rendering */
 }
 
-/* Make sure the form takes available space */
-.contact-form {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Success message container should also fill space */
+/* Success message container */
 .form-success {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding: 2rem;
+  text-align: center;
 }
 
-/* Responsive adjustments */
+/* Optimize form inputs for performance */
+.date-input input[type="date"],
+.select-input select {
+  backface-visibility: hidden; /* Prevent paint flicker */
+  transform: translateZ(0); /* Force GPU acceleration */
+}
+
+/* High-performance loading indicator */
+.spinner {
+  will-change: transform; /* Optimize rotation animation */
+}
+
+/* Mobile optimizations */
 @media (max-width: 992px) {
-  .contact-grid {
+  .info-items-grid {
     grid-template-columns: 1fr;
   }
+}
+
+@media (max-width: 768px) {
+  .contact-info, 
+  .contact-form-container {
+    padding: var(--spacing-md);
+  }
   
-  .contact-form-container,
-  .contact-info {
-    height: auto;
+  .contact-info-section,
+  .contact-form-section {
+    padding: var(--spacing-md) 0;
+  }
+  
+  .info-item {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .info-item .icon {
+    flex: 0 0 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-info p {
+    font-size: 1rem;
+  }
+  
+  .info-item .details h3 {
+    font-size: 1.1rem;
+  }
+  
+  .contact-form-container {
+    border-radius: 6px;
+  }
+  
+  .info-items-grid {
+    gap: var(--spacing-sm);
+  }
+}
+
+/* Print styles - optimize for paper printing */
+@media print {
+  .contact-info,
+  .contact-form-container {
+    box-shadow: none;
+    background: white !important;
+    color: black !important;
+  }
+  
+  .info-item .icon {
+    background-color: transparent;
+    border: 1px solid black;
+    color: black;
+  }
+  
+  .contact-info p,
+  .info-item .details p,
+  .info-item .details h3 {
+    color: black !important;
   }
 }
