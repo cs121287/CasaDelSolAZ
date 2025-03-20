@@ -8,31 +8,53 @@
   background: url('../img/bg2.jpg') center/cover fixed no-repeat;
 }
 
-.about-intro {
-  padding: var(--spacing-xl) 0 var(--spacing-lg);
-  text-align: center;
-}
-
-.about-intro h2 {
-  color: var(--white);
-  font-size: 2.5rem;
-  margin-bottom: var(--spacing-md);
-}
-
-.about-intro p {
-  color: var(--light);
-  max-width: 800px;
-  margin: 0 auto;
-  font-size: 1.2rem;
-  line-height: 1.8;
-}
-
-/* About story section */
-.about-story {
-  padding: var(--spacing-lg) 0;
-}
-
+/* About container - replaces services-container */
 .about-container {
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0);
+  text-align: center;
+  contain: content; /* Performance optimization */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* About title - replaces services-title */
+.about-title {
+  font-size: 1.8rem;
+  margin-bottom: var(--spacing-md);
+  color: var(--white);
+  position: relative;
+  padding-bottom: 15px;
+  display: inline-block;
+}
+
+.about-title:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background-color: var(--primary);
+}
+
+/* Story container styles */
+.story-container {
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
+  box-shadow: 
+    0 0 0 2px rgba(0, 0, 0, 1),
+    0 0 8px 2px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Team container styles */
+.team-container {
   padding: var(--spacing-lg);
   border-radius: 8px;
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
@@ -41,154 +63,281 @@
     0 0 8px 2px rgba(0, 0, 0, 0.6);
   max-width: 1200px;
   margin: 0 auto;
+}
+
+/* About Intro */
+.about-intro {
+  padding: var(--spacing-lg) 0;
+  text-align: center;
   color: var(--white);
 }
 
 .about-grid {
   display: grid;
+    border-radius: 8px;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
+  box-shadow: 
+    0 0 0 2px rgba(0, 0, 0, 1),
+    0 0 8px 2px rgba(0, 0, 0, 0.6);
   grid-template-columns: 1fr 1fr;
-  grid-gap: var(--spacing-lg);
+  gap: var(--spacing-lg);
   align-items: center;
+  text-align: left-enter;
 }
 
+/* ===== IMAGE ZOOM FEATURE ===== */
 .about-image {
-  border-radius: 8px;
+  position: relative;
+  cursor: zoom-in;
   overflow: hidden;
-  box-shadow: var(--shadow-md);
+  border-radius: 8px;
 }
 
-.about-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.about-content h3 {
+.about-image::before {
+  content: "\f00e"; /* Magnifying glass icon from Font Awesome */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
   color: var(--primary);
-  font-size: 2rem;
-  margin-bottom: var(--spacing-sm);
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.about-image:hover::before {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Lightbox/modal for enlarged image */
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  overflow: auto; /* Enable scrolling for large images */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: opacity; /* Hardware acceleration hint */
+}
+
+.image-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.modal-image {
+  max-width: none; /* Remove width constraint */
+  width: auto; /* Auto width for full resolution */
+  height: auto; /* Auto height for full resolution */
+  object-fit: contain;
+  display: block;
+  border-radius: 4px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  margin: auto; /* Center the image */
+}
+
+.modal-close {
+  position: fixed; /* Fixed position to stay visible when scrolling */
+  top: 20px;
+  right: 20px;
+  color: var(--white);
+  font-size: 24px;
+  background-color: rgba(0, 0, 0, 0.5); /* Background for better visibility */
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  z-index: 10;
+}
+
+.modal-close:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: var(--primary);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 20px;
+  }
+  
+  .modal-close {
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
 }
 
 .about-content p {
-  margin-bottom: var(--spacing-md);
+  color: var(--light);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+}
+
+/* Story Section */
+.story-section {
+  padding: var(--spacing-lg) 0;
+  background-color: transparent;
+  position: relative;
+}
+
+.story-section .section-title {
+  color: var(--white);
+}
+
+.story-content {
+  color: var(--light);
   line-height: 1.8;
+  font-size: 1.1rem;
 }
 
-/* Team section */
+.story-content p {
+  margin-bottom: 1.5rem;
+}
+
+/* Team Section */
 .team-section {
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-lg) 0;
+  background-color: transparent;
 }
 
-.team-container {
-  max-width: 1200px;
-  margin: 0 auto;
+.team-section .section-title {
+  color: var(--white);
 }
 
-.team-grid {
+.team-members {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: var(--spacing-md);
-  margin-top: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-md);
 }
 
 .team-member {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
   text-align: center;
-  padding-bottom: var(--spacing-sm);
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: var(--spacing-md);
+  border-radius: 8px;
+  box-shadow: 
+    0 0 0 1px rgba(0, 0, 0, 1),
+    0 0 5px 1px rgba(0, 0, 0, 0.6);
 }
 
 .team-image {
-  width: 100%;
-  height: 300px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
   overflow: hidden;
+  margin: 0 auto var(--spacing-sm);
+  border: 3px solid var(--primary);
 }
 
 .team-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
 }
 
-.team-member:hover .team-image img {
-  transform: scale(1.05);
+.team-info h3 {
+  color: var(--white);
+  margin-bottom: 0.3rem;
 }
 
-.team-info {
-  padding: var(--spacing-sm);
-}
-
-.team-name {
+.team-title {
   color: var(--primary);
-  font-size: 1.5rem;
-  margin-bottom: 0.25rem;
-}
-
-.team-role {
-  color: var(--light);
-  font-size: 0.9rem;
-  opacity: 0.8;
+  font-weight: 600;
   margin-bottom: var(--spacing-xs);
 }
 
-.team-bio {
+.team-info p {
+  color: var(--light);
+}
+
+/* Facilities Section */
+.facilities {
+  padding: var(--spacing-lg) 0;
+  background-color: transparent;
+}
+
+.facilities .section-title {
   color: var(--white);
-  font-size: 0.95rem;
-  line-height: 1.6;
 }
 
-/* Values section */
-.values-section {
-  padding: var(--spacing-xl) 0;
-}
-
-.values-grid {
+.facilities-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  grid-gap: var(--spacing-md);
-  margin-top: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-md);
 }
 
-.value-item {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
+.facility {
+  background-color: rgba(255, 255, 255, 0.9);
   padding: var(--spacing-md);
   border-radius: 8px;
-  box-shadow: var(--shadow-md);
   text-align: center;
+  color: var(--dark);
+  transition: transform var(--transition-med);
+  box-shadow: 
+    0 0 0 1px rgba(0, 0, 0, 1),
+    0 0 5px 1px rgba(0, 0, 0, 0.6);
 }
 
-.value-icon {
+.facility:hover {
+  transform: translateY(-10px);
+}
+
+.facility-icon {
   font-size: 2.5rem;
   color: var(--primary);
   margin-bottom: var(--spacing-sm);
 }
 
-.value-title {
-  color: var(--white);
-  font-size: 1.5rem;
-  margin-bottom: var(--spacing-xs);
-}
-
-.value-text {
-  color: var(--light);
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
+/* Responsive adjustments */
+@media (max-width: 992px) {
   .about-grid {
     grid-template-columns: 1fr;
   }
   
   .about-image {
+    grid-row: 1;
     margin-bottom: var(--spacing-md);
   }
   
-  .team-grid, .values-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  .about-content {
+    grid-row: 2;
   }
 }
