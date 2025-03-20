@@ -5,8 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn about Casa Del Sol AZ - Arizona's premier event venue with stunning views, elegant spaces, and exceptional service">
     <title>About Us | Casa Del Sol AZ</title>
+    
+    <!-- Core CSS -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Component CSS -->
+    <link rel="stylesheet" href="css/components/header.css">
+    <link rel="stylesheet" href="css/components/footer.css">
+    <link rel="stylesheet" href="css/components/common.css">
+    
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="css/about.css">
+    
+    <!-- Responsive CSS (load last to ensure it overrides other styles) -->
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- External CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
@@ -63,6 +80,28 @@
                 </button>
             </div>
         </div>
+        
+        <!-- Mobile Menu Overlay Container -->
+        <div class="mobile-menu-container">
+            <div class="mobile-menu-content">
+                <nav class="mobile-nav">
+                    <ul class="nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Our Services</a></li>
+                        <li><a href="about.html" class="active">About Us</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <!-- Mobile section links -->
+                <div class="section-links">
+                    <a href="#about-intro" class="section-link">Our Background</a>
+                    <a href="#our-story" class="section-link">Our Story</a>
+                    <a href="#team" class="section-link">Our Team</a>
+                    <a href="#contact-cta" class="section-link">Book a Tour</a>
+                </div>
+            </div>
+        </div>
     </header>
 
     <main>
@@ -75,8 +114,8 @@
 
         <section id="about-intro" class="about-intro">
             <div class="container">
-                <div class="services-container">
-                    <h2 class="services-title">Arizona's Premier Event Venue</h2>
+                <div class="about-container">
+                    <h2 class="about-title">Arizona's Premier Event Venue</h2>
                     <div class="about-grid">
                         <div class="about-content">
                             <p>Casa Del Sol is more than just an event venue—it's a destination where memories are created and dreams come to life. Nestled in the beautiful landscape of Goodyear, Arizona, our venue combines stunning natural beauty with elegant design and exceptional service.</p>
@@ -94,7 +133,7 @@
         <section id="our-story" class="story-section">
             <div class="container">
                 <h2 class="section-title">Our Story</h2>
-                <div class="services-container">
+                <div class="story-container">
                     <div class="story-content">
                         <p>The journey of Casa Del Sol began with a vision to create an event space that would showcase the natural beauty of Arizona while providing world-class amenities for celebrations of all kinds. Our founders, drawn to the spectacular mountain views and vibrant sunsets of Goodyear, knew this was the perfect location.</p>
                         <p>After extensive renovations and thoughtful design work, Casa Del Sol opened in spring 2020, quickly becoming one of the region's most sought-after venues despite the challenges of opening during an unprecedented time. Our resilience and dedication to our clients' safety and satisfaction has only strengthened our resolve to create exceptional events.</p>
@@ -107,7 +146,7 @@
         <section id="team" class="team-section">
             <div class="container">
                 <h2 class="section-title">Meet Our Team</h2>
-                <div class="services-container">
+                <div class="team-container">
                     <div class="team-members">
                         <div class="team-member">
                             <div class="team-image">
@@ -165,30 +204,30 @@
         </div>
     </div>
 
- <footer class="footer">
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-logo">
-        <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="120" height="48">
-        <p>Where Memories Are Made</p>
-      </div>
-    </div>
-    <div class="footer-social">
-      <p class="social-heading">Follow Us On Instagram and TikTok</p>
-      <div class="social-links">
-        <a href="https://www.instagram.com/casadelsol_events/" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://www.tiktok.com/@casa.del.sol.events" target="_blank" rel="noopener" aria-label="Follow us on TikTok">
-          <i class="fab fa-tiktok"></i>
-        </a>
-      </div>
-    </div>
-    <div class="copyright">
-      <p>&copy; 2025 Casa Del Sol AZ. All Rights Reserved.</p>
-    </div>
-  </div>
-</footer>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="120" height="48">
+                    <p>Where Memories Are Made</p>
+                </div>
+            </div>
+            <div class="footer-social">
+                <p class="social-heading">Follow Us On Instagram and TikTok</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/casadelsol_events/" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@casa.del.sol.events" target="_blank" rel="noopener" aria-label="Follow us on TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Casa Del Sol AZ. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <a href="#header" class="back-to-top" aria-label="Back to top">
         <i class="fas fa-chevron-up"></i>
@@ -197,7 +236,6 @@
     <!-- Scripts at end of body for faster page load -->
     <script src="js/main.js" defer></script>
     <script src="js/header-scroll.js" defer></script>
-	<script src="js/image-zoom.js" defer></script>
-   
+    <script src="js/image-zoom.js" defer></script>
 </body>
 </html>
