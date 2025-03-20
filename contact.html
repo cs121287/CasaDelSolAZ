@@ -6,23 +6,13 @@
     <meta name="description" content="Contact Casa Del Sol AZ to schedule a tour or inquire about hosting your event at our premier Arizona venue">
     <title>Contact Us | Casa Del Sol AZ</title>
     
-    <!-- Critical CSS preloaded for faster rendering -->
-    <link rel="preload" href="css/style.css" as="style">
-    <link rel="preload" href="css/contact-form.css" as="style">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" as="style">
-    
-    <!-- Stylesheets -->
+    <!-- Optimized CSS loading -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/contact-form.css">
-    
-    <!-- Font optimization -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome optimized loading -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="contact-page">
     <div class="video-container">
@@ -176,9 +166,6 @@
                                     <div class="form-group half date-input">
                                         <label for="event-date">Event Date</label>
                                         <input type="date" id="event-date" name="event-date">
-                                        <div class="date-icon">
-                                            <i class="fas fa-calendar-alt"></i>
-                                        </div>
                                     </div>
                                     
                                     <div class="form-group half select-input">
@@ -270,7 +257,7 @@
                     </div>
                     <div class="footer-column">
                         <h4>Contact Us</h4>
-                        <ul class="contact-info">
+						<ul class="footer-contact-list">
                             <li><i class="fas fa-map-marker-alt"></i> 18401 W Moreland St, Goodyear, AZ 85338</li>
                             <li><i class="fas fa-phone"></i> (480) 123-4567</li>
                             <li><i class="fas fa-envelope"></i> info@casadesolaz.com</li>
@@ -304,12 +291,6 @@
     <!-- Form handler with EmailJS integration -->
     <script>
     (function() {
-        // Preconnect to EmailJS domain for faster requests
-        const link = document.createElement('link');
-        link.rel = 'preconnect';
-        link.href = 'https://api.emailjs.com';
-        document.head.appendChild(link);
-        
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize EmailJS
             emailjs.init({
@@ -323,6 +304,9 @@
             
             // Initialize form effects
             initFormEffects();
+            
+            // Initialize date and select handlers
+            initDateAndSelectHandlers();
             
             // Set current timestamp
             const formTime = document.getElementById('form_time');
@@ -399,11 +383,17 @@
                             formTime.value = new Date().toLocaleString('en-US');
                         }
                         
-                        // Reset form groups efficiently
+                        // Reset form groups
                         const formGroups = contactForm.querySelectorAll('.form-group');
                         for (let i = 0; i < formGroups.length; i++) {
                             formGroups[i].classList.remove('focused', 'has-value', 'has-error');
                         }
+                        
+                        // Also reset date and select containers
+                        const dateContainer = document.querySelector('.date-input');
+                        const selectContainer = document.querySelector('.select-input');
+                        if (dateContainer) dateContainer.classList.remove('has-value');
+                        if (selectContainer) selectContainer.classList.remove('has-value');
                         
                         contactForm.style.display = 'block';
                         contactForm.classList.remove('form-sent');
@@ -417,6 +407,49 @@
                         buttonIcon.innerHTML = '<i class="fas fa-paper-plane"></i>';
                     }, 300);
                 });
+            }
+            
+            // Handle has-value class for date and select inputs
+            function initDateAndSelectHandlers() {
+                // Date input value handler
+                const dateInput = document.getElementById('event-date');
+                if (dateInput) {
+                    const dateContainer = dateInput.closest('.date-input');
+                    
+                    // Set initial state if date has value
+                    if (dateInput.value) {
+                        dateContainer.classList.add('has-value');
+                    }
+                    
+                    // Add change event listener
+                    dateInput.addEventListener('change', function() {
+                        if (this.value) {
+                            dateContainer.classList.add('has-value');
+                        } else {
+                            dateContainer.classList.remove('has-value');
+                        }
+                    });
+                }
+                
+                // Select input value handler
+                const selectInput = document.getElementById('event-type');
+                if (selectInput) {
+                    const selectContainer = selectInput.closest('.select-input');
+                    
+                    // Set initial state if select has value
+                    if (selectInput.value && selectInput.value !== '') {
+                        selectContainer.classList.add('has-value');
+                    }
+                    
+                    // Add change event listener
+                    selectInput.addEventListener('change', function() {
+                        if (this.value && this.value !== '') {
+                            selectContainer.classList.add('has-value');
+                        } else {
+                            selectContainer.classList.remove('has-value');
+                        }
+                    });
+                }
             }
             
             // Form validation function
