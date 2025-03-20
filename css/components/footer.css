@@ -8,7 +8,7 @@
   background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0)), url('../../img/cta-bg.jpg') center/cover no-repeat;
   color: var(--white);
   padding: var(--spacing-sm) 0;
-  border-top: 3px solid #000;
+  border-top: 2px solid #000;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   overflow: hidden;

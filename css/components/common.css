@@ -139,15 +139,15 @@
 .location-flex {
   display: flex;
   gap: var(--spacing-lg);
-  align-items: stretch;
+  align-items: stretch; /* Changed from center to stretch for equal height */
   max-width: 1200px;
   margin: 0 auto;
-  contain: content; /* Performance optimization */
 }
 
+/* Increased map size to match text container */
 .location-map {
-  flex: 0 0 500px;
-  min-height: 480px;
+  flex: 0 0 500px; /* Increased from 450px */
+  min-height: 480px; /* Set minimum height to ensure proper display */
 }
 
 .map-container {
@@ -155,11 +155,13 @@
   height: 100%;
   border-radius: 8px;
   overflow: hidden;
+  /* Replaced border with optimized fading shadow effect */
   box-shadow: 
     0 0 0 2px rgba(0, 0, 0, 1),
     0 0 4px 3px rgba(0, 0, 0, 0.7),
     0 0 8px 3px rgba(0, 0, 0, 0.4),
     0 0 12px 3px rgba(0, 0, 0, 0.1);
+  /* Border removed for better performance */
 }
 
 .location-info {
@@ -168,14 +170,16 @@
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../../img/wood-bg.jpg') center/cover no-repeat;
   color: #000;
   border-radius: 8px;
+  /* Replaced border with optimized fading shadow effect */
   box-shadow: 
     0 0 0 2px rgba(0, 0, 0, 1),
     0 0 4px 3px rgba(0, 0, 0, 0.7),
     0 0 8px 3px rgba(0, 0, 0, 0.4),
     0 0 12px 3px rgba(0, 0, 0, 0.1);
+  /* Border removed for better performance */
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-direction: column; /* Ensure content fills the container height */
+  justify-content: space-between; /* Distribute content evenly */
 }
 
 .location-info h3 {
