@@ -22,7 +22,7 @@
 
 /* Form Container */
 .contact-form-container {
-  background-color: var(--form-bg);
+  background-color: var(--dark);
   border-radius: 12px;
   box-shadow: var(--form-shadow);
   color: var(--form-text);
