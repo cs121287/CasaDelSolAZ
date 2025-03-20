@@ -133,8 +133,13 @@
                         </div>
                         
                         <div id="contact-form" class="contact-form-container">
+<form id="contactForm" class="contact-form" action="#" method="post">
+    <input type="hidden" name="time" id="form_time">
                             <h2>Inquire About Your Event</h2>
                             <form id="contactForm" class="contact-form" action="#" method="post">
+                                <!-- Hidden timestamp field (properly placed) -->
+                                <input type="hidden" name="time" id="form_time">
+                                
                                 <div class="form-group">
                                     <label for="name" class="floating-label">Name *</label>
                                     <input type="text" id="name" name="name" required>
@@ -174,7 +179,6 @@
                                             <option value="corporate">Corporate Event</option>
                                             <option value="memorial">Memorial Service</option>
                                             <option value="other">Other</option>
-											<input type="hidden" name="time" id="form_time">
                                         </select>
                                     </div>
                                 </div>
@@ -260,135 +264,111 @@
         <i class="fas fa-chevron-up"></i>
     </a>
 	
-	<script src="js/main.js"></script>
-    <script src="js/form-effects.js"></script>
-	<script src="js/header-scroll.js"></script>
-		<script src="js/form-handler.js"></script>
-
-<!-- Add this right before the closing body tag -->
-<!-- EmailJS Integration with Debug Info -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script type="text/javascript">
-  // Performance-optimized EmailJS implementation
-  (function() {
-    const contactForm = document.getElementById('contactForm');
-    const formSuccess = document.getElementById('formSuccess');
+    <!-- Core site scripts with defer for performance -->
+    <script src="js/main.js" defer></script>
+    <script src="js/header-scroll.js" defer></script>
     
-    if (!contactForm || !formSuccess) return;
-    
-    // Initialize EmailJS - done outside DOMContentLoaded for faster initialization
-    emailjs.init({
-      publicKey: "b3T2GoOXJmt08AM0y"
-    });
-    
-    // Form submission handler
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Show processing state
-      const submitBtn = this.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span class="spinner"></span>Processing...';
-      
-      // Get form values
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const phone = document.getElementById('phone').value;
-      const eventDate = document.getElementById('event-date').value;
-      const eventType = document.getElementById('event-type').value;
-      const guests = document.getElementById('guests').value;
-      const message = document.getElementById('message').value;
-      
-      // Create template parameters object
-      const templateParams = {
-        from_name: name,
-        name: name,
-        email: email,
-        phone: phone || 'Not provided',
-        event_type: eventType || 'Not specified',
-        event_date: eventDate || 'Not specified',
-        guests: guests || 'Not specified',
-        message: message,
-        time: new Date().toLocaleString('en-US'),
-        reply_to: email
-      };
-      
-      // Log parameters for debugging
-      console.log('Sending with service: service_vkdsa6d');
-      console.log('Template parameters:', templateParams);
-      
-      // Send email with detailed error handling
-      emailjs.send('service_vkdsa6d', 'template_contact_form', templateParams)
-        .then(function(response) {
-          console.log('SUCCESS!', response.status, response.text);
-          
-          // Show success message with smooth animation
-          contactForm.style.opacity = '0';
-          contactForm.style.transform = 'translateY(-20px)';
-          
-          setTimeout(function() {
-            contactForm.style.display = 'none';
-            formSuccess.classList.remove('hidden');
-            
-            requestAnimationFrame(() => {
-              formSuccess.style.opacity = '1';
-              formSuccess.style.transform = 'translateY(0)';
-            });
-          }, 300);
-        })
-        .catch(function(error) {
-          // Detailed error logging
-          console.error('EmailJS FAILED:', error);
-          if (error.text) console.error('Error details:', error.text);
-          
-          // Create specific error message based on error type
-          let errorMessage = 'There was a problem sending your message. ';
-          
-          if (error.status === 0) {
-            errorMessage += 'Please check your internet connection and try again.';
-          } else if (error.status === 400) {
-            errorMessage += 'There was an issue with the form data. Please ensure all required fields are filled out correctly.';
-          } else if (error.status === 403) {
-            errorMessage += 'Authorization error. Please contact the site administrator.';
-          } else {
-            errorMessage += 'Please try again or contact us directly at (480) 123-4567.';
-          }
-          
-          alert(errorMessage);
-          
-          // Reset button state
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'Submit Inquiry';
+// EmailJS Integration - Highly optimized for speed
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize EmailJS
+        emailjs.init({
+            publicKey: "b3T2GoOXJmt08AM0y"
         });
-    });
-    
-    // Reset form functionality (compact version for better performance)
-    const resetBtn = document.getElementById('resetForm');
-    if (resetBtn) {
-      resetBtn.addEventListener('click', function() {
-        formSuccess.style.opacity = '0';
-        formSuccess.style.transform = 'translateY(20px)';
         
-        setTimeout(function() {
-          formSuccess.classList.add('hidden');
-          contactForm.reset();
-          
-          const formGroups = contactForm.querySelectorAll('.form-group');
-          for (let i = 0; i < formGroups.length; i++) {
-            formGroups[i].classList.remove('focused', 'has-value', 'has-error');
-          }
-          
-          contactForm.style.display = 'block';
-          contactForm.style.opacity = '1';
-          contactForm.style.transform = 'translateY(0)';
-          
-          const submitBtn = contactForm.querySelector('button[type="submit"]');
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'Submit Inquiry';
-        }, 300);
-      });
-    }
-  })();
-</script>
+        const contactForm = document.getElementById('contactForm');
+        const formSuccess = document.getElementById('formSuccess');
+        
+        if (!contactForm || !formSuccess) return;
+        
+        // Update hidden timestamp field
+        const formTime = document.getElementById('form_time');
+        if (formTime) {
+            formTime.value = new Date().toLocaleString('en-US');
+        }
+        
+        // Single form submission handler - more efficient
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show processing state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span>Processing...';
+            
+            // Send form data - using variable names that match the template
+            emailjs.send('service_vkdsa6d', 'template_q9f1rn2', {
+                user_name: document.getElementById('name').value,
+                user_email: document.getElementById('email').value,
+                user_phone: document.getElementById('phone').value || 'Not provided',
+                event_type: document.getElementById('event-type').value || 'Not specified',
+                event_date: document.getElementById('event-date').value || 'Not specified',
+                guests: document.getElementById('guests').value || 'Not specified',
+                message: document.getElementById('message').value,
+                time: formTime ? formTime.value : new Date().toLocaleString('en-US')
+            })
+            .then(function(response) {
+                console.log('SUCCESS!', response.status);
+                
+                // Show success message with optimized animations
+                contactForm.style.opacity = '0';
+                contactForm.style.transform = 'translateY(-20px)';
+                
+                setTimeout(function() {
+                    contactForm.style.display = 'none';
+                    formSuccess.classList.remove('hidden');
+                    
+                    requestAnimationFrame(function() {
+                        formSuccess.style.opacity = '1';
+                        formSuccess.style.transform = 'translateY(0)';
+                    });
+                }, 300);
+            })
+            .catch(function(error) {
+                console.error('EmailJS FAILED:', error);
+                alert('There was a problem sending your message. Please try again or contact us directly at (480) 123-4567.');
+                
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Submit Inquiry';
+            });
+        });
+        
+        // Reset form handler - Optimized for performance
+        const resetBtn = document.getElementById('resetForm');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', function() {
+                formSuccess.style.opacity = '0';
+                formSuccess.style.transform = 'translateY(20px)';
+                
+                setTimeout(function() {
+                    formSuccess.classList.add('hidden');
+                    contactForm.reset();
+                    
+                    // Update timestamp
+                    if (formTime) {
+                        formTime.value = new Date().toLocaleString('en-US');
+                    }
+                    
+                    // Efficiently reset form groups
+                    const formGroups = contactForm.querySelectorAll('.form-group');
+                    for (let i = 0; i < formGroups.length; i++) {
+                        formGroups[i].classList.remove('focused', 'has-value', 'has-error');
+                    }
+                    
+                    contactForm.style.display = 'block';
+                    
+                    requestAnimationFrame(function() {
+                        contactForm.style.opacity = '1';
+                        contactForm.style.transform = 'translateY(0)';
+                        
+                        const submitBtn = contactForm.querySelector('button[type="submit"]');
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = 'Submit Inquiry';
+                    });
+                }, 300);
+            });
+        }
+    });
+})();
 </body>
 </html>
