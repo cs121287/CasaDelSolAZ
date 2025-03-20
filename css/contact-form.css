@@ -1,5 +1,6 @@
 /* Enhanced Contact Form Styles
-   Optimized for performance with minimal rendering impact
+   Version: 5.0.0
+   Optimized for performance with modal dialogs
    Created for Casa Del Sol AZ | 2025
 */
 
@@ -7,68 +8,76 @@
   --form-primary: #d4af37;
   --form-primary-light: #e6c655;
   --form-primary-dark: #b3941e;
-  --form-bg: rgba(255, 255, 255, 0.95);
+  --form-bg: rgba(255, 255, 255, 0.98);
   --form-text: #333;
   --form-placeholder: rgba(0, 0, 0, 0.6);
   --form-label: #777;
-  --form-border: #ddd;
+  --form-border: #eaeaea;
   --form-error: #e74c3c;
   --form-success: #2ecc71;
   --transition-fast: 0.2s ease;
   --transition-medium: 0.3s ease;
-  --form-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --form-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
   --input-padding: 1rem 1rem 0.5rem;
+  --input-radius: 8px;
+  --modal-bg: rgba(0, 0, 0, 0.75);
+  --modal-z-index: 1000;
 }
 
 /* Form Container */
 .contact-form-container {
-  background-color: var(--dark);
-  border-radius: 12px;
+  background-color: var(--form-bg);
+  border-radius: var(--input-radius);
   box-shadow: var(--form-shadow);
   color: var(--form-text);
   overflow: hidden;
   transform: translateZ(0); /* Performance optimization */
   will-change: transform, opacity; /* Optimize for animations */
+  position: relative; /* For positioning error messages */
 }
 
 /* Form Header */
 .form-header {
-  padding: 1.5rem;
+  padding: 2rem 1.5rem 1rem;
   position: relative;
   text-align: center;
+  background: linear-gradient(to bottom, rgba(212, 175, 55, 0.05), transparent);
 }
 
-.form-header h2 {
+.form-header h2, .form-header h3 {
   color: var(--form-primary-dark);
   font-family: 'Playfair Display', serif;
   font-size: 1.8rem;
   margin: 0 0 1rem;
   position: relative;
   display: inline-block;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.05);
 }
 
 .form-decoration {
-  height: 2px;
-  width: 80px;
+  height: 3px;
+  width: 100px;
   background: linear-gradient(to right, transparent, var(--form-primary), transparent);
   margin: 0 auto;
+  border-radius: 3px;
 }
 
 /* Form Styling */
 .contact-form {
-  padding: 0 1.5rem 1.5rem;
+  padding: 1.5rem 1.5rem 2rem;
   transition: transform var(--transition-medium), opacity var(--transition-medium);
+  contain: content; /* Performance optimization */
 }
 
 .contact-form.form-sent {
-  opacity: 0;
-  transform: translateY(-20px);
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* Form Groups */
 .form-group {
   position: relative;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
   transition: margin var(--transition-fast);
 }
 
@@ -107,9 +116,10 @@
   padding: var(--input-padding);
   font-size: 1rem;
   border: 1px solid var(--form-border);
-  border-radius: 6px;
+  border-radius: var(--input-radius);
   background-color: #fff;
   font-family: 'Raleway', sans-serif;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast), color var(--transition-fast);
   -webkit-appearance: none;
   appearance: none;
@@ -120,7 +130,7 @@
 .form-group select:focus {
   outline: none;
   border-color: var(--form-primary);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
 }
 
 /* Floating Labels */
@@ -133,6 +143,9 @@
   transition: all var(--transition-fast);
   font-size: 1rem;
   transform-origin: left top;
+  background: linear-gradient(to bottom, transparent 50%, #fff 50%);
+  padding: 0 0.2rem;
+  margin-left: -0.2rem;
 }
 
 .required {
@@ -141,19 +154,20 @@
 
 .form-group.focused .floating-label,
 .form-group.has-value .floating-label {
-  transform: translateY(-0.7rem) scale(0.8);
+  transform: translateY(-1.1rem) scale(0.85);
   color: var(--form-primary);
 }
 
-/* Date and Select Input Labels - Consistent with other form labels */
+/* Date and Select Input Labels */
 .date-input label, 
 .select-input label {
   display: block;
   margin-bottom: 0.5rem;
   color: var(--form-label);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-family: 'Raleway', sans-serif;
   transition: color var(--transition-fast);
+  font-weight: 500;
 }
 
 /* Make labels gold when input has value */
@@ -197,16 +211,7 @@
   padding-right: 2.5rem;
 }
 
-/* Default option style */
-.form-group select option:first-child {
-  color: var(--form-placeholder);
-}
-
-.form-group select option:not(:first-child) {
-  color: var(--form-text);
-}
-
-/* Date Input - Using browser's default picker */
+/* Date Input */
 .date-input input[type="date"] {
   cursor: pointer;
   padding: var(--input-padding);
@@ -233,6 +238,7 @@
 .form-group.has-error input,
 .form-group.has-error textarea {
   border-color: var(--form-error);
+  background-color: rgba(231, 76, 60, 0.02);
 }
 
 .form-group.has-error .floating-label {
@@ -249,6 +255,23 @@
   font-size: 0.8rem;
   margin-top: 0.4rem;
   animation: fadeIn 0.3s;
+  display: flex;
+  align-items: center;
+}
+
+.error-message::before {
+  content: "!";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  background-color: var(--form-error);
+  color: white;
+  border-radius: 50%;
+  margin-right: 0.4rem;
+  font-size: 0.7rem;
+  font-weight: bold;
 }
 
 /* Submit Button */
@@ -256,19 +279,21 @@
   background: linear-gradient(135deg, var(--form-primary), var(--form-primary-dark));
   color: white;
   border: none;
-  border-radius: 6px;
-  padding: 0.8rem 1.5rem;
+  border-radius: var(--input-radius);
+  padding: 0.9rem 1.5rem;
   font-size: 1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   position: relative;
   overflow: hidden;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   will-change: transform;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 .submit-button:before {
@@ -310,37 +335,122 @@
   justify-content: center;
 }
 
-/* Success Message */
-.form-success {
-  padding: 2rem;
-  text-align: center;
+/* Modal Component - Optimized for performance */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--modal-z-index);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity var(--transition-medium), transform var(--transition-medium);
+  transition: visibility 0s linear 0.2s, opacity 0.2s ease;
+  /* Not in the normal render flow */
+  contain: layout size style;
+  pointer-events: none;
 }
 
-.form-success.show {
+.modal.active {
+  visibility: visible;
   opacity: 1;
-  transform: translateY(0);
+  transition-delay: 0s;
+  pointer-events: auto;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--modal-bg);
+}
+
+.modal-container {
+  position: relative;
+  max-width: 90%;
+  width: 450px;
+  transform: scale(0.9);
+  transition: transform 0.2s ease;
+  z-index: 1;
+}
+
+.modal.active .modal-container {
+  transform: scale(1);
+}
+
+.modal-content {
+  background-color: var(--form-bg);
+  border-radius: var(--input-radius);
+  box-shadow: var(--form-shadow);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  /* Optimize rendering */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Success Modal Content */
+.success-content {
+  background: linear-gradient(to bottom, rgba(46, 204, 113, 0.03), transparent);
+}
+
+/* Error Modal Content */
+.error-content {
+  background: linear-gradient(to bottom, rgba(231, 76, 60, 0.03), transparent);
+}
+
+.success-icon, .error-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .success-icon {
-  font-size: 3.5rem;
   color: var(--form-success);
-  margin-bottom: 1rem;
   animation: successPulse 2s infinite;
 }
 
-.form-success h3 {
+.error-icon {
+  color: var(--form-error);
+  animation: errorShake 0.5s ease-in-out;
+}
+
+.modal-content h3 {
   color: var(--form-primary-dark);
   font-size: 1.8rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   font-family: 'Playfair Display', serif;
 }
 
-.form-success p {
+.modal-content p {
   color: var(--form-text);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
+  line-height: 1.6;
+}
+
+/* Close button */
+.modal-content .btn-secondary {
+  background-color: var(--form-bg);
+  color: var(--form-primary-dark);
+  border: 2px solid var(--form-primary);
+  border-radius: var(--input-radius);
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+  font-weight: 500;
+}
+
+.modal-content .btn-secondary:hover {
+  background-color: var(--form-primary);
+  color: white;
 }
 
 /* Spinner Animation */
@@ -352,35 +462,32 @@
   border-radius: 50%;
   border-top-color: white;
   animation: spin 0.8s linear infinite;
+  contain: strict; /* Performance optimization */
 }
 
-/* Animations */
+/* Animations - using performant properties */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
+  from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes successPulse {
   0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  50% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
 
-/* Responsive Adjustments */
-@media (max-width: 992px) {
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .contact-info {
-    margin-bottom: 2rem;
-  }
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
 }
 
+/* Responsive Adjustments */
 @media (max-width: 768px) {
   .form-row {
     flex-direction: column;
@@ -391,8 +498,24 @@
     margin-bottom: 1.5rem;
   }
   
-  .form-header h2 {
+  .form-header h2, .form-header h3 {
     font-size: 1.5rem;
+  }
+  
+  .form-header {
+    padding: 1.5rem 1.25rem 0.75rem;
+  }
+  
+  .contact-form {
+    padding: 1.25rem 1.25rem 1.75rem;
+  }
+  
+  .modal-container {
+    width: 95%;
+  }
+  
+  .modal-content {
+    padding: 2rem 1.5rem;
   }
 }
 
@@ -403,5 +526,21 @@
   
   .form-header, .contact-form {
     padding: 1rem;
+  }
+  
+  .form-header h2, .form-header h3 {
+    font-size: 1.4rem;
+  }
+  
+  .submit-button {
+    padding: 0.8rem 1.25rem;
+  }
+  
+  .modal-content {
+    padding: 1.75rem 1.25rem;
+  }
+  
+  .success-icon, .error-icon {
+    font-size: 3rem;
   }
 }
