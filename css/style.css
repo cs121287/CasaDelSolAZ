@@ -3,6 +3,12 @@
  * Version: 2.1.4
  * Description: Core styles, reset, typography, and shared components
  */
+ 
+ /* If there's a charset rule, it would go first */
+@charset "UTF-8";
+
+/* Then immediately place the import */
+@import 'section-scroll.css';
 
 /* ===== CSS RESET ===== */
 *,
@@ -199,12 +205,144 @@ p {
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   transition: var(--transition-header);
-  border-bottom: none; /* Remove the solid border */
+  border-bottom: none;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  /* Add bottom shadow effect */
+  box-shadow: 
+    0 0px 0 0 rgba(0, 0, 0, 1),
+    0 2px 4px 0 rgba(0, 0, 0, 0.7),
+    0 2px 8px 0 rgba(0, 0, 0, 0.4),
+    0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  contain: layout; /* Performance optimization */
+}
+
+/* Header main layout */
+.header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* Logo positioning */
+.logo {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  will-change: transform; /* Performance hint */
+}
+
+.logo img {
+  max-height: 60px;
+  width: auto;
+  transition: max-height 0.3s ease;
+}
+
+/* Center column with navigation, title, and section links */
+.header-center {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Navigation styling */
+.main-nav {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nav-links li a {
+  color: var(--white);
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.25rem 0;
+  position: relative;
+  text-decoration: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.nav-links li a:after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary);
+  transition: width var(--transition-med);
+}
+
+.nav-links li a:hover:after,
+.nav-links li a.active:after {
+  width: 100%;
+}
+
+/* Page title */
+.page-title {
+  color: var(--white);
+  font-size: 1.8rem;
+  margin: 0.2rem 0 0.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  font-family: 'Playfair Display', serif;
+}
+
+/* Section links */
+.section-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.2rem;
+}
+
+.section-link {
+  color: var(--light);
+  font-size: 0.85rem;
+  position: relative;
+  text-decoration: none;
+  padding: 0.2rem 0;
+  transition: color var(--transition-fast);
+}
+
+.section-link:hover {
+  color: var(--primary);
+}
+
+.section-link:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--primary);
+  transition: width var(--transition-fast);
+}
+
+.section-link:hover:after {
+  width: 100%;
+}
+
+/* Standard header when scrolled */
+.header.scrolled {
+  background-color: var(--dark);
+  padding: 0.5rem 0;
   box-shadow: 
     0 0px 0 0 rgba(0, 0, 0, 1),
     0 2px 4px 0 rgba(0, 0, 0, 0.7),
@@ -212,16 +350,17 @@ p {
     0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 
-/* Standard header when scrolled */
-.header.scrolled {
-  background-color: var(--dark);
-  padding: 0.75rem 0;
-  /* Maintain shadow when scrolled */
-  box-shadow: 
-    0 0px 0 0 rgba(0, 0, 0, 1),
-    0 2px 4px 0 rgba(0, 0, 0, 0.7),
-    0 2px 8px 0 rgba(0, 0, 0, 0.4),
-    0 2px 12px 0 rgba(0, 0, 0, 0.1);
+.header.scrolled .logo img {
+  max-height: 50px;
+}
+
+.header.scrolled .page-title {
+  font-size: 1.5rem;
+  margin: 0 0 0.3rem;
+}
+
+.header.scrolled .section-links {
+  margin-top: 0;
 }
 
 /* Header hidden state for scroll-up/down behavior */
@@ -237,11 +376,11 @@ p {
 .header.transparent {
   position: fixed;
   background-color: transparent;
-  box-shadow: none; /* No shadow in transparent state */
+  box-shadow: none;
   border-bottom: none;
 }
 
-/* Use pseudo-element for better background transition */
+/* Background image with transition */
 .header.transparent::before {
   content: "";
   position: absolute;
@@ -257,6 +396,7 @@ p {
   z-index: -1;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+  will-change: opacity; /* Performance hint */
 }
 
 .header.transparent.scrolled::before {
@@ -264,8 +404,7 @@ p {
 }
 
 .header.transparent.scrolled {
-  padding: 0.75rem 0;
-  /* Add shadow when scrolled from transparent */
+  padding: 0.5rem 0;
   box-shadow: 
     0 2px 0 0 rgba(0, 0, 0, 1),
     0 2px 4px 0 rgba(0, 0, 0, 0.7),
@@ -273,105 +412,100 @@ p {
     0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 
-/* We need to apply styling to the container to get proper border-radius effect */
-.header .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* Background element to ensure rounded corners work with solid backgrounds */
-.header:not(.transparent)::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: inherit;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-  z-index: -1;
-}
-
-/* Logo styling */
-.logo h1 {
-  font-size: 1.75rem;
-  margin-bottom: 0;
-  color: var(--white);
-  transition: color var(--transition-med);
-}
-
-.scrolled .logo h1 {
-  color: var(--white);
-}
-
-.logo span {
-  color: var(--primary);
-}
-
-/* Navigation styling */
-.main-nav {
-  display: flex;
-  align-items: center;
-}
-
-.nav-links {
-  display: flex;
-  gap: 2rem;
-}
-
-.nav-links li a {
-  color: var(--white);
-  font-size: 1rem;
-  font-weight: 500;
-  padding: 0.5rem 0;
-  position: relative;
-  text-decoration: none;
-}
-
-/* Ensure text is visible on all header states */
-.scrolled .nav-links li a,
-.transparent .nav-links li a {
-  color: var(--white);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.nav-links li a:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--primary);
-  transition: width var(--transition-med);
-}
-
-.nav-links li a:hover:after,
-.nav-links li a.active:after {
-  width: 100%;
-}
-
-/* Menu toggle button (mobile) */
+/* Mobile menu toggle button */
 .menu-toggle {
   display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1001;
 }
 
-.scrolled .menu-toggle span {
+.menu-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
   background-color: var(--white);
+  margin: 5px 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 /* Menu open state */
 .header.menu-open {
   transform: translateY(0);
   background-color: var(--dark);
-  /* Maintain shadow in menu-open state */
   box-shadow: 
     0 2px 0 0 rgba(0, 0, 0, 1),
     0 2px 4px 0 rgba(0, 0, 0, 0.7),
     0 2px 8px 0 rgba(0, 0, 0, 0.4),
     0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive breakpoints */
+@media (max-width: 992px) {
+  .header-main {
+    flex-wrap: wrap;
+  }
+  
+  .header-center {
+    order: 3;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  
+  .menu-toggle {
+    display: block;
+    order: 2;
+  }
+  
+  .main-nav {
+    display: none;
+    width: 100%;
+  }
+  
+  .header.menu-open .main-nav {
+    display: block;
+  }
+  
+  .nav-links {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 1rem 0;
+  }
+  
+  .section-links {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .header.menu-open .menu-toggle span:first-child {
+    transform: translateY(7px) rotate(45deg);
+  }
+  
+  .header.menu-open .menu-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .header.menu-open .menu-toggle span:last-child {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.5rem;
+  }
+  
+  .logo img {
+    max-height: 50px;
+  }
+  
+  .header.scrolled .logo img {
+    max-height: 40px;
+  }
 }
 
 /* ===== HERO SECTION ===== */
