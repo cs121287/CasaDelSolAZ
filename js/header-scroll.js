@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const menuToggle = document.querySelector('.menu-toggle');
   let lastScrollTop = 0;
   let ticking = false;
+  let scrollDirection = 'none';
   
   // Handle section links with smooth scrolling
   initSectionLinks();
@@ -24,11 +25,15 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Efficient scroll handling with requestAnimationFrame
   window.addEventListener('scroll', function() {
-    lastScrollTop = window.scrollY || document.documentElement.scrollTop;
+    const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
+    
+    // Determine scroll direction
+    scrollDirection = currentScrollTop > lastScrollTop ? 'down' : 'up';
+    lastScrollTop = currentScrollTop;
     
     if (!ticking) {
       window.requestAnimationFrame(function() {
-        handleScroll(lastScrollTop);
+        handleScroll(currentScrollTop, scrollDirection);
         ticking = false;
       });
       
@@ -37,9 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   // Initial check
-  handleScroll(window.scrollY || document.documentElement.scrollTop);
+  handleScroll(window.scrollY || document.documentElement.scrollTop, 'none');
   
-  function handleScroll(scrollTop) {
+  function handleScroll(scrollTop, direction) {
     // Toggle scrolled class
     if (scrollTop > 50) {
       if (!header.classList.contains('scrolled')) {
@@ -51,18 +56,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Handle header visibility based on scroll direction
     if (!header.classList.contains('menu-open')) {
-      if (scrollTop > lastScrollTop && scrollTop > 200) {
+      if (direction === 'down' && scrollTop > 200) {
         // Scrolling down - hide header
-        if (!header.classList.contains('header-hidden')) {
+        if (!header.classList.contains('header-hidden') && !header.classList.contains('section-clicked')) {
           header.classList.remove('header-visible');
           header.classList.add('header-hidden');
         }
-      } else {
-        // Scrolling up - show header
-        if (header.classList.contains('header-hidden')) {
-          header.classList.remove('header-hidden');
-          header.classList.add('header-visible');
-        }
+      } else if (direction === 'up') {
+        // Scrolling up - show header and remove section-clicked state
+        header.classList.remove('header-hidden', 'section-clicked');
+        header.classList.add('header-visible');
       }
     }
   }
@@ -86,6 +89,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const targetElement = document.querySelector(targetId);
         
         if (targetElement) {
+          // Hide header immediately when section link is clicked
+          header.classList.remove('header-visible', 'header-hidden');
+          header.classList.add('section-clicked');
+          
           // Calculate header height dynamically
           const headerHeight = header.offsetHeight;
           
