@@ -240,21 +240,35 @@ p {
   transition: max-height 0.3s ease;
 }
 
-/* Center column with navigation, title, and section links */
+/* Center column with title and section links */
 .header-center {
-  flex: 1 1 auto;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  pointer-events: none; /* Allow clicks to pass through */
+  width: auto;
+  min-width: 50%;
+}
+
+/* Right-aligned navigation wrapper */
+.header-right {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
 }
 
 /* Navigation styling */
 .main-nav {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   margin-bottom: 0.5rem;
 }
 
@@ -262,7 +276,7 @@ p {
   display: flex;
   gap: 1.5rem;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .nav-links li a {
@@ -291,24 +305,27 @@ p {
   width: 100%;
 }
 
-/* Page title */
+/* Gold page title */
 .page-title {
-  color: var(--white);
+  color: var(--primary);
   font-size: 1.8rem;
   margin: 0.2rem 0 0.6rem;
   font-weight: 700;
   line-height: 1.2;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
   font-family: 'Playfair Display', serif;
+  pointer-events: auto; /* Make title clickable */
 }
 
-/* Section links */
+/* Section links - centered */
 .section-links {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
   margin-top: 0.2rem;
+  pointer-events: auto; /* Enable click events */
+  width: 100%;
 }
 
 .section-link {
@@ -370,6 +387,11 @@ p {
 
 .header.header-visible {
   transform: translateY(0);
+}
+
+/* Header hidden state after section link click */
+.header.section-clicked {
+  transform: translateY(-100%);
 }
 
 /* Transparent header (on index.html) */
@@ -449,9 +471,17 @@ p {
   }
   
   .header-center {
-    order: 3;
+    position: relative;
+    left: auto;
+    transform: none;
     width: 100%;
     margin-top: 0.5rem;
+  }
+  
+  .header-right {
+    order: 3;
+    width: 100%;
+    align-items: center;
   }
   
   .menu-toggle {
@@ -473,12 +503,14 @@ p {
     gap: 0.75rem;
     align-items: center;
     padding: 1rem 0;
+    justify-content: center;
   }
   
   .section-links {
     flex-direction: column;
     gap: 0.5rem;
     align-items: center;
+    justify-content: center;
   }
   
   .header.menu-open .menu-toggle span:first-child {
@@ -517,7 +549,7 @@ p {
 
 /* ===== PAGE BANNER ===== */
 .page-banner {
-  background-color: var(--dark);
+  background-color: rgba(0, 0, 0, 0);
   color: var(--white);
   padding: 8rem 0 4rem;
   text-align: center;
@@ -1202,6 +1234,19 @@ p {
   padding: var(--spacing-lg) 0;
   text-align: center;
   color: var(--white);
+}
+
+.services-intro .section-title {
+  color: #ffffff !important;
+}
+
+/* More specific selector to ensure text is white */
+.services-intro .intro-text p {
+  color: #ffffff;
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  line-height: 1.8;
 }
 
 .intro-text {
