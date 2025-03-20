@@ -6,13 +6,26 @@
     <meta name="description" content="Contact Casa Del Sol AZ to schedule a tour or inquire about hosting your event at our premier Arizona venue">
     <title>Contact Us | Casa Del Sol AZ</title>
     
-    <!-- Optimized CSS loading -->
+    <!-- Core CSS -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Component CSS -->
+    <link rel="stylesheet" href="css/components/header.css">
+    <link rel="stylesheet" href="css/components/footer.css">
+    <link rel="stylesheet" href="css/components/common.css">
+    
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="css/contact.css">
     <link rel="stylesheet" href="css/contact-form.css">
+    
+    <!-- Responsive CSS (load last to ensure it overrides other styles) -->
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- External CSS & Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="contact-page">
     <div class="video-container">
@@ -20,75 +33,71 @@
         <div class="video-overlay"></div>
     </div>
 
-<header class="header transparent" id="header">
-  <div class="container">
-    <div class="header-main">
-      <!-- Logo aligned left -->
-      <div class="logo">
-        <a href="index.html">
-          <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="200" height="80">
-        </a>
-      </div>
-      
-      <!-- Center column for title and section links -->
-      <div class="header-center">
-        <!-- Current page title in gold -->
-        <h1 class="page-title">Our Services</h1>
-        
-        <!-- Section links - centered -->
-        <div class="section-links">
-          <a href="#services-list" class="section-link">Available Services</a>
-          <a href="#add-ons" class="section-link">Add-Ons</a>
-          <a href="#faq" class="section-link">FAQ</a>
-          <a href="#contact-cta" class="section-link">Plan Your Event</a>
+    <header class="header transparent" id="header">
+        <div class="container">
+            <div class="header-main">
+                <!-- Logo aligned left -->
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="200" height="80">
+                    </a>
+                </div>
+                
+                <!-- Center column for title and section links -->
+                <div class="header-center">
+                    <!-- Current page title in gold -->
+                    <h1 class="page-title">Contact Us</h1>
+                    
+                    <!-- Section links - centered -->
+                    <div class="section-links">
+                        <a href="#contact-info" class="section-link">Contact Information</a>
+                        <a href="#contact-form" class="section-link">Inquiry Form</a>
+                    </div>
+                </div>
+                
+                <!-- Right-aligned navigation -->
+                <div class="header-right">
+                    <!-- Navigation menu at top right -->
+                    <nav class="main-nav">
+                        <ul class="nav-links">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="services.html">Our Services</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
+                            <li><a href="contact.html" class="active">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                
+                <!-- Mobile menu toggle -->
+                <button class="menu-toggle" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
-      </div>
-      
-      <!-- Right-aligned navigation -->
-      <div class="header-right">
-        <!-- Navigation menu at top right -->
-        <nav class="main-nav">
-          <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="services.html" class="active">Our Services</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-      
-      <!-- Mobile menu toggle -->
-      <button class="menu-toggle" aria-label="Toggle Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </div>
-  
-  <!-- Mobile Menu Overlay Container (New element) -->
-  <div class="mobile-menu-container">
-    <div class="mobile-menu-content">
-      <nav class="mobile-nav">
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="services.html" class="active">Our Services</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
-      <!-- Mobile section links if on a page with sections -->
-      <div class="section-links">
-        <a href="#services-list" class="section-link">Available Services</a>
-        <a href="#add-ons" class="section-link">Add-Ons</a>
-        <a href="#faq" class="section-link">FAQ</a>
-        <a href="#contact-cta" class="section-link">Plan Your Event</a>
-      </div>
-    </div>
-  </div>
-</header>
+        
+        <!-- Mobile Menu Overlay Container -->
+        <div class="mobile-menu-container">
+            <div class="mobile-menu-content">
+                <nav class="mobile-nav">
+                    <ul class="nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Our Services</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html" class="active">Contact</a></li>
+                    </ul>
+                </nav>
+                <!-- Mobile section links if on a page with sections -->
+                <div class="section-links">
+                    <a href="#contact-info" class="section-link">Contact Information</a>
+                    <a href="#contact-form" class="section-link">Inquiry Form</a>
+                </div>
+            </div>
+        </div>
+    </header>
 
     <main>
         <section class="page-banner">
@@ -99,8 +108,8 @@
 
         <section id="contact-info" class="contact-info-section">
             <div class="container">
-                <div class="services-container">
-                    <h2 class="services-title">Get in Touch</h2>
+                <div class="contact-container">
+                    <h2 class="section-title">Get in Touch</h2>
                     <div class="contact-grid">
                         <div class="contact-info">
                             <p>We'd love to hear from you! Whether you're ready to book your event or just have questions, our team is here to help make your vision a reality.</p>
@@ -252,30 +261,30 @@
         </section>
     </main>
 
- <footer class="footer">
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-logo">
-        <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="120" height="48">
-        <p>Where Memories Are Made</p>
-      </div>
-    </div>
-    <div class="footer-social">
-      <p class="social-heading">Follow Us On Instagram and TikTok</p>
-      <div class="social-links">
-        <a href="https://www.instagram.com/casadelsol_events/" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://www.tiktok.com/@casa.del.sol.events" target="_blank" rel="noopener" aria-label="Follow us on TikTok">
-          <i class="fab fa-tiktok"></i>
-        </a>
-      </div>
-    </div>
-    <div class="copyright">
-      <p>&copy; 2025 Casa Del Sol AZ. All Rights Reserved.</p>
-    </div>
-  </div>
-</footer>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="120" height="48">
+                    <p>Where Memories Are Made</p>
+                </div>
+            </div>
+            <div class="footer-social">
+                <p class="social-heading">Follow Us On Instagram and TikTok</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/casadelsol_events/" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@casa.del.sol.events" target="_blank" rel="noopener" aria-label="Follow us on TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Casa Del Sol AZ. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <a href="#header" class="back-to-top" aria-label="Back to top">
         <i class="fas fa-chevron-up"></i>
