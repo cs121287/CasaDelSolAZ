@@ -17,43 +17,62 @@
         <div class="video-overlay"></div>
     </div>
 
-    <header class="header transparent" id="header">
-        <div class="container">
-            <div class="logo">
-                <a href="index.html">
-                    <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="200" height="80">
-                </a>
-            </div>
-            <nav class="main-nav">
-                <button class="menu-toggle" aria-label="Toggle Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="services.html" class="active">Our Services</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
+<header class="header transparent" id="header">
+  <div class="container">
+    <div class="header-main">
+      <!-- Logo aligned left -->
+      <div class="logo">
+        <a href="index.html">
+          <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="200" height="80">
+        </a>
+      </div>
+      
+      <!-- Center column for title and section links -->
+      <div class="header-center">
+        <!-- Current page title in gold -->
+        <h1 class="page-title">Our Services</h1>
+        
+        <!-- Section links - now centered with added planning link -->
+        <div class="section-links">
+          <a href="#services-list" class="section-link">Available Services</a>
+          <a href="#faq" class="section-link">FAQ</a>
+          <a href="#contact-cta" class="section-link">Plan Your Event</a>
         </div>
-    </header>
+      </div>
+      
+      <!-- Right-aligned navigation -->
+      <div class="header-right">
+        <!-- Navigation menu at top right -->
+        <nav class="main-nav">
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html" class="active">Our Services</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+      
+      <!-- Mobile menu toggle -->
+      <button class="menu-toggle" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
 
     <main>
-        <section class="services-intro">
+	<!-- Added Page Banner -->
+        <section class="page-banner">
             <div class="container">
-                <h2 class="section-title">Our Services</h2>
-                <div class="intro-container">
-                    <div class="intro-text">
-                        <p>At Casa Del Sol AZ, we specialize in creating unforgettable events tailored to your unique vision. Our versatile venue and experienced team can accommodate a wide range of occasions from intimate gatherings to grand celebrations.</p>
-                    </div>
-                </div>
+                <h1></h1>
             </div>
         </section>
 
-        <section class="services-section">
+        <section id="services-list" class="services-section">
             <div class="container">
                 <div class="services-container">
                     <h3 class="services-title">We Host All Types of Events</h3>
@@ -137,7 +156,7 @@
             </div>
         </section>
 
-        <section class="faq-section">
+        <section id="faq" class="faq-section">
             <div class="container">
                 <h2 class="section-title">Frequently Asked Questions</h2>
                 <div class="faq-container">
@@ -181,7 +200,7 @@
             </div>
         </section>
 
-        <section class="cta dark-section">
+        <section id="contact-cta" class="cta dark-section">
             <div class="container">
                 <div class="cta-content">
                     <h2>Ready to Start Planning Your Event?</h2>
@@ -246,9 +265,9 @@
     </a>
 
     <!-- Scripts at end of body for faster page load -->
-    <script src="js/main.js"></script>
-    <script src="js/parallax.js"></script>
-    <script src="js/header-scroll.js"></script>
-    <script src="js/faq.js"></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/parallax.js" defer></script>
+    <script src="js/header-scroll.js" defer></script>
+    <script src="js/faq.js" defer></script>
 </body>
 </html>
