@@ -83,7 +83,7 @@
                             <p>Since opening our doors in 2020, we've hosted hundreds of weddings, corporate gatherings, and special celebrations, each one uniquely tailored to reflect the vision of our clients and exceed their expectations.</p>
                             <p>At Casa Del Sol, we believe in creating experiences that exceed expectations. From the moment you step onto our property until the last guest departs, you'll be embraced by the warm hospitality and attention to detail that defines our approach.</p>
                         </div>
-                        <div class="about-image">
+                        <div class="about-image" id="venue-image">
                             <img src="img/about-1.jpg" alt="Casa Del Sol venue exterior" width="500" height="400">
                         </div>
                     </div>
@@ -193,6 +193,16 @@
         </section>
     </main>
 
+    <!-- Modal/Lightbox for image zoom -->
+    <div class="image-modal" id="imageModal">
+        <div class="modal-content">
+            <img src="" alt="Enlarged view of Casa Del Sol venue" class="modal-image" id="modalImage">
+            <button class="modal-close" id="modalClose" aria-label="Close image">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -250,5 +260,64 @@
     <script src="js/main.js" defer></script>
     <script src="js/parallax.js" defer></script>
     <script src="js/header-scroll.js" defer></script>
+    
+    <!-- Image zoom functionality -->
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function() {
+            const venueImage = document.getElementById('venue-image');
+            const imageModal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalClose = document.getElementById('modalClose');
+            
+            // Only set up the event listeners if the elements exist
+            if (venueImage && imageModal && modalImage && modalClose) {
+                // Get the image source from the venue image
+                const imageSrc = venueImage.querySelector('img').src;
+                
+                // Open modal when clicking on venue image
+                venueImage.addEventListener('click', function() {
+                    // Set modal image source
+                    modalImage.src = imageSrc;
+                    
+                    // Show modal with a slight delay to ensure the image is loaded
+                    requestAnimationFrame(() => {
+                        imageModal.classList.add('active');
+                    });
+                    
+                    // Prevent body scrolling when modal is open
+                    document.body.style.overflow = 'hidden';
+                });
+                
+                // Close modal when clicking the close button
+                modalClose.addEventListener('click', closeModal);
+                
+                // Close modal when clicking outside the image
+                imageModal.addEventListener('click', function(e) {
+                    if (e.target === imageModal) {
+                        closeModal();
+                    }
+                });
+                
+                // Close modal when pressing Escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && imageModal.classList.contains('active')) {
+                        closeModal();
+                    }
+                });
+                
+                function closeModal() {
+                    imageModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                    
+                    // Reset modal image source after transition ends
+                    setTimeout(() => {
+                        if (!imageModal.classList.contains('active')) {
+                            modalImage.src = '';
+                        }
+                    }, 300);
+                }
+            }
+        });
+    </script>
 </body>
 </html>
