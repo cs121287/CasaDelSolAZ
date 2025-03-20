@@ -1,6 +1,7 @@
 /**
  * Header scroll behavior for CasaDelSolAZ
  * Optimized for performance with requestAnimationFrame
+ * Fixed: Header stays visible on scroll down, hides on scroll up
  */
 document.addEventListener('DOMContentLoaded', function() {
   const header = document.getElementById('header');
@@ -8,6 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
   let lastScrollTop = 0;
   let ticking = false;
   let scrollDirection = 'none';
+  
+  // Initial check - add scrolled class immediately if needed
+  if (window.scrollY > 50) {
+    header.classList.add('scrolled');
+  }
   
   // Handle section links with smooth scrolling
   initSectionLinks();
@@ -41,11 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Initial check
-  handleScroll(window.scrollY || document.documentElement.scrollTop, 'none');
-  
   function handleScroll(scrollTop, direction) {
-    // Toggle scrolled class
+    // Toggle scrolled class but don't change header size
     if (scrollTop > 50) {
       if (!header.classList.contains('scrolled')) {
         header.classList.add('scrolled');
@@ -54,16 +57,16 @@ document.addEventListener('DOMContentLoaded', function() {
       header.classList.remove('scrolled');
     }
     
-    // Handle header visibility based on scroll direction
+    // Handle header visibility based on scroll direction - FIXED BEHAVIOR
     if (!header.classList.contains('menu-open')) {
-      if (direction === 'down' && scrollTop > 200) {
-        // Scrolling down - hide header
+      if (direction === 'up' && scrollTop > 200) {
+        // Scrolling UP - hide header (inverted from original)
         if (!header.classList.contains('header-hidden') && !header.classList.contains('section-clicked')) {
           header.classList.remove('header-visible');
           header.classList.add('header-hidden');
         }
-      } else if (direction === 'up') {
-        // Scrolling up - show header and remove section-clicked state
+      } else if (direction === 'down' || scrollTop <= 50) {
+        // Scrolling DOWN or at top - show header (inverted from original)
         header.classList.remove('header-hidden', 'section-clicked');
         header.classList.add('header-visible');
       }
@@ -89,8 +92,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const targetElement = document.querySelector(targetId);
         
         if (targetElement) {
-          // Hide header immediately when section link is clicked
-          header.classList.remove('header-visible', 'header-hidden');
+          // Keep header visible when clicking section links
+          header.classList.add('header-visible');
+          header.classList.remove('header-hidden');
           header.classList.add('section-clicked');
           
           // Calculate header height dynamically

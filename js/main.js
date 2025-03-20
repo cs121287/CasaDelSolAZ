@@ -1,6 +1,7 @@
 /**
  * Casa Del Sol AZ - Main JavaScript
- * Version: 2.0.0
+ * Version: 2.1.0
+ * Optimized for performance
  */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -11,6 +12,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     const backToTop = document.querySelector('.back-to-top');
+    const mobileMenuLinks = document.querySelectorAll('.mobile-menu-container a');
+    
+    // Track scroll position for performance
+    let lastScrollTop = 0;
+    let scrollThreshold = 50;
     
     /**
      * Initialize all functions
@@ -18,13 +24,18 @@ document.addEventListener('DOMContentLoaded', function() {
     function init() {
         setupEventListeners();
         checkScroll();
+        
+        // Set initial ARIA state for accessibility
+        if (menuToggle) {
+            menuToggle.setAttribute('aria-expanded', 'false');
+        }
     }
     
     /**
-     * Setup all event listeners
+     * Setup all event listeners with performance optimizations
      */
     function setupEventListeners() {
-        // Enhanced scroll handling with throttling
+        // Enhanced scroll handling with throttling and requestAnimationFrame
         let isScrolling = false;
         window.addEventListener('scroll', function() {
             if (!isScrolling) {
@@ -34,11 +45,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 isScrolling = true;
             }
-        });
+        }, { passive: true }); // Passive for improved scrolling performance
         
-        // Mobile menu toggle
+        // Optimized mobile menu toggle
         if (menuToggle) {
-            menuToggle.addEventListener('click', toggleMenu);
+            menuToggle.addEventListener('click', function() {
+                // Toggle menu-open class instead of active
+                header.classList.toggle('menu-open');
+                
+                // Toggle aria-expanded for accessibility
+                const expanded = header.classList.contains('menu-open');
+                menuToggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+                
+                // Toggle body scroll lock
+                document.body.style.overflow = expanded ? 'hidden' : '';
+            }, { passive: true });
+        }
+        
+        // Close menu when clicking mobile menu links
+        if (mobileMenuLinks.length > 0) {
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    header.classList.remove('menu-open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                }, { passive: true });
+            });
         }
         
         // Back to top button
@@ -48,19 +80,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Enhanced scroll handling with direction detection
+     * Enhanced scroll handling with direction detection and performance optimization
      */
     function handleScroll() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
+        // Only process if meaningful scroll change occurred (improved performance)
+        if (Math.abs(lastScrollTop - scrollTop) <= 5) return;
+        
         // Check if scrolled for header background change
-        if (scrollTop > 50) {
-            header.classList.add('scrolled');
-            if (backToTop) backToTop.classList.add('show');
+        if (scrollTop > scrollThreshold) {
+            if (!header.classList.contains('scrolled')) {
+                header.classList.add('scrolled');
+            }
+            if (backToTop && !backToTop.classList.contains('show')) {
+                backToTop.classList.add('show');
+            }
         } else {
             header.classList.remove('scrolled');
             if (backToTop) backToTop.classList.remove('show');
         }
+        
+        // Save current position for comparison
+        lastScrollTop = scrollTop;
     }
     
     /**
@@ -71,19 +113,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Toggle mobile menu
-     */
-    function toggleMenu() {
-        menuToggle.classList.toggle('active');
-        navLinks.classList.toggle('show');
-    }
-    
-    /**
-     * Scroll to top function
+     * Scroll to top function with performance optimization
      * @param {Event} e - Click event
      */
     function scrollToTop(e) {
         e.preventDefault();
+        
+        // Use native API for smooth scrolling (more performant than CSS)
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
@@ -97,14 +133,26 @@ document.addEventListener('DOMContentLoaded', function() {
     function scrollToElement(selector) {
         const element = document.querySelector(selector);
         if (element) {
-            element.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+            // Calculate header height for offset
+            const headerHeight = header ? header.offsetHeight : 0;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+            
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
             });
+            
+            // If menu is open, close it
+            if (header && header.classList.contains('menu-open')) {
+                header.classList.remove('menu-open');
+                if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
         }
     }
     
-    // Make scrollToElement available globally
+    // Make scrollToElement available globally but with performance protection
     window.scrollToElement = scrollToElement;
     
     // Initialize everything
