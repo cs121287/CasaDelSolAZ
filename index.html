@@ -16,7 +16,7 @@
 </head>
 <body class="home-page">
     <div class="video-container">
-        <video autoplay muted loop id="hero-video">
+        <video autoplay muted loop id="hero-video" preload="auto" playsinline>
             <source src="vid/background.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -25,25 +25,45 @@
 
     <header class="header transparent" id="header">
         <div class="container">
-            <div class="logo">
-                <a href="index.html">
-                    <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="200" height="80">
-                </a>
-            </div>
-            <nav class="main-nav">
+            <div class="header-main">
+                <!-- Logo aligned left -->
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="200" height="80">
+                    </a>
+                </div>
+                
+                <!-- Center content column -->
+                <div class="header-center">
+                    <!-- Navigation menu at top center -->
+                    <nav class="main-nav">
+                        <ul class="nav-links">
+                            <li><a href="index.html" class="active">Home</a></li>
+                            <li><a href="services.html">Our Services</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                    
+                    <!-- Current page title -->
+                    <h1 class="page-title">Home</h1>
+                    
+                    <!-- Section links for current page -->
+                    <div class="section-links">
+                        <a href="#why-us" class="section-link">Why Choose Casa Del Sol</a>
+                        <a href="#location" class="section-link">Our Location</a>
+                        <a href="#cta" class="section-link">Plan Your Event</a>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu toggle -->
                 <button class="menu-toggle" aria-label="Toggle Menu">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
-                <ul class="nav-links">
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="services.html">Our Services</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
+            </div>
         </div>
     </header>
 
@@ -61,7 +81,7 @@
             </div>
         </section>
 
-        <section class="features dark-section" data-speed="0.1">
+        <section id="why-us" class="features dark-section" data-speed="0.1">
             <div class="container">
                 <h2 class="section-title">Why Choose Casa Del Sol</h2>
                 <div class="feature-grid">
@@ -98,7 +118,7 @@
         </section>
 
         <!-- Map Section with Updated Styling -->
-        <section class="location-section">
+        <section id="location" class="location-section">
             <div class="container">
                 <h2 class="section-title">Our Location</h2>
                 <div class="location-flex">
@@ -131,7 +151,7 @@
             </div>
         </section>
 
-        <section class="cta dark-section">
+        <section id="cta" class="cta dark-section">
             <div class="container">
                 <div class="cta-content">
                     <h2>Ready to Plan Your Perfect Event?</h2>
@@ -199,6 +219,5 @@
     <script src="js/main.js"></script>
     <script src="js/parallax.js"></script>
     <script src="js/header-scroll.js"></script>
-
 </body>
 </html>
