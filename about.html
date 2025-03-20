@@ -5,149 +5,184 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn about Casa Del Sol AZ - Arizona's premier event venue with stunning views, elegant spaces, and exceptional service">
     <title>About Us | Casa Del Sol AZ</title>
-    <!-- Consolidated CSS file replacing multiple CSS files -->
     <link rel="stylesheet" href="css/style.css">
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body class="about-page">
-    <header class="header" id="header">
+    <div class="video-container">
+        <div class="bg-image" style="background-image: url('img/bg2.jpg');"></div>
+        <div class="video-overlay"></div>
+    </div>
+
+    <header class="header transparent" id="header">
         <div class="container">
-            <div class="logo">
-                <a href="index.html">
-                    <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="200" height="80">
-                </a>
-            </div>
-            <nav class="main-nav">
+            <div class="header-main">
+                <!-- Logo aligned left -->
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="200" height="80">
+                    </a>
+                </div>
+                
+                <!-- Center column for title and section links -->
+                <div class="header-center">
+                    <!-- Current page title in gold -->
+                    <h1 class="page-title">About Us</h1>
+                    
+                    <!-- Section links - centered below page title -->
+                    <div class="section-links">
+                        <a href="#about-intro" class="section-link">Our Background</a>
+                        <a href="#our-story" class="section-link">Our Story</a>
+                        <a href="#team" class="section-link">Our Team</a>
+                        <a href="#facilities" class="section-link">Our Facilities</a>
+                    </div>
+                </div>
+                
+                <!-- Right-aligned navigation -->
+                <div class="header-right">
+                    <!-- Navigation menu at top right -->
+                    <nav class="main-nav">
+                        <ul class="nav-links">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="services.html">Our Services</a></li>
+                            <li><a href="about.html" class="active">About Us</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                
+                <!-- Mobile menu toggle -->
                 <button class="menu-toggle" aria-label="Toggle Menu">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-					<li><a href="services.html">Our Services</a></li>
-                    <li><a href="about.html" class="active">About Us</a></li>
-                    <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
+            </div>
         </div>
     </header>
 
     <main>
+        <!-- Added Page Banner -->
         <section class="page-banner">
             <div class="container">
-                <h1>About Us</h1>
+                <h1></h1>
             </div>
         </section>
 
-        <section class="about-intro">
+        <section id="about-intro" class="about-intro">
             <div class="container">
-                <div class="about-grid">
-                    <div class="about-content">
-                        <h2>Arizona's Premier Event Venue</h2>
-                        <p>Casa Del Sol is more than just an event venue—it's a destination where memories are created and dreams come to life. Nestled in the beautiful landscape of Goodyear, Arizona, our venue combines stunning natural beauty with elegant design and exceptional service.</p>
-                        <p>Since opening our doors in 2020, we've hosted hundreds of weddings, corporate gatherings, and special celebrations, each one uniquely tailored to reflect the vision of our clients and exceed their expectations.</p>
-                        <p>At Casa Del Sol, we believe in creating experiences that exceed expectations. From the moment you step onto our property until the last guest departs, you'll be embraced by the warm hospitality and attention to detail that defines our approach.</p>
-                    </div>
-                    <div class="about-image">
-                        <img src="img/about-1.jpg" alt="Casa Del Sol venue exterior" width="500" height="400">
+                <div class="services-container">
+                    <h2 class="services-title">Arizona's Premier Event Venue</h2>
+                    <div class="about-grid">
+                        <div class="about-content">
+                            <p>Casa Del Sol is more than just an event venue—it's a destination where memories are created and dreams come to life. Nestled in the beautiful landscape of Goodyear, Arizona, our venue combines stunning natural beauty with elegant design and exceptional service.</p>
+                            <p>Since opening our doors in 2020, we've hosted hundreds of weddings, corporate gatherings, and special celebrations, each one uniquely tailored to reflect the vision of our clients and exceed their expectations.</p>
+                            <p>At Casa Del Sol, we believe in creating experiences that exceed expectations. From the moment you step onto our property until the last guest departs, you'll be embraced by the warm hospitality and attention to detail that defines our approach.</p>
+                        </div>
+                        <div class="about-image">
+                            <img src="img/about-1.jpg" alt="Casa Del Sol venue exterior" width="500" height="400">
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="story-section parallax-bg" data-speed="0.15">
+        <section id="our-story" class="story-section">
             <div class="container">
                 <h2 class="section-title">Our Story</h2>
-                <div class="story-content">
-                    <p>The journey of Casa Del Sol began with a vision to create an event space that would showcase the natural beauty of Arizona while providing world-class amenities for celebrations of all kinds. Our founders, drawn to the spectacular mountain views and vibrant sunsets of Goodyear, knew this was the perfect location.</p>
-                    <p>After extensive renovations and thoughtful design work, Casa Del Sol opened in spring 2020, quickly becoming one of the region's most sought-after venues despite the challenges of opening during an unprecedented time. Our resilience and dedication to our clients' safety and satisfaction has only strengthened our resolve to create exceptional events.</p>
-                    <p>Today, our venue continues to evolve and improve while maintaining the welcoming atmosphere and exceptional service that have become our hallmark. We take pride in being part of our clients' most important moments and creating a backdrop for memories that will last a lifetime.</p>
+                <div class="services-container">
+                    <div class="story-content">
+                        <p>The journey of Casa Del Sol began with a vision to create an event space that would showcase the natural beauty of Arizona while providing world-class amenities for celebrations of all kinds. Our founders, drawn to the spectacular mountain views and vibrant sunsets of Goodyear, knew this was the perfect location.</p>
+                        <p>After extensive renovations and thoughtful design work, Casa Del Sol opened in spring 2020, quickly becoming one of the region's most sought-after venues despite the challenges of opening during an unprecedented time. Our resilience and dedication to our clients' safety and satisfaction has only strengthened our resolve to create exceptional events.</p>
+                        <p>Today, our venue continues to evolve and improve while maintaining the welcoming atmosphere and exceptional service that have become our hallmark. We take pride in being part of our clients' most important moments and creating a backdrop for memories that will last a lifetime.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="team-section">
+        <section id="team" class="team-section">
             <div class="container">
                 <h2 class="section-title">Meet Our Team</h2>
-                <div class="team-members">
-                    <div class="team-member">
-                        <div class="team-image">
-                            <img src="img/team-1.jpg" alt="Maria Rodriguez - Venue Director" width="300" height="300">
+                <div class="services-container">
+                    <div class="team-members">
+                        <div class="team-member">
+                            <div class="team-image">
+                                <img src="img/team-1.jpg" alt="Maria Rodriguez - Venue Director" width="300" height="300">
+                            </div>
+                            <div class="team-info">
+                                <h3>Maria Rodriguez</h3>
+                                <p class="team-title">Venue Director</p>
+                                <p>With over 15 years in luxury event management, Maria oversees all operations at Casa Del Sol. Her attention to detail and commitment to excellence ensure that every event exceeds expectations.</p>
+                            </div>
                         </div>
-                        <div class="team-info">
-                            <h3>Maria Rodriguez</h3>
-                            <p class="team-title">Venue Director</p>
-                            <p>With over 15 years in luxury event management, Maria oversees all operations at Casa Del Sol. Her attention to detail and commitment to excellence ensure that every event exceeds expectations.</p>
+                        <div class="team-member">
+                            <div class="team-image">
+                                <img src="img/team-2.jpg" alt="James Anderson - Event Coordinator" width="300" height="300">
+                            </div>
+                            <div class="team-info">
+                                <h3>James Anderson</h3>
+                                <p class="team-title">Event Coordinator</p>
+                                <p>James brings creativity and organization to every event he manages. His background in design and hospitality allows him to transform clients' visions into reality with ease and style.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="team-member">
-                        <div class="team-image">
-                            <img src="img/team-2.jpg" alt="James Anderson - Event Coordinator" width="300" height="300">
-                        </div>
-                        <div class="team-info">
-                            <h3>James Anderson</h3>
-                            <p class="team-title">Event Coordinator</p>
-                            <p>James brings creativity and organization to every event he manages. His background in design and hospitality allows him to transform clients' visions into reality with ease and style.</p>
-                        </div>
-                    </div>
-                    <div class="team-member">
-                        <div class="team-image">
-                            <img src="img/team-3.jpg" alt="Sofia Patel - Client Relations" width="300" height="300">
-                        </div>
-                        <div class="team-info">
-                            <h3>Sofia Patel</h3>
-                            <p class="team-title">Client Relations</p>
-                            <p>Sofia is often the first face you'll see at Casa Del Sol. Her warm personality and dedicated approach make clients feel instantly welcome and confident in their choice of venue.</p>
+                        <div class="team-member">
+                            <div class="team-image">
+                                <img src="img/team-3.jpg" alt="Sofia Patel - Client Relations" width="300" height="300">
+                            </div>
+                            <div class="team-info">
+                                <h3>Sofia Patel</h3>
+                                <p class="team-title">Client Relations</p>
+                                <p>Sofia is often the first face you'll see at Casa Del Sol. Her warm personality and dedicated approach make clients feel instantly welcome and confident in their choice of venue.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="facilities parallax-bg" data-speed="0.2">
+        <section id="facilities" class="facilities">
             <div class="container">
                 <h2 class="section-title">Our Facilities</h2>
-                <div class="facilities-grid">
-                    <div class="facility">
-                        <div class="facility-icon">
-                            <i class="fas fa-building"></i>
+                <div class="services-container">
+                    <div class="facilities-grid">
+                        <div class="facility">
+                            <div class="facility-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <h3>Grand Ballroom</h3>
+                            <p>Our spacious 5,000 sq ft ballroom features crystal chandeliers, adjustable lighting, and floor-to-ceiling windows with mountain views. Capacity: 300 seated.</p>
                         </div>
-                        <h3>Grand Ballroom</h3>
-                        <p>Our spacious 5,000 sq ft ballroom features crystal chandeliers, adjustable lighting, and floor-to-ceiling windows with mountain views. Capacity: 300 seated.</p>
-                    </div>
-                    <div class="facility">
-                        <div class="facility-icon">
-                            <i class="fas fa-tree"></i>
+                        <div class="facility">
+                            <div class="facility-icon">
+                                <i class="fas fa-tree"></i>
+                            </div>
+                            <h3>Desert Gardens</h3>
+                            <p>Our landscaped outdoor space showcases native Arizona flora and offers a picturesque setting for ceremonies and cocktail hours. Capacity: 250 guests.</p>
                         </div>
-                        <h3>Desert Gardens</h3>
-                        <p>Our landscaped outdoor space showcases native Arizona flora and offers a picturesque setting for ceremonies and cocktail hours. Capacity: 250 guests.</p>
-                    </div>
-                    <div class="facility">
-                        <div class="facility-icon">
-                            <i class="fas fa-glass-cheers"></i>
+                        <div class="facility">
+                            <div class="facility-icon">
+                                <i class="fas fa-glass-cheers"></i>
+                            </div>
+                            <h3>Sunset Terrace</h3>
+                            <p>This elegant covered patio provides breathtaking views of the mountains and desert landscape—perfect for smaller gatherings. Capacity: 100 guests.</p>
                         </div>
-                        <h3>Sunset Terrace</h3>
-                        <p>This elegant covered patio provides breathtaking views of the mountains and desert landscape—perfect for smaller gatherings. Capacity: 100 guests.</p>
-                    </div>
-                    <div class="facility">
-                        <div class="facility-icon">
-                            <i class="fas fa-door-open"></i>
+                        <div class="facility">
+                            <div class="facility-icon">
+                                <i class="fas fa-door-open"></i>
+                            </div>
+                            <h3>Preparation Suites</h3>
+                            <p>Spacious bridal and groom suites offer comfortable spaces for wedding parties to prepare, with private bathrooms and lounging areas.</p>
                         </div>
-                        <h3>Preparation Suites</h3>
-                        <p>Spacious bridal and groom suites offer comfortable spaces for wedding parties to prepare, with private bathrooms and lounging areas.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="cta parallax-bg" data-speed="0.15">
+        <section id="contact-cta" class="cta dark-section">
             <div class="container">
                 <div class="cta-content">
                     <h2>Ready to Visit Casa Del Sol?</h2>
@@ -170,6 +205,7 @@
                         <h4>Quick Links</h4>
                         <ul>
                             <li><a href="index.html">Home</a></li>
+                            <li><a href="services.html">Our Services</a></li>
                             <li><a href="about.html">About Us</a></li>
                             <li><a href="gallery.html">Gallery</a></li>
                             <li><a href="contact.html">Contact</a></li>
@@ -178,10 +214,10 @@
                     <div class="footer-column">
                         <h4>Services</h4>
                         <ul>
-                            <li><a href="#">Weddings</a></li>
-                            <li><a href="#">Corporate Events</a></li>
-                            <li><a href="#">Special Celebrations</a></li>
-                            <li><a href="#">Private Parties</a></li>
+                            <li><a href="services.html#weddings">Weddings</a></li>
+                            <li><a href="services.html#corporate">Corporate Events</a></li>
+                            <li><a href="services.html#quinceaneras">Quinceañeras</a></li>
+                            <li><a href="services.html#anniversary">Special Celebrations</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
@@ -210,9 +246,9 @@
         <i class="fas fa-chevron-up"></i>
     </a>
 
-    <!-- Simplified JavaScript Files -->
-    <script src="js/main.js"></script>
-    <script src="js/parallax.js"></script>
-	<script src="js/header-scroll.js"></script>
+    <!-- Scripts at end of body for faster page load -->
+    <script src="js/main.js" defer></script>
+    <script src="js/parallax.js" defer></script>
+    <script src="js/header-scroll.js" defer></script>
 </body>
 </html>
