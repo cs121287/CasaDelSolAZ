@@ -21,7 +21,7 @@
     <!-- Responsive CSS (load last to ensure it overrides other styles) -->
     <link rel="stylesheet" href="css/responsive.css">
     
-    <!-- External CSS & Fonts (preload for performance) -->
+    <!-- External CSS & Fonts - Preload for performance -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
     
@@ -52,8 +52,7 @@
                     
                     <!-- Section links - centered -->
                     <div class="section-links">
-                        <a href="#contact-info" class="section-link">Contact Information</a>
-                        <a href="#contact-form" class="section-link">Inquiry Form</a>
+                        <a href="#contact-section" class="section-link">Contact & Inquiry</a>
                     </div>
                 </div>
                 
@@ -94,8 +93,7 @@
                 </nav>
                 <!-- Mobile section links if on a page with sections -->
                 <div class="section-links">
-                    <a href="#contact-info" class="section-link">Contact Information</a>
-                    <a href="#contact-form" class="section-link">Inquiry Form</a>
+                    <a href="#contact-section" class="section-link">Contact & Inquiry</a>
                 </div>
             </div>
         </div>
@@ -108,15 +106,108 @@
             </div>
         </section>
 
-        <!-- Contact Info Section - Now standalone -->
-        <section id="contact-info" class="contact-info-section">
+        <!-- Integrated Contact Section -->
+        <section id="contact-section" class="contact-section">
             <div class="container">
                 <h2 class="section-title">Get in Touch</h2>
-                <div class="contact-info-container">
-                    <div class="contact-info">
-                        <p>We'd love to hear from you! Whether you're ready to book your event or just have questions, our team is here to help make your vision a reality.</p>
+                
+                <div class="integrated-contact-container">
+                    <!-- Left column: Contact Form -->
+                    <div class="contact-form-wrapper">
+                        <div class="form-header">
+                            <h3>Inquire About Your Event</h3>
+                            <div class="form-decoration"></div>
+                        </div>
                         
-                        <div class="info-items-grid">
+                        <form id="contactForm" class="contact-form" action="#" method="post">
+                            <input type="hidden" name="time" id="form_time">
+                            
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" required autocomplete="name">
+                                <label for="name" class="floating-label">Name <span class="required">*</span></label>
+                                <div class="form-highlight"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" required autocomplete="email">
+                                <label for="email" class="floating-label">Email <span class="required">*</span></label>
+                                <div class="form-highlight"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="tel" id="phone" name="phone" autocomplete="tel">
+                                <label for="phone" class="floating-label">Phone</label>
+                                <div class="form-highlight"></div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group half date-input">
+                                    <label for="event-date">Event Date</label>
+                                    <input type="date" id="event-date" name="event-date" style="color: rgba(0, 0, 0, 0.6);">
+                                </div>
+                                
+                                <div class="form-group half select-input">
+                                    <label for="event-type">Event Type</label>
+                                    <div class="select-wrapper">
+                                        <select id="event-type" name="event-type" style="color: rgba(0, 0, 0, 0.6);">
+                                            <option value="" disabled selected hidden>Select event type...</option>
+                                            <option value="wedding">Wedding</option>
+                                            <option value="quinceanera">Quinceañera</option>
+                                            <option value="baptism">Baptism</option>
+                                            <option value="first-communion">First Communion</option>
+                                            <option value="confirmation">Confirmation Party</option>
+                                            <option value="birthday">Birthday Party</option>
+                                            <option value="anniversary">Anniversary</option>
+                                            <option value="graduation">Graduation</option>
+                                            <option value="engagement">Engagement Party</option>
+                                            <option value="bridal-shower">Bridal Shower</option>
+                                            <option value="baby-shower">Baby Shower</option>
+                                            <option value="corporate">Corporate Event</option>
+                                            <option value="memorial">Memorial Service</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                        <div class="select-arrow">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="number" id="guests" name="guests" min="1">
+                                <label for="guests" class="floating-label">Estimated Guest Count</label>
+                                <div class="form-highlight"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                                <label for="message" class="floating-label">Message <span class="required">*</span></label>
+                                <div class="form-highlight"></div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary submit-button">
+                                <span class="button-text">Submit Inquiry</span>
+                                <span class="button-icon"><i class="fas fa-paper-plane"></i></span>
+                            </button>
+                        </form>
+                        
+                        <div id="formSuccess" class="form-success hidden">
+                            <div class="success-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h3>Thank You!</h3>
+                            <p>Your message has been sent successfully. A member of our team will be in touch with you shortly.</p>
+                            <button id="resetForm" class="btn btn-secondary">Send Another Message</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Right column: Contact Information -->
+                    <div class="contact-info-wrapper">
+                        <div class="contact-intro">
+                            <p>We'd love to hear from you! Whether you're ready to book your event or just have questions, our team is here to help make your vision a reality.</p>
+                        </div>
+                        
+                        <div class="info-grid">
                             <div class="info-item">
                                 <div class="icon">
                                     <i class="fas fa-map-marker-alt"></i>
@@ -175,100 +266,6 @@
                 </div>
             </div>
         </section>
-        
-        <!-- Contact Form Section - Now standalone -->
-        <section id="contact-form-section" class="contact-form-section">
-            <div class="container">
-                <!-- Enhanced Contact Form Container -->
-                <div id="contact-form" class="contact-form-container">
-                    <div class="form-header">
-                        <h2>Inquire About Your Event</h2>
-                        <div class="form-decoration"></div>
-                    </div>
-                    
-                    <form id="contactForm" class="contact-form" action="#" method="post">
-                        <input type="hidden" name="time" id="form_time">
-                        
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" required autocomplete="name">
-                            <label for="name" class="floating-label">Name <span class="required">*</span></label>
-                            <div class="form-highlight"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" required autocomplete="email">
-                            <label for="email" class="floating-label">Email <span class="required">*</span></label>
-                            <div class="form-highlight"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <input type="tel" id="phone" name="phone" autocomplete="tel">
-                            <label for="phone" class="floating-label">Phone</label>
-                            <div class="form-highlight"></div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group half date-input">
-                                <label for="event-date">Event Date</label>
-                                <input type="date" id="event-date" name="event-date" style="color: rgba(0, 0, 0, 0.6);">
-                            </div>
-                            
-                            <div class="form-group half select-input">
-                                <label for="event-type">Event Type</label>
-                                <div class="select-wrapper">
-                                    <select id="event-type" name="event-type" style="color: rgba(0, 0, 0, 0.6);">
-                                        <option value="" disabled selected hidden>Select event type...</option>
-                                        <option value="wedding">Wedding</option>
-                                        <option value="quinceanera">Quinceañera</option>
-                                        <option value="baptism">Baptism</option>
-                                        <option value="first-communion">First Communion</option>
-                                        <option value="confirmation">Confirmation Party</option>
-                                        <option value="birthday">Birthday Party</option>
-                                        <option value="anniversary">Anniversary</option>
-                                        <option value="graduation">Graduation</option>
-                                        <option value="engagement">Engagement Party</option>
-                                        <option value="bridal-shower">Bridal Shower</option>
-                                        <option value="baby-shower">Baby Shower</option>
-                                        <option value="corporate">Corporate Event</option>
-                                        <option value="memorial">Memorial Service</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                    <div class="select-arrow">
-                                        <i class="fas fa-chevron-down"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <input type="number" id="guests" name="guests" min="1">
-                            <label for="guests" class="floating-label">Estimated Guest Count</label>
-                            <div class="form-highlight"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                            <label for="message" class="floating-label">Message <span class="required">*</span></label>
-                            <div class="form-highlight"></div>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary submit-button">
-                            <span class="button-text">Submit Inquiry</span>
-                            <span class="button-icon"><i class="fas fa-paper-plane"></i></span>
-                        </button>
-                    </form>
-                    
-                    <div id="formSuccess" class="form-success hidden">
-                        <div class="success-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <h3>Thank You!</h3>
-                        <p>Your message has been sent successfully. A member of our team will be in touch with you shortly.</p>
-                        <button id="resetForm" class="btn btn-secondary">Send Another Message</button>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
     <footer class="footer">
@@ -304,7 +301,7 @@
     <script src="js/main.js" defer></script>
     <script src="js/header-scroll.js" defer></script>
     
-    <!-- EmailJS library -->
+    <!-- EmailJS library - deferred for performance -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
     
     <!-- Form handler with EmailJS integration -->
