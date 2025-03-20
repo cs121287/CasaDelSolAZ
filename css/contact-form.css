@@ -144,6 +144,23 @@
   color: var(--form-primary);
 }
 
+/* Date and Select Input Labels - Consistent with other form labels */
+.date-input label, 
+.select-input label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--form-label);
+  font-size: 1rem;
+  font-family: 'Raleway', sans-serif;
+  transition: color var(--transition-fast);
+}
+
+/* Make labels gold when input has value */
+.date-input.has-value label,
+.select-input.has-value label {
+  color: var(--form-primary);
+}
+
 /* Select Styling */
 .select-wrapper {
   position: relative;
@@ -168,30 +185,11 @@
   padding-right: 2.5rem;
 }
 
-/* Date Input */
-.date-icon {
-  position: absolute;
-  right: 1rem;
-  top: 2.1rem;
-  color: var(--form-label);
-  pointer-events: none;
-  transition: color var(--transition-fast);
-}
-
-.form-group.focused .date-icon {
-  color: var(--form-primary);
-}
-
-.date-input input, .select-input select {
-  padding: 0.8rem 1rem;
-  height: auto;
-}
-
-.date-input label, .select-input label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
+/* Date Input - Using browser's default picker */
+.date-input input[type="date"] {
   color: var(--form-text);
+  cursor: pointer;
+  padding: var(--input-padding);
 }
 
 /* Error Styling */

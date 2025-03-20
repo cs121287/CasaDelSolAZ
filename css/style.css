@@ -807,21 +807,21 @@ p {
 }
 
 /* Fix for Contact Us section background */
-.contact-info,
-.contact-info li,
+.footer-contact-list,
+.footer-contact-list li,
 .footer-column:nth-child(3),
 .footer-column:nth-child(3) * {
   background-color: transparent !important;
   background: transparent !important;
 }
 
-.contact-info li {
+.footer-contact-list li {
   display: flex;
   align-items: flex-start;
   margin-bottom: 10px;
 }
 
-.contact-info li i {
+.footer-contact-list li i {
   color: var(--primary);
   margin-right: 10px;
   width: 16px;
@@ -1437,11 +1437,6 @@ p {
 
 .services-container {
   padding: var(--spacing-lg);
-  border-radius: 8px;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
-  box-shadow: 
-    0 0 0 2px rgba(0, 0, 0, 1),
-    0 0 8px 2px rgba(0, 0, 0, 0.6);
   text-align: center;
   contain: content;
   max-width: 1200px;
@@ -1892,12 +1887,15 @@ p {
 }
 
 .contact-info {
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: var(--spacing-md);
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
+  padding: var(--spacing-lg);
   border-radius: 8px;
+  /* Replaced border with optimized box-shadow for fade effect */
   box-shadow: 
-    0 0 0 1px rgba(0, 0, 0, 1),
-    0 0 5px 1px rgba(0, 0, 0, 0.6);
+    0 0 0 2px rgba(0, 0, 0, 1),
+    0 0 5px 3px rgba(0, 0, 0, 0.7),
+    0 0 10px 3px rgba(0, 0, 0, 0.4),
+    0 0 15px 3px rgba(0, 0, 0, 0.1);
   color: var(--light);
 }
 
