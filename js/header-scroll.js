@@ -1,101 +1,113 @@
 /**
- * Casa Del Sol AZ - Enhanced Header Scroll Effect
- * Version: 2.3.0
- * Features:
- * - Transparent header on index.html fades to background image when scrolling down
- * - Header hides when scrolling up and shows when scrolling down (reversed behavior)
- * - Smooth transitions between all states
+ * Header scroll behavior for CasaDelSolAZ
+ * Optimized for performance with requestAnimationFrame
  */
 document.addEventListener('DOMContentLoaded', function() {
-    const header = document.getElementById('header');
-    if (!header) return;
-    
-    // Variables to track scroll position and direction
-    let lastScrollTop = 0;
-    let ticking = false;
-    const scrollThreshold = 5; // Minimum scroll amount to consider
-    
-    // Set initial state based on scroll position
-    checkScrollState();
-    
-    // Check scroll position and direction when user scrolls
-    window.addEventListener('scroll', function() {
-        if (!ticking) {
-            window.requestAnimationFrame(function() {
-                checkScrollState();
-                ticking = false;
-            });
-            ticking = true;
-        }
+  const header = document.getElementById('header');
+  const menuToggle = document.querySelector('.menu-toggle');
+  let lastScrollTop = 0;
+  let ticking = false;
+  
+  // Handle section links with smooth scrolling
+  initSectionLinks();
+  
+  // Mobile menu toggle
+  if (menuToggle) {
+    menuToggle.addEventListener('click', function() {
+      header.classList.toggle('menu-open');
+      
+      if (!header.classList.contains('menu-open') && window.scrollY > 50) {
+        header.classList.add('scrolled');
+      }
     });
+  }
+  
+  // Efficient scroll handling with requestAnimationFrame
+  window.addEventListener('scroll', function() {
+    lastScrollTop = window.scrollY || document.documentElement.scrollTop;
     
-    function checkScrollState() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const isScrollingDown = scrollTop > lastScrollTop;
-        const scrollDifference = Math.abs(scrollTop - lastScrollTop);
-        
-        // Don't react to tiny scroll amounts
-        if (scrollDifference < scrollThreshold) {
-            lastScrollTop = scrollTop;
-            return;
-        }
-        
-        // Always show header at top of page
-        if (scrollTop <= 50) {
-            header.classList.remove('header-hidden');
-            header.classList.add('header-visible');
-            
-            // Reset header styles when at top - ensure proper fade out
-            if (header.classList.contains('transparent')) {
-                header.classList.remove('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        } 
-        else {
-            // Apply scrolled styles with slow fade in
-            if (header.classList.contains('transparent')) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.add('scrolled');
-            }
-            
-            // REVERSED BEHAVIOR: Hide when scrolling up, show when scrolling down
-            if (scrollTop > 200) {
-                if (!isScrollingDown && !header.classList.contains('menu-open')) {
-                    // Scrolling UP - hide header
-                    header.classList.add('header-hidden');
-                    header.classList.remove('header-visible');
-                } else if (isScrollingDown) {
-                    // Scrolling DOWN - show header
-                    header.classList.remove('header-hidden');
-                    header.classList.add('header-visible');
-                }
-            } else {
-                // Always visible in the top area of the page
-                header.classList.remove('header-hidden');
-                header.classList.add('header-visible');
-            }
-        }
-        
-        lastScrollTop = scrollTop;
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        handleScroll(lastScrollTop);
+        ticking = false;
+      });
+      
+      ticking = true;
+    }
+  });
+  
+  // Initial check
+  handleScroll(window.scrollY || document.documentElement.scrollTop);
+  
+  function handleScroll(scrollTop) {
+    // Toggle scrolled class
+    if (scrollTop > 50) {
+      if (!header.classList.contains('scrolled')) {
+        header.classList.add('scrolled');
+      }
+    } else {
+      header.classList.remove('scrolled');
     }
     
-    // Handle mobile menu toggle
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    
-    if (menuToggle && navLinks) {
-        menuToggle.addEventListener('click', function() {
-            menuToggle.classList.toggle('active');
-            navLinks.classList.toggle('show');
-            header.classList.toggle('menu-open');
-            
-            // Ensure header is visible when menu is open
-            if (navLinks.classList.contains('show')) {
-                header.classList.remove('header-hidden');
-                header.classList.add('header-visible');
-            }
-        });
+    // Handle header visibility based on scroll direction
+    if (!header.classList.contains('menu-open')) {
+      if (scrollTop > lastScrollTop && scrollTop > 200) {
+        // Scrolling down - hide header
+        if (!header.classList.contains('header-hidden')) {
+          header.classList.remove('header-visible');
+          header.classList.add('header-hidden');
+        }
+      } else {
+        // Scrolling up - show header
+        if (header.classList.contains('header-hidden')) {
+          header.classList.remove('header-hidden');
+          header.classList.add('header-visible');
+        }
+      }
     }
+  }
+  
+  function initSectionLinks() {
+    // Get all section links
+    const sectionLinks = document.querySelectorAll('.section-link');
+    
+    if (sectionLinks.length === 0) return;
+    
+    // Add click handler to each section link
+    sectionLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Get target section ID from href
+        const targetId = this.getAttribute('href');
+        if (!targetId || targetId.charAt(0) !== '#') return;
+        
+        // Find target element
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          // Calculate header height dynamically
+          const headerHeight = header.offsetHeight;
+          
+          // Get element position relative to the document
+          const elementPosition = targetElement.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
+          
+          // Smooth scroll to target
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu if open
+          if (header.classList.contains('menu-open')) {
+            header.classList.remove('menu-open');
+          }
+          
+          // Update URL hash (optional)
+          history.pushState(null, null, targetId);
+        }
+      });
+    });
+  }
 });
