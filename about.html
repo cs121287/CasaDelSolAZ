@@ -37,7 +37,7 @@
                         <a href="#about-intro" class="section-link">Our Background</a>
                         <a href="#our-story" class="section-link">Our Story</a>
                         <a href="#team" class="section-link">Our Team</a>
-                        <a href="#facilities" class="section-link">Our Facilities</a>
+                        <a href="#contact-cta" class="section-link">Book a Tour</a>
                     </div>
                 </div>
                 
@@ -144,44 +144,6 @@
             </div>
         </section>
 
-        <section id="facilities" class="facilities">
-            <div class="container">
-                <h2 class="section-title">Our Facilities</h2>
-                <div class="services-container">
-                    <div class="facilities-grid">
-                        <div class="facility">
-                            <div class="facility-icon">
-                                <i class="fas fa-building"></i>
-                            </div>
-                            <h3>Grand Ballroom</h3>
-                            <p>Our spacious 5,000 sq ft ballroom features crystal chandeliers, adjustable lighting, and floor-to-ceiling windows with mountain views. Capacity: 300 seated.</p>
-                        </div>
-                        <div class="facility">
-                            <div class="facility-icon">
-                                <i class="fas fa-tree"></i>
-                            </div>
-                            <h3>Desert Gardens</h3>
-                            <p>Our landscaped outdoor space showcases native Arizona flora and offers a picturesque setting for ceremonies and cocktail hours. Capacity: 250 guests.</p>
-                        </div>
-                        <div class="facility">
-                            <div class="facility-icon">
-                                <i class="fas fa-glass-cheers"></i>
-                            </div>
-                            <h3>Sunset Terrace</h3>
-                            <p>This elegant covered patio provides breathtaking views of the mountains and desert landscape—perfect for smaller gatherings. Capacity: 100 guests.</p>
-                        </div>
-                        <div class="facility">
-                            <div class="facility-icon">
-                                <i class="fas fa-door-open"></i>
-                            </div>
-                            <h3>Preparation Suites</h3>
-                            <p>Spacious bridal and groom suites offer comfortable spaces for wedding parties to prepare, with private bathrooms and lounging areas.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="contact-cta" class="cta dark-section">
             <div class="container">
                 <div class="cta-content">
@@ -260,64 +222,7 @@
     <script src="js/main.js" defer></script>
     <script src="js/parallax.js" defer></script>
     <script src="js/header-scroll.js" defer></script>
-    
-    <!-- Image zoom functionality -->
-    <script defer>
-        document.addEventListener('DOMContentLoaded', function() {
-            const venueImage = document.getElementById('venue-image');
-            const imageModal = document.getElementById('imageModal');
-            const modalImage = document.getElementById('modalImage');
-            const modalClose = document.getElementById('modalClose');
-            
-            // Only set up the event listeners if the elements exist
-            if (venueImage && imageModal && modalImage && modalClose) {
-                // Get the image source from the venue image
-                const imageSrc = venueImage.querySelector('img').src;
-                
-                // Open modal when clicking on venue image
-                venueImage.addEventListener('click', function() {
-                    // Set modal image source
-                    modalImage.src = imageSrc;
-                    
-                    // Show modal with a slight delay to ensure the image is loaded
-                    requestAnimationFrame(() => {
-                        imageModal.classList.add('active');
-                    });
-                    
-                    // Prevent body scrolling when modal is open
-                    document.body.style.overflow = 'hidden';
-                });
-                
-                // Close modal when clicking the close button
-                modalClose.addEventListener('click', closeModal);
-                
-                // Close modal when clicking outside the image
-                imageModal.addEventListener('click', function(e) {
-                    if (e.target === imageModal) {
-                        closeModal();
-                    }
-                });
-                
-                // Close modal when pressing Escape key
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && imageModal.classList.contains('active')) {
-                        closeModal();
-                    }
-                });
-                
-                function closeModal() {
-                    imageModal.classList.remove('active');
-                    document.body.style.overflow = '';
-                    
-                    // Reset modal image source after transition ends
-                    setTimeout(() => {
-                        if (!imageModal.classList.contains('active')) {
-                            modalImage.src = '';
-                        }
-                    }, 300);
-                }
-            }
-        });
-    </script>
+	<script src="js/image-zoom.js" defer></script>
+   
 </body>
 </html>
