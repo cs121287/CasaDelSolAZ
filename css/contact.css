@@ -1,6 +1,6 @@
 /*
  * Casa Del Sol AZ - Contact Page Styles
- * Version: 3.0.0
+ * Version: 3.0.1
  * Description: Specific styles for the contact page
  */
 
@@ -8,272 +8,147 @@
   background: url('../img/bg2.jpg') center/cover fixed no-repeat;
 }
 
-.contact-section {
-  padding: var(--spacing-xl) 0;
+.contact-info-section {
+  padding: var(--spacing-lg) 0;
+  color: var(--white);
 }
 
-.contact-container {
+.contact-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.5fr;
   gap: var(--spacing-lg);
-  max-width: 1200px;
-  margin: 0 auto;
-  contain: content; /* Performance optimization */
+  align-items: stretch; /* Changed from 'start' to 'stretch' to make heights equal */
+  contain: layout style; /* Performance optimization */
 }
 
-.contact-form-wrapper {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
-  padding: var(--spacing-lg);
-  border-radius: 8px;
-  box-shadow: 
-    0 0 0 2px rgba(0, 0, 0, 1),
-    0 0 8px 2px rgba(0, 0, 0, 0.6);
-  color: var(--white);
-}
-
-.contact-form-title {
-  font-size: 2rem;
-  margin-bottom: var(--spacing-md);
-  color: var(--primary);
-  text-align: center;
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group {
-  margin-bottom: var(--spacing-sm);
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: var(--light);
-}
-
-.form-input,
-.form-textarea,
-.form-select {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: var(--white);
-  font-family: var(--font-body);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-input:focus,
-.form-textarea:focus,
-.form-select:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3);
-}
-
-.form-textarea {
-  min-height: 150px;
-  resize: vertical;
-}
-
-.form-select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: calc(100% - 1rem) center;
-  padding-right: 2.5rem;
-}
-
-.submit-btn {
-  align-self: center;
-  margin-top: var(--spacing-md);
-  padding: 0.875rem 2.5rem;
-  background-color: var(--primary);
-  color: var(--white);
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.submit-btn:hover {
-  background-color: #c19f2e;
-  transform: translateY(-2px);
-}
-
-/* Info box */
 .contact-info {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
   padding: var(--spacing-lg);
   border-radius: 8px;
+  /* Replaced border with optimized box-shadow for fade effect */
   box-shadow: 
     0 0 0 2px rgba(0, 0, 0, 1),
-    0 0 8px 2px rgba(0, 0, 0, 0.6);
-  color: var(--white);
-  display: flex;
-  flex-direction: column;
+    0 0 5px 3px rgba(0, 0, 0, 0.7),
+    0 0 10px 3px rgba(0, 0, 0, 0.4),
+    0 0 15px 3px rgba(0, 0, 0, 0.1);
+  color: var(--light);
+  display: flex;  /* Added flex display */
+  flex-direction: column; /* Stack children vertically */
+  justify-content: space-between; /* Distribute content evenly */
 }
 
-.contact-info-title {
-  font-size: 2rem;
-  margin-bottom: var(--spacing-md);
-  color: var(--primary);
-  text-align: center;
-}
-
-.info-list {
-  margin-bottom: var(--spacing-lg);
+.contact-info p {
+  color: var(--light);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
 }
 
 .info-item {
   display: flex;
-  align-items: flex-start;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
 }
 
-.info-icon {
-  font-size: 1.25rem;
-  color: var(--primary);
-  margin-right: 1rem;
-  width: 24px;
-  text-align: center;
-}
-
-.info-content {
-  flex: 1;
-}
-
-.info-label {
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-.info-text {
-  color: var(--light);
-  line-height: 1.6;
-}
-
-.business-hours {
-  margin-top: var(--spacing-md);
-}
-
-.hours-title {
-  font-size: 1.25rem;
-  margin-bottom: var(--spacing-sm);
-  color: var(--primary);
-}
-
-.hours-list {
-  list-style: none;
-  padding: 0;
-}
-
-.hours-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.hours-item:last-child {
-  border-bottom: none;
-}
-
-.day {
-  font-weight: 600;
-}
-
-.time {
-  color: var(--light);
-}
-
-/* Map section */
-.location-section {
-  padding: var(--spacing-xl) 0;
-  background-color: rgba(18, 18, 18, 0);
-}
-
-.location-section .section-title {
-  color: var(--light);
-  position: relative;
-  margin-bottom: var(--spacing-lg);
-}
-
-.location-section .section-title:after {
-  content: '';
-  display: block;
-  width: 80px;
-  height: 3px;
+.info-item .icon {
+  flex: 0 0 50px;
+  height: 50px;
   background-color: var(--primary);
-  margin: var(--spacing-xs) auto 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 1.2rem;
+  margin-right: var(--spacing-sm);
 }
 
-.map-container {
-  width: 100%;
-  height: 450px;
+.info-item .details h3 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  color: var(--primary);
+}
+
+.info-item .details p {
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.social-connect {
+  margin-top: var(--spacing-lg);
+}
+
+.social-connect h3 {
+  font-size: 1.2rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--primary);
+}
+
+.social-icons {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: var(--white);
+  transition: all var(--transition-fast);
+  will-change: transform; /* Hardware acceleration hint */
+}
+
+.social-icons a:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
+  background-color: var(--white);
+  color: var(--primary);
+}
+
+/* Added styles to match contact form with contact info */
+.contact-form-container {
+  background-color: var(--form-bg);
   border-radius: 8px;
-  overflow: hidden;
   box-shadow: 
     0 0 0 2px rgba(0, 0, 0, 1),
-    0 0 4px 3px rgba(0, 0, 0, 0.7),
-    0 0 8px 3px rgba(0, 0, 0, 0.4),
-    0 0 12px 3px rgba(0, 0, 0, 0.1);
-  margin-bottom: var(--spacing-lg);
+    0 0 5px 3px rgba(0, 0, 0, 0.7),
+    0 0 10px 3px rgba(0, 0, 0, 0.4),
+    0 0 15px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transform: translateZ(0); /* Performance optimization */
+  overflow: hidden;
+  height: 100%; /* Ensure full height */
 }
 
-/* Form success and error messages */
-.form-message {
-  padding: 0.75rem;
-  margin-top: var(--spacing-sm);
-  border-radius: 4px;
-  text-align: center;
-  display: none;
+/* Make sure the form takes available space */
+.contact-form {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.form-message.success {
-  background-color: rgba(40, 167, 69, 0.2);
-  border: 1px solid rgba(40, 167, 69, 0.5);
-  color: #c3e6cb;
-  display: block;
+/* Success message container should also fill space */
+.form-success {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
 }
 
-.form-message.error {
-  background-color: rgba(220, 53, 69, 0.2);
-  border: 1px solid rgba(220, 53, 69, 0.5);
-  color: #f8d7da;
-  display: block;
-}
-
-/* Responsive styles */
+/* Responsive adjustments */
 @media (max-width: 992px) {
-  .contact-container {
+  .contact-grid {
     grid-template-columns: 1fr;
-    gap: var(--spacing-md);
   }
   
+  .contact-form-container,
   .contact-info {
-    order: -1; /* Show info before form on mobile */
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-form-wrapper,
-  .contact-info {
-    padding: var(--spacing-md);
-  }
-  
-  .contact-form-title,
-  .contact-info-title {
-    font-size: 1.75rem;
-  }
-  
-  .submit-btn {
-    width: 100%;
+    height: auto;
   }
 }
