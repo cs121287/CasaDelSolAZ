@@ -1060,6 +1060,10 @@ p {
 }
 
 /* ===== SERVICES PAGE STYLES ===== */
+.services-page {
+  background: url('../img/bg2.jpg') center/cover fixed no-repeat;
+}
+
 .services-intro {
   padding: var(--spacing-lg) 0;
   text-align: center;
@@ -1073,92 +1077,112 @@ p {
   line-height: 1.8;
 }
 
-.services-grid {
-  background-color: rgba(18, 18, 18, 0);
-  padding: var(--spacing-xl) 0;
+/* Services section */
+.services-section {
+  padding: var(--spacing-lg) 0;
+  background-color: transparent;
 }
 
-.services-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--spacing-md);
-}
-
-.service-item {
-  text-align: center;
-  padding: var(--spacing-md);
+.services-container {
+  padding: var(--spacing-lg);
   border-radius: 8px;
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
-  transition: transform var(--transition-med), box-shadow var(--transition-med);
-  /* Fading shadow border effect */
   box-shadow: 
     0 0 0 2px rgba(0, 0, 0, 1),
-    0 0 4px 2px rgba(0, 0, 0, 0.7),
-    0 0 8px 2px rgba(0, 0, 0, 0.4),
-    0 0 12px 2px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
+    0 0 8px 2px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  contain: content;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.service-item:hover {
-  transform: translateY(-10px);
-  /* Enhanced hover effect that preserves the fading border while adding elevation */
-  box-shadow: 
-    0 0 0 2px rgba(0, 0, 0, 1),
-    0 0 4px 2px rgba(0, 0, 0, 0.7),
-    0 0 8px 2px rgba(0, 0, 0, 0.4),
-    0 0 12px 2px rgba(0, 0, 0, 0.1),
-    0 10px 20px rgba(0, 0, 0, 0.3);
-}
-
-.service-icon {
-  width: 70px;
-  height: 70px;
-  line-height: 70px;
-  font-size: 2rem;
-  margin: 0 auto var(--spacing-sm);
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.service-content {
-  padding: var(--spacing-sm);
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.service-content h3 {
-  font-size: 1.3rem;
-  margin-bottom: var(--spacing-xs);
+.services-title {
+  font-size: 1.8rem;
+  margin-bottom: var(--spacing-md);
   color: var(--white);
+  position: relative;
+  padding-bottom: 15px;
+  display: inline-block;
 }
 
-.service-content p {
+.services-title:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background-color: var(--primary);
+}
+
+.services-horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 20px;
+  margin: 0 auto;
+  max-width: 100%;
+  padding-bottom: var(--spacing-sm);
+}
+
+.service-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--white);
+  padding: 10px;
+  border-radius: 8px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  width: 110px;
+  text-decoration: none;
+}
+
+.service-link:hover, .service-link:focus {
+  transform: translateY(-5px);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.service-link i {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  color: var(--primary);
+}
+
+.service-link span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.services-description {
   color: var(--light);
-  margin-bottom: 0; /* Removed extra bottom margin since we don't have buttons */
+  margin-top: var(--spacing-md);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* ===== FAQ SECTION ===== */
+/* FAQ section */
 .faq-section {
   padding: var(--spacing-xl) 0;
-  background-color: var(--white);
+  background-color: transparent;
 }
 
 .faq-container {
-  max-width: 800px;
+  max-width: 1200px; /* Match services container width */
   margin: 0 auto;
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/wood-bg.jpg') center/cover no-repeat;
+  box-shadow: 
+    0 0 0 2px rgba(0, 0, 0, 1),
+    0 0 8px 2px rgba(0, 0, 0, 0.6);
 }
 
 .faq-item {
   margin-bottom: var(--spacing-sm);
-  border-bottom: 1px solid var(--gray-light);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .faq-question {
@@ -1169,7 +1193,7 @@ p {
   padding: var(--spacing-sm) 0;
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--dark);
+  color: var(--white);
   text-align: left;
   background: none;
   border: none;
@@ -1198,12 +1222,56 @@ p {
 .faq-answer {
   max-height: 0;
   overflow: hidden;
-  transition: max-height var(--transition-med);
+  transition: max-height 0.3s ease;
+}
+
+.faq-answer.active {
+  max-height: 300px; /* Allow enough height for content */
 }
 
 .faq-answer p {
   padding-bottom: var(--spacing-sm);
   line-height: 1.6;
+  color: var(--light);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .services-horizontal {
+    gap: 10px;
+  }
+  
+  .service-link {
+    width: 90px;
+  }
+  
+  .service-link i {
+    font-size: 1.25rem;
+  }
+  
+  .service-link span {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .services-horizontal {
+    gap: 8px;
+  }
+  
+  .service-link {
+    width: 80px;
+    padding: 8px 5px;
+  }
+  
+  .service-link i {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+  }
+  
+  .service-link span {
+    font-size: 0.75rem;
+  }
 }
 
 /* ===== GALLERY PAGE STYLES ===== */
