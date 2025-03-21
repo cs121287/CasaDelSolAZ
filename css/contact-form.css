@@ -1,6 +1,6 @@
 /* Enhanced Contact Form Styles
-   Version: 5.0.0
-   Optimized for performance with modal dialogs
+   Version: 6.0.0
+   Modernized design with optimized performance
    Created for Casa Del Sol AZ | 2025
 */
 
@@ -8,25 +8,31 @@
   --form-primary: #d4af37;
   --form-primary-light: #e6c655;
   --form-primary-dark: #b3941e;
+  --form-primary-gradient: linear-gradient(135deg, var(--form-primary), var(--form-primary-dark));
+  --form-primary-transparent: rgba(212, 175, 55, 0.08);
   --form-bg: rgba(255, 255, 255, 0.98);
   --form-text: #333;
+  --form-subtext: #505050;
   --form-placeholder: rgba(0, 0, 0, 0.6);
   --form-label: #777;
   --form-border: #eaeaea;
+  --form-focus-border: rgba(212, 175, 55, 0.4);
   --form-error: #e74c3c;
   --form-success: #2ecc71;
   --transition-fast: 0.2s ease;
   --transition-medium: 0.3s ease;
-  --form-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-  --input-padding: 1rem 1rem 0.5rem;
-  --input-radius: 8px;
+  --form-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+  --form-shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+  --input-padding: 1rem 1.2rem 0.7rem;
+  --input-radius: 10px;
+  --section-spacing: 3rem;
   --modal-bg: rgba(0, 0, 0, 0.75);
   --modal-z-index: 1000;
 }
 
 /* Form Container */
 .contact-form-container {
-  background-color: var(--form-bg);
+  background-color: var(--primary-dark);
   border-radius: var(--input-radius);
   box-shadow: var(--form-shadow);
   color: var(--form-text);
@@ -34,37 +40,40 @@
   transform: translateZ(0); /* Performance optimization */
   will-change: transform, opacity; /* Optimize for animations */
   position: relative; /* For positioning error messages */
+  border: 1px solid rgba(212, 175, 55, 0.1);
 }
 
 /* Form Header */
 .form-header {
-  padding: 2rem 1.5rem 1rem;
+  padding: 2.5rem 2rem 1.5rem;
   position: relative;
   text-align: center;
-  background: linear-gradient(to bottom, rgba(212, 175, 55, 0.05), transparent);
+  background: linear-gradient(to bottom, var(--form-primary-transparent), transparent 70%);
 }
 
 .form-header h2, .form-header h3 {
   color: var(--form-primary-dark);
   font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
+  font-size: 2rem;
   margin: 0 0 1rem;
   position: relative;
   display: inline-block;
   text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+  letter-spacing: 0.5px;
 }
 
 .form-decoration {
   height: 3px;
-  width: 100px;
-  background: linear-gradient(to right, transparent, var(--form-primary), transparent);
+  width: 120px;
+  background: var(--form-primary-gradient);
   margin: 0 auto;
   border-radius: 3px;
+  opacity: 0.9;
 }
 
 /* Form Styling */
 .contact-form {
-  padding: 1.5rem 1.5rem 2rem;
+  padding: 2rem 2.5rem 2.5rem;
   transition: transform var(--transition-medium), opacity var(--transition-medium);
   contain: content; /* Performance optimization */
 }
@@ -77,7 +86,7 @@
 /* Form Groups */
 .form-group {
   position: relative;
-  margin-bottom: 1.75rem;
+  margin-bottom: 2rem;
   transition: margin var(--transition-fast);
 }
 
@@ -88,7 +97,7 @@
 .form-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
 }
 
 /* Form Highlights */
@@ -119,50 +128,69 @@
   border-radius: var(--input-radius);
   background-color: #fff;
   font-family: 'Raleway', sans-serif;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), color var(--transition-fast);
+  box-shadow: var(--form-shadow-inset);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast);
   -webkit-appearance: none;
   appearance: none;
+  color: var(--form-text);
+  line-height: 1.5;
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: var(--form-primary);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+  border-color: var(--form-focus-border);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--form-placeholder);
+  opacity: 0.7;
+}
+
+/* Textarea specific styling */
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
 }
 
 /* Floating Labels */
 .floating-label {
   position: absolute;
   top: 1rem;
-  left: 1rem;
+  left: 1.2rem;
   color: var(--form-label);
   pointer-events: none;
   transition: all var(--transition-fast);
   font-size: 1rem;
   transform-origin: left top;
-  background: linear-gradient(to bottom, transparent 50%, #fff 50%);
-  padding: 0 0.2rem;
-  margin-left: -0.2rem;
+  z-index: 2;
+  background: linear-gradient(to bottom, transparent 40%, #fff 40%);
+  padding: 0 0.4rem;
+  margin-left: -0.4rem;
+  border-radius: 2px;
 }
 
 .required {
   color: var(--form-error);
+  margin-left: 2px;
 }
 
 .form-group.focused .floating-label,
 .form-group.has-value .floating-label {
-  transform: translateY(-1.1rem) scale(0.85);
+  transform: translateY(-1.3rem) scale(0.85);
   color: var(--form-primary);
+  font-weight: 500;
 }
 
 /* Date and Select Input Labels */
 .date-input label, 
 .select-input label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
   color: var(--form-label);
   font-size: 0.95rem;
   font-family: 'Raleway', sans-serif;
@@ -180,6 +208,8 @@
 .date-input input[type="date"],
 .select-input select {
   color: var(--form-placeholder);
+  padding: 1rem 1.2rem;
+  height: 3.25rem;
 }
 
 .date-input.has-value input[type="date"],
@@ -194,7 +224,7 @@
 
 .select-arrow {
   position: absolute;
-  right: 1rem;
+  right: 1.2rem;
   top: 50%;
   transform: translateY(-50%);
   color: var(--form-label);
@@ -202,19 +232,19 @@
   transition: color var(--transition-fast);
 }
 
-.form-group.focused .select-arrow {
+.form-group.focused .select-arrow,
+.select-input.has-value .select-arrow {
   color: var(--form-primary);
 }
 
 .form-group select {
   cursor: pointer;
-  padding-right: 2.5rem;
+  padding-right: 2.8rem;
 }
 
 /* Date Input */
 .date-input input[type="date"] {
   cursor: pointer;
-  padding: var(--input-padding);
 }
 
 /* For Safari & Firefox compatibility with date input coloring */
@@ -227,11 +257,14 @@
 }
 
 .date-input input[type="date"]::-webkit-calendar-picker-indicator {
-  opacity: 0.7;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
 }
 
-.date-input.has-value input[type="date"]::-webkit-calendar-picker-indicator {
-  opacity: 1;
+.date-input.has-value input[type="date"]::-webkit-calendar-picker-indicator,
+.date-input input[type="date"]:hover::-webkit-calendar-picker-indicator {
+  opacity: 0.8;
 }
 
 /* Error Styling */
@@ -253,10 +286,12 @@
 .error-message {
   color: var(--form-error);
   font-size: 0.8rem;
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
   animation: fadeIn 0.3s;
   display: flex;
   align-items: center;
+  font-weight: 500;
+  letter-spacing: 0.2px;
 }
 
 .error-message::before {
@@ -269,31 +304,32 @@
   background-color: var(--form-error);
   color: white;
   border-radius: 50%;
-  margin-right: 0.4rem;
+  margin-right: 0.5rem;
   font-size: 0.7rem;
   font-weight: bold;
 }
 
 /* Submit Button */
 .submit-button {
-  background: linear-gradient(135deg, var(--form-primary), var(--form-primary-dark));
+  background: var(--form-primary-gradient);
   color: white;
   border: none;
   border-radius: var(--input-radius);
-  padding: 0.9rem 1.5rem;
+  padding: 1rem 1.5rem;
   font-size: 1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   position: relative;
   overflow: hidden;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   will-change: transform;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
 }
 
 .submit-button:before {
@@ -318,21 +354,23 @@
 
 .submit-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 6px 18px rgba(212, 175, 55, 0.3);
 }
 
 .submit-button:active {
   transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.2);
 }
 
 .button-text {
-  margin-right: 0.5rem;
+  margin-right: 0.7rem;
 }
 
 .button-icon {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 1.1rem;
 }
 
 /* Modal Component - Optimized for performance */
@@ -349,9 +387,9 @@
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s linear 0.2s, opacity 0.2s ease;
-  /* Not in the normal render flow */
   contain: layout size style;
   pointer-events: none;
+  will-change: opacity;
 }
 
 .modal.active {
@@ -368,6 +406,8 @@
   right: 0;
   bottom: 0;
   background-color: var(--modal-bg);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 
 .modal-container {
@@ -377,6 +417,7 @@
   transform: scale(0.9);
   transition: transform 0.2s ease;
   z-index: 1;
+  will-change: transform;
 }
 
 .modal.active .modal-container {
@@ -385,31 +426,31 @@
 
 .modal-content {
   background-color: var(--form-bg);
-  border-radius: var(--input-radius);
+  border-radius: 16px;
   box-shadow: var(--form-shadow);
-  padding: 2.5rem 2rem;
+  padding: 3rem 2.5rem;
   text-align: center;
   position: relative;
   overflow: hidden;
-  /* Optimize rendering */
   transform: translateZ(0);
   backface-visibility: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Success Modal Content */
 .success-content {
-  background: linear-gradient(to bottom, rgba(46, 204, 113, 0.03), transparent);
+  background: linear-gradient(to bottom, rgba(46, 204, 113, 0.04), transparent);
 }
 
 /* Error Modal Content */
 .error-content {
-  background: linear-gradient(to bottom, rgba(231, 76, 60, 0.03), transparent);
+  background: linear-gradient(to bottom, rgba(231, 76, 60, 0.04), transparent);
 }
 
 .success-icon, .error-icon {
-  font-size: 3.5rem;
-  margin-bottom: 1.5rem;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  font-size: 4rem;
+  margin-bottom: 1.75rem;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.1));
 }
 
 .success-icon {
@@ -424,15 +465,16 @@
 
 .modal-content h3 {
   color: var(--form-primary-dark);
-  font-size: 1.8rem;
+  font-size: 2rem;
   margin-bottom: 0.75rem;
   font-family: 'Playfair Display', serif;
 }
 
 .modal-content p {
-  color: var(--form-text);
-  margin-bottom: 1.75rem;
+  color: var(--form-subtext);
+  margin-bottom: 2rem;
   line-height: 1.6;
+  font-size: 1.05rem;
 }
 
 /* Close button */
@@ -441,23 +483,29 @@
   color: var(--form-primary-dark);
   border: 2px solid var(--form-primary);
   border-radius: var(--input-radius);
-  padding: 0.7rem 1.5rem;
+  padding: 0.9rem 2rem;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color var(--transition-fast), color var(--transition-fast);
-  font-weight: 500;
+  transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .modal-content .btn-secondary:hover {
   background-color: var(--form-primary);
   color: white;
+  transform: translateY(-2px);
+}
+
+.modal-content .btn-secondary:active {
+  transform: translateY(0);
 }
 
 /* Spinner Animation */
 .spinner {
   display: inline-block;
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.3rem;
+  height: 1.3rem;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   border-top-color: white;
@@ -495,19 +543,19 @@
   
   .form-group.half {
     width: 100%;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
   }
   
   .form-header h2, .form-header h3 {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
   
   .form-header {
-    padding: 1.5rem 1.25rem 0.75rem;
+    padding: 2rem 1.5rem 1rem;
   }
   
   .contact-form {
-    padding: 1.25rem 1.25rem 1.75rem;
+    padding: 1.5rem 1.5rem 2rem;
   }
   
   .modal-container {
@@ -515,32 +563,52 @@
   }
   
   .modal-content {
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 1.75rem;
   }
 }
 
 @media (max-width: 480px) {
   .contact-form-container {
-    border-radius: 8px;
+    border-radius: 10px;
   }
   
   .form-header, .contact-form {
-    padding: 1rem;
+    padding: 1.5rem 1.25rem;
   }
   
   .form-header h2, .form-header h3 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
   }
   
   .submit-button {
-    padding: 0.8rem 1.25rem;
+    padding: 0.9rem 1.25rem;
+    margin-top: 1.5rem;
   }
   
   .modal-content {
-    padding: 1.75rem 1.25rem;
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
   }
   
   .success-icon, .error-icon {
-    font-size: 3rem;
+    font-size: 3.5rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .modal-content h3 {
+    font-size: 1.7rem;
+  }
+  
+  .modal-content p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .modal-content .btn-secondary {
+    padding: 0.8rem 1.75rem;
   }
 }
