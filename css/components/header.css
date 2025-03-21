@@ -1,11 +1,12 @@
 /*
- * Casa Del Sol AZ - Optimized Header Styles
- * Version: 3.1.0
- * Performance-optimized with GPU acceleration
- * Last updated: 2025-03-21 21:50:22
+ * Casa Del Sol AZ - Performance-Optimized Header Styles
+ * Version: 3.2.0
+ * Last updated: 2025-03-21 23:25:24
+ * Repository: https://github.com/cs121287/CasaDelSolAZ
+ * Author: cs121287
  */
 
-/* Base header with hardware acceleration */
+/* ===== BASE HEADER STYLES ===== */
 .header {
   position: fixed;
   top: 0;
@@ -16,16 +17,18 @@
   transition: transform 0.3s ease, background-color 0.3s ease;
   background-color: var(--dark);
   transform: translateZ(0); /* Force GPU rendering */
+  contain: layout style; /* Limit paint area */
+  will-change: transform, background-color;
 }
 
 .header.transparent {
   background-color: transparent;
 }
 
-/* Scrolled state with background image */
+/* Scrolled state with correct image path */
 .header.scrolled {
   background-color: rgba(17, 17, 17, 0.95);
-  background-image: url('../img/cta-bg.jpg'); /* Critical: Path relative to the CSS file */
+  background-image: url('../../img/cta-bg.jpg'); /* Path from css/components to root/img */
   background-size: cover;
   background-position: center;
   border-bottom: 2px solid #000;
@@ -36,7 +39,7 @@
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* Header visibility states */
+/* Header visibility classes */
 .header.header-visible {
   transform: translateY(0);
 }
@@ -45,15 +48,16 @@
   transform: translateY(-100%);
 }
 
-/* Header layout - efficient two-column */
+/* ===== HEADER LAYOUT ===== */
 .header-main {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
+  contain: layout style;
 }
 
-/* Logo styles */
+/* ===== LOGO STYLES ===== */
 .logo {
   display: flex;
   align-items: center;
@@ -73,7 +77,7 @@
   contain: strict;
 }
 
-/* Main navigation */
+/* ===== DESKTOP NAVIGATION ===== */
 .main-nav {
   margin-left: auto;
 }
@@ -125,7 +129,7 @@
   transform: scaleX(1);
 }
 
-/* Dropdown menu styles */
+/* ===== DESKTOP DROPDOWN STYLES ===== */
 .nav-links .has-dropdown {
   position: relative;
 }
@@ -198,7 +202,7 @@
   display: none;
 }
 
-/* Mobile menu toggle */
+/* ===== MOBILE TOGGLE BUTTON ===== */
 .menu-toggle {
   display: none;
   background: none;
@@ -233,7 +237,7 @@
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* Mobile menu container */
+/* ===== MOBILE MENU CONTAINER ===== */
 .mobile-menu-container {
   position: fixed;
   top: 0;
@@ -241,7 +245,7 @@
   width: 100%;
   height: 100%;
   background-color: rgba(17, 17, 17, 0.98);
-  background-image: url('../img/cta-bg.jpg');
+  background-image: url('../../img/cta-bg.jpg'); /* Path from css/components to root/img */
   background-size: cover;
   background-position: center;
   background-blend-mode: multiply;
@@ -276,7 +280,7 @@
   transform: translateY(0);
 }
 
-/* Mobile navigation styles */
+/* ===== MOBILE NAVIGATION STYLES ===== */
 .mobile-nav {
   margin-bottom: 2rem;
 }
@@ -307,10 +311,11 @@
   border-radius: 8px;
 }
 
-/* Mobile dropdown menu */
+/* ===== MOBILE DROPDOWN MENU STYLES ===== */
 .mobile-dropdown-item {
   position: relative;
   width: 100%;
+  contain: layout style;
 }
 
 .mobile-dropdown-toggle {
@@ -321,7 +326,9 @@
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.2);
   transition: background-color 0.2s ease;
+  will-change: transform;
   transform: translateZ(0);
+  touch-action: manipulation;
 }
 
 .mobile-dropdown-toggle i {
@@ -386,7 +393,7 @@
   padding-left: 1.75rem !important;
 }
 
-/* Staggered animation for dropdown items */
+/* ===== STAGGERED ANIMATION FOR DROPDOWN ITEMS ===== */
 .mobile-dropdown-content li:nth-child(1) {
   transition-delay: 0.05s;
 }
@@ -403,7 +410,7 @@
   transition-delay: 0.25s;
 }
 
-/* Responsive breakpoints */
+/* ===== RESPONSIVE BREAKPOINTS ===== */
 @media (max-width: 992px) {
   .main-nav {
     display: none;
@@ -444,7 +451,7 @@
   }
 }
 
-/* Reduced motion preferences */
+/* ===== A11Y: REDUCED MOTION PREFERENCES ===== */
 @media (prefers-reduced-motion: reduce) {
   .header,
   .nav-links a::after,
@@ -462,7 +469,7 @@
   }
 }
 
-/* Print styles */
+/* ===== PRINT STYLES ===== */
 @media print {
   .header {
     position: static;
