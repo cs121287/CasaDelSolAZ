@@ -1,0 +1,112 @@
+/* Mobile dropdown menu enhancements */
+.mobile-dropdown-item {
+  position: relative;
+  width: 100%;
+}
+
+.mobile-dropdown-toggle {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem !important;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.mobile-dropdown-toggle i {
+  font-size: 0.8rem;
+  transition: transform 0.2s ease;
+  opacity: 0.8;
+}
+
+.mobile-dropdown-toggle.active {
+  background-color: rgba(212, 175, 55, 0.15);
+  color: var(--primary) !important;
+}
+
+.mobile-dropdown-toggle.active i {
+  transform: rotate(-180deg);
+  opacity: 1;
+}
+
+.mobile-dropdown-content {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  contain: content;
+  opacity: 0.8;
+}
+
+.mobile-dropdown-content.active {
+  max-height: 300px;
+  opacity: 1;
+  padding-bottom: 0.5rem;
+}
+
+.mobile-dropdown-content li {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.mobile-dropdown-content.active li {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.mobile-dropdown-content a {
+  padding: 0.5rem 1.5rem !important;
+  font-size: 1rem !important;
+  display: block;
+  color: var(--light);
+  text-decoration: none;
+  transition: color 0.2s ease, padding 0.2s ease;
+  border-left: 2px solid transparent;
+  text-align: left !important;
+}
+
+.mobile-dropdown-content a:hover,
+.mobile-dropdown-content a:focus {
+  color: var(--primary);
+  border-left-color: var(--primary);
+  padding-left: 1.75rem !important;
+}
+
+/* Staggered animation for dropdown items */
+.mobile-dropdown-content li:nth-child(1) {
+  transition-delay: 0.05s;
+}
+.mobile-dropdown-content li:nth-child(2) {
+  transition-delay: 0.1s;
+}
+.mobile-dropdown-content li:nth-child(3) {
+  transition-delay: 0.15s;
+}
+.mobile-dropdown-content li:nth-child(4) {
+  transition-delay: 0.2s;
+}
+.mobile-dropdown-content li:nth-child(5) {
+  transition-delay: 0.25s;
+}
+
+/* Print styles - hide mobile menu */
+@media print {
+  .mobile-menu-container {
+    display: none !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-dropdown-toggle i,
+  .mobile-dropdown-content,
+  .mobile-dropdown-content li {
+    transition: none !important;
+  }
+}
