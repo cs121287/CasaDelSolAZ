@@ -1,7 +1,8 @@
 /*
- * Casa Del Sol AZ - Optimized Header Styles
+ * Casa Del Sol AZ - Modern Header Styles
  * Version: 3.0.0
- * Performance-focused implementation with GPU acceleration
+ * Performance-focused implementation for fast page loads
+ * Last updated: 2025-03-21 21:32:02
  */
 
 .header {
@@ -14,7 +15,7 @@
   transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
   background-color: var(--dark);
   transform: translateZ(0); /* Hardware acceleration */
-  will-change: transform, background-color;
+  will-change: transform, background-color; /* Performance hint */
   contain: layout style; /* Limit paint area */
 }
 
@@ -41,12 +42,12 @@
   transform: translateY(-100%);
 }
 
-/* Header layout - optimized for grid layout */
+/* Header layout - updated to two columns */
 .header-main {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 1.5rem;
+  padding: 0 1rem;
 }
 
 /* Logo styles */
@@ -68,66 +69,9 @@
   backface-visibility: hidden;
 }
 
-/* Center header content */
-.header-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.page-title {
-  color: var(--primary);
-  font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
-  margin: 0 0 0.3rem;
-  text-align: center;
-  font-weight: 700;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  contain: content; /* Optimize rendering */
-}
-
-.section-links {
-  display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-}
-
-.section-link {
-  color: var(--light);
-  text-decoration: none;
-  font-size: 0.9rem;
-  letter-spacing: 0.5px;
-  opacity: 0.9;
-  transition: opacity 0.2s ease, color 0.2s ease;
-  position: relative;
-}
-
-.section-link::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: var(--primary);
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.2s ease;
-}
-
-.section-link:hover {
-  color: var(--primary);
-  opacity: 1;
-}
-
-.section-link:hover::after {
-  transform: scaleX(1);
-}
-
 /* Main navigation */
 .main-nav {
-  justify-self: end;
+  margin-left: auto;
 }
 
 .nav-links {
@@ -357,64 +301,127 @@
   border-radius: 8px;
 }
 
-/* Mobile section links */
-.mobile-menu-container .section-links {
-  flex-direction: column;
-  gap: 0.75rem;
-  align-items: center;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  transition-delay: 0.2s;
+/* Mobile dropdown menu enhancements */
+.mobile-dropdown-item {
+  position: relative;
+  width: 100%;
 }
 
-.header.menu-open .mobile-menu-container .section-links {
+.mobile-dropdown-toggle {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem !important;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.mobile-dropdown-toggle i {
+  font-size: 0.8rem;
+  transition: transform 0.2s ease;
+  opacity: 0.8;
+}
+
+.mobile-dropdown-toggle.active {
+  background-color: rgba(212, 175, 55, 0.15);
+  color: var(--primary) !important;
+}
+
+.mobile-dropdown-toggle.active i {
+  transform: rotate(-180deg);
   opacity: 1;
-  transform: translateY(0);
+}
+
+.mobile-dropdown-content {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  contain: content;
+  opacity: 0.8;
+}
+
+.mobile-dropdown-content.active {
+  max-height: 300px;
+  opacity: 1;
+  padding-bottom: 0.5rem;
+}
+
+.mobile-dropdown-content li {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.mobile-dropdown-content.active li {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.mobile-dropdown-content a {
+  padding: 0.5rem 1.5rem !important;
+  font-size: 1rem !important;
+  display: block;
+  color: var(--light);
+  text-decoration: none;
+  transition: color 0.2s ease, padding 0.2s ease;
+  border-left: 2px solid transparent;
+  text-align: left !important;
+}
+
+.mobile-dropdown-content a:hover,
+.mobile-dropdown-content a:focus {
+  color: var(--primary);
+  border-left-color: var(--primary);
+  padding-left: 1.75rem !important;
+}
+
+/* Staggered animation for dropdown items */
+.mobile-dropdown-content li:nth-child(1) {
+  transition-delay: 0.05s;
+}
+.mobile-dropdown-content li:nth-child(2) {
+  transition-delay: 0.1s;
+}
+.mobile-dropdown-content li:nth-child(3) {
+  transition-delay: 0.15s;
+}
+.mobile-dropdown-content li:nth-child(4) {
+  transition-delay: 0.2s;
+}
+.mobile-dropdown-content li:nth-child(5) {
+  transition-delay: 0.25s;
 }
 
 /* Responsive breakpoints */
 @media (max-width: 992px) {
-  .header-right {
+  .main-nav {
     display: none;
   }
   
   .menu-toggle {
     display: block;
   }
-  
-  .page-title {
-    font-size: 1.5rem;
-  }
-  
-  .section-links {
-    display: none;
-  }
-  
-  .mobile-menu-container .section-links {
-    display: flex;
-  }
 }
 
 @media (max-width: 768px) {
-  .header-center {
-    justify-content: flex-start;
-    align-items: flex-start;
+  .logo img {
+    height: 55px;
   }
   
-  .page-title {
-    font-size: 1.4rem;
-    text-align: left;
+  .mobile-menu-content {
+    max-width: 90%;
   }
 }
 
 @media (max-width: 576px) {
   .logo img {
     height: 50px;
-  }
-  
-  .page-title {
-    font-size: 1.2rem;
   }
   
   .mobile-menu-content {
@@ -432,7 +439,9 @@
   .mobile-menu-container,
   .mobile-menu-content,
   .mobile-nav .nav-links li,
-  .mobile-menu-container .section-links {
+  .mobile-dropdown-toggle i,
+  .mobile-dropdown-content,
+  .mobile-dropdown-content li {
     transition: none !important;
     animation: none !important;
   }
@@ -452,15 +461,11 @@
     filter: brightness(0) !important;
   }
   
-  .nav-links a,
-  .section-link {
+  .nav-links a {
     color: black !important;
   }
   
-  .menu-toggle {
-    display: none !important;
-  }
-  
+  .menu-toggle,
   .mobile-menu-container {
     display: none !important;
   }
