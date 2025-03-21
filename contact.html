@@ -6,10 +6,15 @@
     <meta name="description" content="Contact Casa Del Sol AZ to schedule a tour or inquire about hosting your event at our premier Arizona venue">
     <title>Contact Us | Casa Del Sol AZ</title>
     
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Preload critical resources -->
+    <link rel="preload" href="css/style.css" as="style">
+    <link rel="preload" href="css/contact.css" as="style">
+    <link rel="preload" href="css/contact-form.css" as="style">
+    <link rel="preload" href="fonts/PlayfairDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/Raleway-Regular.woff2" as="font" type="font/woff2" crossorigin>
     
-    <!-- Component CSS -->
+    <!-- Core CSS - Load critical styles immediately -->
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components/header.css">
     <link rel="stylesheet" href="css/components/footer.css">
     <link rel="stylesheet" href="css/components/common.css">
@@ -21,17 +26,22 @@
     <!-- Responsive CSS (load last to ensure it overrides other styles) -->
     <link rel="stylesheet" href="css/responsive.css">
     
-    <!-- External CSS & Fonts - Preload for performance -->
+    <!-- Optimized Font Awesome loading -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
     
+    <!-- Google Fonts with display=swap for better performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    
+    <!-- DNS prefetch for third-party services -->
+    <link rel="dns-prefetch" href="//cdn.emailjs.com">
 </head>
 <body class="contact-page">
+    <!-- Background container with reduced paint operations -->
     <div class="video-container">
-        <div class="bg-image" style="background-image: url('img/bg2.jpg');"></div>
+        <div class="bg-image" style="background-image: url('img/bg2.jpg');" loading="eager"></div>
         <div class="video-overlay"></div>
     </div>
 
@@ -41,7 +51,7 @@
                 <!-- Logo aligned left -->
                 <div class="logo">
                     <a href="index.html">
-                        <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="200" height="80">
+                        <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="200" height="80" fetchpriority="high">
                     </a>
                 </div>
                 
@@ -100,12 +110,11 @@
     </header>
 
     <main>
-        <section class="page-banner">
+		        <section class="page-banner">
             <div class="container">
                 <h1></h1>
             </div>
         </section>
-
         <!-- Integrated Contact Section -->
         <section id="contact-section" class="contact-section">
             <div class="container">
@@ -124,32 +133,32 @@
                             
                             <div class="form-group">
                                 <input type="text" id="name" name="name" required autocomplete="name">
-                                <label for="name" class="floating-label">Name <span class="required">*</span></label>
+                                <label for="name" class="floating-label">Full Name <span class="required">*</span></label>
                                 <div class="form-highlight"></div>
                             </div>
                             
                             <div class="form-group">
                                 <input type="email" id="email" name="email" required autocomplete="email">
-                                <label for="email" class="floating-label">Email <span class="required">*</span></label>
+                                <label for="email" class="floating-label">Email Address <span class="required">*</span></label>
                                 <div class="form-highlight"></div>
                             </div>
                             
                             <div class="form-group">
                                 <input type="tel" id="phone" name="phone" autocomplete="tel">
-                                <label for="phone" class="floating-label">Phone</label>
+                                <label for="phone" class="floating-label">Phone Number</label>
                                 <div class="form-highlight"></div>
                             </div>
                             
                             <div class="form-row">
                                 <div class="form-group half date-input">
-                                    <label for="event-date">Event Date</label>
-                                    <input type="date" id="event-date" name="event-date" style="color: rgba(0, 0, 0, 0.6);">
+                                    <label for="event-date">Preferred Event Date</label>
+                                    <input type="date" id="event-date" name="event-date" style="color: var(--form-placeholder);">
                                 </div>
                                 
                                 <div class="form-group half select-input">
                                     <label for="event-type">Event Type</label>
                                     <div class="select-wrapper">
-                                        <select id="event-type" name="event-type" style="color: rgba(0, 0, 0, 0.6);">
+                                        <select id="event-type" name="event-type" style="color: var(--form-placeholder);">
                                             <option value="" disabled selected hidden>Select event type...</option>
                                             <option value="wedding">Wedding</option>
                                             <option value="quinceanera">Quinceañera</option>
@@ -181,7 +190,7 @@
                             
                             <div class="form-group">
                                 <textarea id="message" name="message" rows="5" required></textarea>
-                                <label for="message" class="floating-label">Message <span class="required">*</span></label>
+                                <label for="message" class="floating-label">Your Message <span class="required">*</span></label>
                                 <div class="form-highlight"></div>
                             </div>
                             
@@ -190,15 +199,6 @@
                                 <span class="button-icon"><i class="fas fa-paper-plane"></i></span>
                             </button>
                         </form>
-                        
-                        <div id="formSuccess" class="form-success hidden">
-                            <div class="success-icon">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <h3>Thank You!</h3>
-                            <p>Your message has been sent successfully. A member of our team will be in touch with you shortly.</p>
-                            <button id="resetForm" class="btn btn-secondary">Send Another Message</button>
-                        </div>
                     </div>
                     
                     <!-- Right column: Contact Information -->
@@ -210,7 +210,7 @@
                         <div class="info-grid">
                             <div class="info-item">
                                 <div class="icon">
-                                    <i class="fas fa-map-marker-alt"></i>
+                                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                                 </div>
                                 <div class="details">
                                     <h3>Location</h3>
@@ -220,27 +220,27 @@
                             
                             <div class="info-item">
                                 <div class="icon">
-                                    <i class="fas fa-phone"></i>
+                                    <i class="fas fa-phone" aria-hidden="true"></i>
                                 </div>
                                 <div class="details">
                                     <h3>Phone</h3>
-                                    <p>(480) 123-4567</p>
+                                    <p><a href="tel:+14801234567">(480) 123-4567</a></p>
                                 </div>
                             </div>
                             
                             <div class="info-item">
                                 <div class="icon">
-                                    <i class="fas fa-envelope"></i>
+                                    <i class="fas fa-envelope" aria-hidden="true"></i>
                                 </div>
                                 <div class="details">
                                     <h3>Email</h3>
-                                    <p>info@casadesolaz.com</p>
+                                    <p><a href="mailto:info@casadesolaz.com">info@casadesolaz.com</a></p>
                                 </div>
                             </div>
                             
                             <div class="info-item">
                                 <div class="icon">
-                                    <i class="fas fa-clock"></i>
+                                    <i class="fas fa-clock" aria-hidden="true"></i>
                                 </div>
                                 <div class="details">
                                     <h3>Hours</h3>
@@ -255,10 +255,10 @@
                             <h3>Connect With Us</h3>
                             <div class="social-icons">
                                 <a href="https://www.instagram.com/casadelsol_events/" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
-                                    <i class="fab fa-instagram"></i>
+                                    <i class="fab fa-instagram" aria-hidden="true"></i>
                                 </a>
                                 <a href="https://www.tiktok.com/@casa.del.sol.events" target="_blank" rel="noopener" aria-label="Follow us on TikTok">
-                                    <i class="fab fa-tiktok"></i>
+                                    <i class="fab fa-tiktok" aria-hidden="true"></i>
                                 </a>
                             </div>
                         </div>
@@ -266,13 +266,43 @@
                 </div>
             </div>
         </section>
+        
+        <!-- Modal containers - Outside the regular flow for performance -->
+        <div id="successModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="successModalTitle">
+            <div class="modal-overlay"></div>
+            <div class="modal-container">
+                <div class="modal-content success-content">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle" aria-hidden="true"></i>
+                    </div>
+                    <h3 id="successModalTitle">Thank You!</h3>
+                    <p>Your message has been sent successfully. A member of our team will be in touch with you shortly.</p>
+                    <button id="closeSuccessModal" class="btn btn-secondary">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error modal for form submission errors -->
+        <div id="errorModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="errorModalTitle">
+            <div class="modal-overlay"></div>
+            <div class="modal-container">
+                <div class="modal-content error-content">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                    </div>
+                    <h3 id="errorModalTitle">Submission Error</h3>
+                    <p id="errorModalMessage">There was a problem sending your message. Please try again or contact us directly at (480) 123-4567.</p>
+                    <button id="closeErrorModal" class="btn btn-secondary">Close</button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="120" height="48">
+                    <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="120" height="48" loading="lazy">
                     <p>Where Memories Are Made</p>
                 </div>
             </div>
@@ -280,10 +310,10 @@
                 <p class="social-heading">Follow Us On Instagram and TikTok</p>
                 <div class="social-links">
                     <a href="https://www.instagram.com/casadelsol_events/" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
-                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-instagram" aria-hidden="true"></i>
                     </a>
                     <a href="https://www.tiktok.com/@casa.del.sol.events" target="_blank" rel="noopener" aria-label="Follow us on TikTok">
-                        <i class="fab fa-tiktok"></i>
+                        <i class="fab fa-tiktok" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
@@ -294,312 +324,52 @@
     </footer>
 
     <a href="#header" class="back-to-top" aria-label="Back to top">
-        <i class="fas fa-chevron-up"></i>
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
     </a>
     
     <!-- Core scripts with performance optimization -->
     <script src="js/main.js" defer></script>
     <script src="js/header-scroll.js" defer></script>
     
-    <!-- EmailJS library - deferred for performance -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+    <!-- EmailJS library - load asynchronously -->
+    <script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.6.4/email.min.js" async></script>
     
-    <!-- Form handler with EmailJS integration -->
-    <script>
-    (function() {
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize EmailJS
-            emailjs.init({
-                publicKey: "b3T2GoOXJmt08AM0y"
-            });
-            
-            const contactForm = document.getElementById('contactForm');
-            const formSuccess = document.getElementById('formSuccess');
-            
-            if (!contactForm || !formSuccess) return;
-            
-            // Initialize form effects
-            initFormEffects();
-            
-            // Initialize date and select handlers
-            initDateAndSelectHandlers();
-            
-            // Set current timestamp
-            const formTime = document.getElementById('form_time');
-            if (formTime) {
-                formTime.value = new Date().toLocaleString('en-US');
-            }
-            
-            // Form submission
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Validate form
-                if (!validateForm(this)) return;
-                
-                // Update button state
-                const submitBtn = this.querySelector('button[type="submit"]');
-                const buttonText = submitBtn.querySelector('.button-text');
-                const buttonIcon = submitBtn.querySelector('.button-icon');
-                
-                submitBtn.disabled = true;
-                buttonText.textContent = 'Sending...';
-                buttonIcon.innerHTML = '<span class="spinner"></span>';
-                
-                // Prepare form data
-                const params = {
-                    user_name: document.getElementById('name').value,
-                    user_email: document.getElementById('email').value,
-                    user_phone: document.getElementById('phone').value || 'Not provided',
-                    event_type: document.getElementById('event-type').value || 'Not specified',
-                    event_date: document.getElementById('event-date').value || 'Not specified',
-                    guests: document.getElementById('guests').value || 'Not specified',
-                    message: document.getElementById('message').value,
-                    time: formTime ? formTime.value : new Date().toLocaleString('en-US')
-                };
-                
-                // Send with EmailJS
-                emailjs.send('service_vkdsa6d', 'template_q9f1rn2', params)
-                    .then(function() {
-                        // Show success message
-                        contactForm.classList.add('form-sent');
-                        
-                        setTimeout(function() {
-                            contactForm.style.display = 'none';
-                            formSuccess.classList.remove('hidden');
-                            
-                            requestAnimationFrame(function() {
-                                formSuccess.classList.add('show');
-                            });
-                        }, 600);
-                    })
-                    .catch(function(error) {
-                        console.error('EmailJS error:', error);
-                        alert('There was a problem sending your message. Please try again or contact us directly at (480) 123-4567.');
-                        
-                        // Reset button state
-                        submitBtn.disabled = false;
-                        buttonText.textContent = 'Submit Inquiry';
-                        buttonIcon.innerHTML = '<i class="fas fa-paper-plane"></i>';
-                    });
-            });
-            
-            // Reset form handler
-            const resetBtn = document.getElementById('resetForm');
-            if (resetBtn) {
-                resetBtn.addEventListener('click', function() {
-                    formSuccess.classList.remove('show');
-                    
-                    setTimeout(function() {
-                        formSuccess.classList.add('hidden');
-                        contactForm.reset();
-                        
-                        // Update timestamp
-                        if (formTime) {
-                            formTime.value = new Date().toLocaleString('en-US');
-                        }
-                        
-                        // Reset form groups
-                        const formGroups = contactForm.querySelectorAll('.form-group');
-                        for (let i = 0; i < formGroups.length; i++) {
-                            formGroups[i].classList.remove('focused', 'has-value', 'has-error');
-                        }
-                        
-                        // Also reset date and select containers
-                        const dateContainer = document.querySelector('.date-input');
-                        const selectContainer = document.querySelector('.select-input');
-                        if (dateContainer) dateContainer.classList.remove('has-value');
-                        if (selectContainer) selectContainer.classList.remove('has-value');
-                        
-                        // Reset input colors for date and select
-                        const dateInput = document.getElementById('event-date');
-                        const selectInput = document.getElementById('event-type');
-                        if (dateInput) dateInput.style.color = 'rgba(0, 0, 0, 0.6)';
-                        if (selectInput) selectInput.style.color = 'rgba(0, 0, 0, 0.6)';
-                        
-                        contactForm.style.display = 'block';
-                        contactForm.classList.remove('form-sent');
-                        
-                        const submitBtn = contactForm.querySelector('button[type="submit"]');
-                        const buttonText = submitBtn.querySelector('.button-text');
-                        const buttonIcon = submitBtn.querySelector('.button-icon');
-                        
-                        submitBtn.disabled = false;
-                        buttonText.textContent = 'Submit Inquiry';
-                        buttonIcon.innerHTML = '<i class="fas fa-paper-plane"></i>';
-                    }, 300);
-                });
-            }
-            
-            // Handle has-value class for date and select inputs
-            function initDateAndSelectHandlers() {
-                // Date input value handler
-                const dateInput = document.getElementById('event-date');
-                if (dateInput) {
-                    const dateContainer = dateInput.closest('.date-input');
-                    
-                    // Set initial state if date has value
-                    if (dateInput.value) {
-                        dateContainer.classList.add('has-value');
-                        dateInput.style.color = 'var(--form-text)';
-                    }
-                    
-                    // Add change event listener
-                    dateInput.addEventListener('change', function() {
-                        if (this.value) {
-                            dateContainer.classList.add('has-value');
-                            this.style.color = 'var(--form-text)';
-                        } else {
-                            dateContainer.classList.remove('has-value');
-                            this.style.color = 'rgba(0, 0, 0, 0.6)';
-                        }
-                    });
-                    
-                    // Also handle the input event for better responsiveness
-                    dateInput.addEventListener('input', function() {
-                        if (this.value) {
-                            dateContainer.classList.add('has-value');
-                            this.style.color = 'var(--form-text)';
-                        } else {
-                            dateContainer.classList.remove('has-value');
-                            this.style.color = 'rgba(0, 0, 0, 0.6)';
-                        }
-                    });
-                }
-                
-                // Select input value handler
-                const selectInput = document.getElementById('event-type');
-                if (selectInput) {
-                    const selectContainer = selectInput.closest('.select-input');
-                    
-                    // Set initial state if select has value
-                    if (selectInput.value && selectInput.value !== '') {
-                        selectContainer.classList.add('has-value');
-                        selectInput.style.color = 'var(--form-text)';
-                    }
-                    
-                    // Add change event listener
-                    selectInput.addEventListener('change', function() {
-                        if (this.value && this.value !== '') {
-                            selectContainer.classList.add('has-value');
-                            this.style.color = 'var(--form-text)';
-                        } else {
-                            selectContainer.classList.remove('has-value');
-                            this.style.color = 'rgba(0, 0, 0, 0.6)';
-                        }
-                    });
-                }
-            }
-            
-            // Form validation function
-            function validateForm(form) {
-                const requiredFields = form.querySelectorAll('[required]');
-                let isValid = true;
-                
-                for (let i = 0; i < requiredFields.length; i++) {
-                    const field = requiredFields[i];
-                    const fieldGroup = field.closest('.form-group');
-                    
-                    if (!field.value.trim()) {
-                        fieldGroup.classList.add('has-error');
-                        isValid = false;
-                        
-                        // Add error message if needed
-                        if (!fieldGroup.querySelector('.error-message')) {
-                            const errorMsg = document.createElement('div');
-                            errorMsg.className = 'error-message';
-                            errorMsg.textContent = 'This field is required';
-                            fieldGroup.appendChild(errorMsg);
-                        }
-                    } else {
-                        fieldGroup.classList.remove('has-error');
-                        const errorMsg = fieldGroup.querySelector('.error-message');
-                        if (errorMsg) errorMsg.remove();
-                    }
-                }
-                
-                if (!isValid) {
-                    // Focus first invalid field
-                    form.querySelector('.has-error input, .has-error textarea').focus();
-                }
-                
-                return isValid;
-            }
-            
-            // Initialize form effects
-            function initFormEffects() {
-                const inputs = document.querySelectorAll('.form-group input, .form-group textarea, .form-group select');
-                
-                // Set initial state for inputs with values
-                inputs.forEach(input => {
-                    if (input.value) {
-                        input.parentElement.classList.add('has-value');
-                    }
-                    
-                    // Focus event
-                    input.addEventListener('focus', function() {
-                        this.parentElement.classList.add('focused');
-                    });
-                    
-                    // Blur event
-                    input.addEventListener('blur', function() {
-                        this.parentElement.classList.remove('focused');
-                        
-                        if (this.value) {
-                            this.parentElement.classList.add('has-value');
-                        } else {
-                            this.parentElement.classList.remove('has-value');
-                        }
-                        
-                        // Validate required fields
-                        if (this.hasAttribute('required')) {
-                            const fieldGroup = this.closest('.form-group');
-                            
-                            if (!this.value.trim()) {
-                                fieldGroup.classList.add('has-error');
-                                
-                                if (!fieldGroup.querySelector('.error-message')) {
-                                    const errorMsg = document.createElement('div');
-                                    errorMsg.className = 'error-message';
-                                    errorMsg.textContent = 'This field is required';
-                                    fieldGroup.appendChild(errorMsg);
-                                }
-                            } else {
-                                fieldGroup.classList.remove('has-error');
-                                const errorMsg = fieldGroup.querySelector('.error-message');
-                                if (errorMsg) errorMsg.remove();
-                            }
-                        }
-                    });
-                    
-                    // Input validation
-                    input.addEventListener('input', function() {
-                        if (this.hasAttribute('required')) {
-                            const fieldGroup = this.closest('.form-group');
-                            
-                            if (this.value.trim()) {
-                                fieldGroup.classList.remove('has-error');
-                                const errorMsg = fieldGroup.querySelector('.error-message');
-                                if (errorMsg) errorMsg.remove();
-                            }
-                        }
-                    });
-                });
-                
-                // Submit button hover effects
-                const submitButton = document.querySelector('.submit-button');
-                if (submitButton) {
-                    submitButton.addEventListener('mouseover', function() {
-                        this.classList.add('hover');
-                    });
-                    
-                    submitButton.addEventListener('mouseout', function() {
-                        this.classList.remove('hover');
-                    });
-                }
-            }
-        });
-    })();
+    <!-- Modal and form handlers - using a bundled approach for fewer HTTP requests -->
+    <script src="js/contact-bundle.js" defer></script>
+    
+    <!-- Schema.org structured data for better SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Casa Del Sol AZ",
+      "image": "https://casadesolaz.com/img/logo.png",
+      "telephone": "+14801234567",
+      "email": "info@casadesolaz.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "18401 W Moreland St",
+        "addressLocality": "Goodyear",
+        "addressRegion": "AZ",
+        "postalCode": "85338",
+        "addressCountry": "US"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "17:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "10:00",
+          "closes": "16:00"
+        }
+      ],
+      "url": "https://casadesolaz.com/contact.html"
+    }
     </script>
 </body>
 </html>
