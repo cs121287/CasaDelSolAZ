@@ -22,22 +22,24 @@
     <link rel="stylesheet" href="css/components/header-transitions.css">
     <link rel="stylesheet" href="css/components/footer.css">
     <link rel="stylesheet" href="css/components/common.css">
-	<link rel="stylesheet" href="css/components/common.css">
+    
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="css/gallery.css">
     
     <!-- Responsive CSS (load last to ensure it overrides other styles) -->
     <link rel="stylesheet" href="css/responsive.css">
     
-    <!-- Font Awesome for icons - optimized loading -->
+    <!-- Font Awesome - optimized loading -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
     
-    <!-- Google Fonts with display swap for better performance -->
+    <!-- Google Fonts with display swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet"></noscript>
 </head>
-<body class="services-page">
+<body class="gallery-page">
     <div class="video-container">
         <div class="bg-image" style="background-image: url('img/bg2.jpg');"></div>
         <div class="video-overlay"></div>
@@ -127,7 +129,6 @@
         <div class="mobile-menu-content">
           <nav class="mobile-nav" aria-label="Mobile Navigation">
             <ul class="nav-links">
-              <!-- Home with dropdown -->
               <li style="--i:0" class="mobile-dropdown-item">
                 <a href="javascript:void(0)" class="mobile-dropdown-toggle">
                   <span>Home</span>
@@ -141,7 +142,6 @@
                 </ul>
               </li>
               
-              <!-- Services with dropdown -->
               <li style="--i:1" class="mobile-dropdown-item">
                 <a href="javascript:void(0)" class="mobile-dropdown-toggle">
                   <span>Services</span>
@@ -156,7 +156,6 @@
                 </ul>
               </li>
               
-              <!-- About with dropdown -->
               <li style="--i:2" class="mobile-dropdown-item">
                 <a href="javascript:void(0)" class="mobile-dropdown-toggle">
                   <span>About</span>
@@ -171,7 +170,6 @@
                 </ul>
               </li>
               
-              <!-- Gallery with dropdown -->
               <li style="--i:3" class="mobile-dropdown-item">
                 <a href="javascript:void(0)" class="mobile-dropdown-toggle active">
                   <span>Gallery</span>
@@ -184,7 +182,6 @@
                 </ul>
               </li>
               
-              <!-- Contact with dropdown -->
               <li style="--i:4" class="mobile-dropdown-item">
                 <a href="javascript:void(0)" class="mobile-dropdown-toggle">
                   <span>Contact</span>
@@ -205,12 +202,18 @@
     <main>
         <section id="page-banner" class="page-banner">
             <div class="container">
-                <h1>Our Gallery</h1>
+                <h1 class="page-title">Our Gallery</h1>
+                <div class="section-links">
+                    <a href="#gallery-categories" class="section-link">All Categories</a>
+                    <a href="#gallery-showcase" class="section-link">View Photos</a>
+                    <a href="#cta" class="section-link">Plan Your Event</a>
+                </div>
             </div>
         </section>
 
-        <section id="gallery-categories" class="gallery-categories">
-            <div class="container">
+        <section id="gallery-categories" class="gallery-categories content-section">
+            <div class="container content-container">
+                <h2 class="section-title">Browse by Category</h2>
                 <div class="filter-buttons">
                     <button class="filter-btn active" data-category="all">All</button>
                     <button class="filter-btn" data-category="weddings">Weddings</button>
@@ -221,8 +224,9 @@
             </div>
         </section>
 
-        <section id="gallery-showcase" class="gallery-showcase">
-            <div class="container">
+        <section id="gallery-showcase" class="gallery-showcase content-section">
+            <div class="container content-container">
+                <h2 class="section-title">Photo Gallery</h2>
                 <div class="gallery-grid">
                     <!-- Weddings -->
                     <div class="gallery-item" data-category="weddings">
@@ -435,40 +439,17 @@
                     <img src="img/logo.png" alt="Casa Del Sol AZ Logo" width="150" height="60" loading="lazy">
                     <p>Where Memories Are Made</p>
                 </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Quick Links</h4>
-                        <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="gallery.html">Gallery</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Services</h4>
-                        <ul>
-                            <li><a href="#">Weddings</a></li>
-                            <li><a href="#">Corporate Events</a></li>
-                            <li><a href="#">Special Celebrations</a></li>
-                            <li><a href="#">Private Parties</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Contact Us</h4>
-                        <ul class="contact-info">
-                            <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> 18401 W Moreland St, Goodyear, AZ 85338</li>
-                            <li><i class="fas fa-phone" aria-hidden="true"></i> (480) 123-4567</li>
-                            <li><i class="fas fa-envelope" aria-hidden="true"></i> info@casadesolaz.com</li>
-                        </ul>
-                    </div>
-                </div>
             </div>
-            <div class="social-links">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-                <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+            <div class="footer-social">
+                <p class="social-heading">Follow Us On Instagram and TikTok</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/casadelsol_events/" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
+                        <i class="fab fa-instagram" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@casa.del.sol.events" target="_blank" rel="noopener" aria-label="Follow us on TikTok">
+                        <i class="fab fa-tiktok" aria-hidden="true"></i>
+                    </a>
+                </div>
             </div>
             <div class="copyright">
                 <p>&copy; 2025 Casa Del Sol AZ. All Rights Reserved.</p>
@@ -484,6 +465,5 @@
     <script src="js/main.js" defer></script>
     <script src="js/header-modern.js" defer></script>
     <script src="js/gallery.js" defer></script>
-	    <script src="js/gallery-effects.js" defer></script>
 </body>
 </html>
