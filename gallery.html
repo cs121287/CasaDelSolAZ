@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="View our gallery of past events at Casa Del Sol AZ - Arizona's premier event venue for weddings and special occasions">
+    <meta name="description" content="View our gallery of past events at Casa Del Sol AZ - Arizona's premier event venue for weddings, quinceañeras, and special occasions">
     <title>Gallery | Casa Del Sol AZ</title>
     
     <!-- Preload critical resources -->
@@ -12,7 +12,6 @@
     <link rel="preload" href="css/components/header-transitions.css" as="style">
     <link rel="preload" href="img/logo.png" as="image" fetchpriority="high">
     <link rel="preload" href="img/bg2.jpg" as="image" fetchpriority="high">
-    <link rel="preload" href="img/cta-bg.jpg" as="image" fetchpriority="low">
     
     <!-- Core CSS -->
     <link rel="stylesheet" href="css/style.css">
@@ -26,7 +25,7 @@
     <!-- Page-specific CSS -->
     <link rel="stylesheet" href="css/gallery.css">
     
-    <!-- Responsive CSS (load last to ensure it overrides other styles) -->
+    <!-- Responsive CSS -->
     <link rel="stylesheet" href="css/responsive.css">
     
     <!-- Font Awesome - optimized loading -->
@@ -97,8 +96,8 @@
                 <a href="gallery.html" class="active">Gallery</a>
                 <div class="dropdown">
                   <ul class="dropdown-links">
-                    <li><a href="gallery.html#gallery-categories" class="section-link">Photo Gallery</a></li>
-                    <li><a href="gallery.html#gallery-showcase" class="section-link">Past Events</a></li>
+                    <li><a href="#gallery-categories" class="section-link">Photo Gallery</a></li>
+                    <li><a href="#gallery-showcase" class="section-link">Past Events</a></li>
                   </ul>
                 </div>
               </li>
@@ -177,8 +176,8 @@
                 </a>
                 <ul class="mobile-dropdown-content">
                   <li><a href="gallery.html">Gallery Page</a></li>
-                  <li><a href="gallery.html#gallery-categories" class="section-link">Photo Gallery</a></li>
-                  <li><a href="gallery.html#gallery-showcase" class="section-link">Past Events</a></li>
+                  <li><a href="#gallery-categories" class="section-link">Photo Gallery</a></li>
+                  <li><a href="#gallery-showcase" class="section-link">Past Events</a></li>
                 </ul>
               </li>
               
@@ -204,26 +203,30 @@
             <div class="container">
                 <h1 class="page-title"></h1>
                 <div class="section-links">
-				<P></P>
+				<p></p>
                 </div>
             </div>
         </section>
 
         <section id="gallery-showcase" class="gallery-showcase content-section">
+			<h2 class="section-title">Photo Gallery</h2>
             <div class="container content-container">
-                <h2 class="section-title">Photo Gallery</h2>
-				               <div class="filter-buttons">
+                <div class="filter-buttons">
                     <button class="filter-btn active" data-category="all">All</button>
                     <button class="filter-btn" data-category="weddings">Weddings</button>
                     <button class="filter-btn" data-category="quinceaneras">Quinceañeras</button>
                     <button class="filter-btn" data-category="special">Special Events</button>
                     <button class="filter-btn" data-category="venue">Venue</button>
+					<p></p>
                 </div>
                 <div class="gallery-grid">
                     <!-- Weddings -->
                     <div class="gallery-item" data-category="weddings">
                         <div class="gallery-image">
-                            <img src="img/wedding-1.jpg" alt="Wedding ceremony at Casa Del Sol" loading="lazy" width="400" height="300">
+                            <picture>
+                                <source srcset="img/wedding-1.webp" type="image/webp">
+                                <img src="img/wedding-1.jpg" alt="Wedding ceremony at Casa Del Sol" loading="lazy" width="400" height="300" data-highres="img/wedding-1-large.jpg">
+                            </picture>
                             <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     <h3>Garden Ceremony</h3>
@@ -235,7 +238,10 @@
                     </div>
                     <div class="gallery-item" data-category="weddings">
                         <div class="gallery-image">
-                            <img src="img/wedding-2.jpg" alt="Wedding reception at Casa Del Sol" loading="lazy" width="400" height="300">
+                            <picture>
+                                <source srcset="img/wedding-2.webp" type="image/webp">
+                                <img src="img/wedding-2.jpg" alt="Wedding reception at Casa Del Sol" loading="lazy" width="400" height="300" data-highres="img/wedding-2-large.jpg">
+                            </picture>
                             <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     <h3>Elegant Reception</h3>
@@ -247,7 +253,10 @@
                     </div>
                     <div class="gallery-item" data-category="weddings">
                         <div class="gallery-image">
-                            <img src="img/wedding-3.jpg" alt="Sunset wedding at Casa Del Sol" loading="lazy" width="400" height="300">
+                            <picture>
+                                <source srcset="img/wedding-3.webp" type="image/webp">
+                                <img src="img/wedding-3.jpg" alt="Sunset wedding at Casa Del Sol" loading="lazy" width="400" height="300" data-highres="img/wedding-3-large.jpg">
+                            </picture>
                             <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     <h3>Sunset Vows</h3>
@@ -259,7 +268,10 @@
                     </div>
                     <div class="gallery-item" data-category="weddings">
                         <div class="gallery-image">
-                            <img src="img/wedding-4.jpg" alt="Wedding table decorations" loading="lazy" width="400" height="300">
+                            <picture>
+                                <source srcset="img/wedding-4.webp" type="image/webp">
+                                <img src="img/wedding-4.jpg" alt="Wedding table decorations" loading="lazy" width="400" height="300" data-highres="img/wedding-4-large.jpg">
+                            </picture>
                             <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     <h3>Elegant Details</h3>
@@ -270,10 +282,13 @@
                         </div>
                     </div>
 
-                    <!-- Quinceañeras (formerly Corporate) -->
+                    <!-- Quinceañeras -->
                     <div class="gallery-item" data-category="quinceaneras">
                         <div class="gallery-image">
-                            <img src="img/quinceanera-1.jpg" alt="Quinceañera celebration at Casa Del Sol" loading="lazy" width="400" height="300">
+                            <picture>
+                                <source srcset="img/quinceanera-1.webp" type="image/webp">
+                                <img src="img/quinceanera-1.jpg" alt="Quinceañera celebration at Casa Del Sol" loading="lazy" width="400" height="300" data-highres="img/quinceanera-1-large.jpg">
+                            </picture>
                             <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     <h3>Grand Entrance</h3>
@@ -285,7 +300,10 @@
                     </div>
                     <div class="gallery-item" data-category="quinceaneras">
                         <div class="gallery-image">
-                            <img src="img/quinceanera-2.jpg" alt="Quinceañera dance celebration" loading="lazy" width="400" height="300">
+                            <picture>
+                                <source srcset="img/quinceanera-2.webp" type="image/webp">
+                                <img src="img/quinceanera-2.jpg" alt="Quinceañera dance celebration" loading="lazy" width="400" height="300" data-highres="img/quinceanera-2-large.jpg">
+                            </picture>
                             <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     <h3>First Dance</h3>
@@ -297,7 +315,10 @@
                     </div>
                     <div class="gallery-item" data-category="quinceaneras">
                         <div class="gallery-image">
-                            <img src="img/quinceanera-3.jpg" alt="Quinceañera venue decorations" loading="lazy" width="400" height="300">
+                            <picture>
+                                <source srcset="img/quinceanera-3.webp" type="image/webp">
+                                <img src="img/quinceanera-3.jpg" alt="Quinceañera venue decorations" loading="lazy" width="400" height="300" data-highres="img/quinceanera-3-large.jpg">
+                            </picture>
                             <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     <h3>Elegant Decorations</h3>
@@ -311,7 +332,10 @@
                     <!-- Special Events -->
                     <div class="gallery-item" data-category="special">
                         <div class="gallery-image">
-                            <img src="img/special-1.jpg" alt="Birthday celebration" loading="lazy" width="400" height="300">
+                            <picture>
+                                <source srcset="img/special-1.webp" type="image/webp">
+                                <img src="img/special-1.jpg" alt="Birthday celebration" loading="lazy" width="400" height="300" data-highres="img/special-1-large.jpg">
+                            </picture>
                             <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     <h3>Milestone Birthday</h3>
@@ -323,7 +347,10 @@
                     </div>
                     <div class="gallery-item" data-category="special">
                         <div class="gallery-image">
-                            <img src="img/special-2.jpg" alt="Anniversary party" loading="lazy" width="400" height="300">
+                            <picture>
+                                <source srcset="img/special-2.webp" type="image/webp">
+                                <img src="img/special-2.jpg" alt="Anniversary party" loading="lazy" width="400" height="300" data-highres="img/special-2-large.jpg">
+                            </picture>
                             <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     <h3>Golden Anniversary</h3>
@@ -335,7 +362,10 @@
                     </div>
                     <div class="gallery-item" data-category="special">
                         <div class="gallery-image">
-                            <img src="img/special-3.jpg" alt="Graduation celebration" loading="lazy" width="400" height="300">
+                            <picture>
+                                <source srcset="img/special-3.webp" type="image/webp">
+                                <img src="img/special-3.jpg" alt="Graduation celebration" loading="lazy" width="400" height="300" data-highres="img/special-3-large.jpg">
+                            </picture>
                             <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     <h3>Graduation Party</h3>
@@ -349,7 +379,10 @@
                     <!-- Venue -->
                     <div class="gallery-item" data-category="venue">
                         <div class="gallery-image">
-                            <img src="img/venue-1.jpg" alt="Main hall interior" loading="lazy" width="400" height="300">
+                            <picture>
+                                <source srcset="img/venue-1.webp" type="image/webp">
+                                <img src="img/venue-1.jpg" alt="Main hall interior" loading="lazy" width="400" height="300" data-highres="img/venue-1-large.jpg">
+                            </picture>
                             <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     <h3>Main Hall</h3>
@@ -361,7 +394,10 @@
                     </div>
                     <div class="gallery-item" data-category="venue">
                         <div class="gallery-image">
-                            <img src="img/venue-2.jpg" alt="Garden area" loading="lazy" width="400" height="300">
+                            <picture>
+                                <source srcset="img/venue-2.webp" type="image/webp">
+                                <img src="img/venue-2.jpg" alt="Garden area" loading="lazy" width="400" height="300" data-highres="img/venue-2-large.jpg">
+                            </picture>
                             <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     <h3>Desert Garden</h3>
@@ -373,7 +409,10 @@
                     </div>
                     <div class="gallery-item" data-category="venue">
                         <div class="gallery-image">
-                            <img src="img/venue-3.jpg" alt="Sunset Terrace" loading="lazy" width="400" height="300">
+                            <picture>
+                                <source srcset="img/venue-3.webp" type="image/webp">
+                                <img src="img/venue-3.jpg" alt="Sunset Terrace" loading="lazy" width="400" height="300" data-highres="img/venue-3-large.jpg">
+                            </picture>
                             <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     <h3>Sunset Terrace</h3>
@@ -385,7 +424,10 @@
                     </div>
                     <div class="gallery-item" data-category="venue">
                         <div class="gallery-image">
-                            <img src="img/venue-4.jpg" alt="Bridal Suite" loading="lazy" width="400" height="300">
+                            <picture>
+                                <source srcset="img/venue-4.webp" type="image/webp">
+                                <img src="img/venue-4.jpg" alt="Bridal Suite" loading="lazy" width="400" height="300" data-highres="img/venue-4-large.jpg">
+                            </picture>
                             <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     <h3>Bridal Suite</h3>
@@ -402,7 +444,7 @@
         <!-- Image Modal -->
         <div id="image-modal" class="modal">
             <div class="modal-content">
-                <span class="close-modal">&times;</span>
+                <span class="close-modal" aria-label="Close image">&times;</span>
                 <img id="modal-image" src="" alt="Enlarged gallery image">
                 <div class="modal-caption">
                     <h3 id="modal-title"></h3>
@@ -453,7 +495,7 @@
         <i class="fas fa-chevron-up" aria-hidden="true"></i>
     </a>
 
-    <!-- Essential JavaScript Files -->
+    <!-- Scripts loaded after critical content -->
     <script src="js/main.js" defer></script>
     <script src="js/header-modern.js" defer></script>
     <script src="js/gallery.js" defer></script>
