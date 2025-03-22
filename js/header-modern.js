@@ -1,15 +1,12 @@
 /**
- * Casa Del Sol AZ - Unified Header JavaScript
- * Combines functionality from:
- * - header-scroll.js
- * - mobile-menu-dropdowns.js
- * - header-modern.js
+ * Casa Del Sol AZ - Enhanced Header JavaScript
+ * Combines functionality from header-scroll.js, mobile-menu-dropdowns.js, and header-modern.js
+ * With improved smooth transitions and performance optimizations
  * 
- * Optimized for maximum performance with minimal DOM operations
- * 
- * @version 2.0.0
- * @updated 2025-03-21 23:21:35
+ * @version 2.1.0
+ * @updated 2025-03-21 23:34:40
  * @repository https://github.com/cs121287/CasaDelSolAZ
+ * @author cs121287
  */
 (function() {
   'use strict';
@@ -23,6 +20,12 @@
   let dropdownContainers;
   let mobileDropdownToggles;
   let initialized = false;
+  let transitionTimer = null;
+  let headerState = 'default'; // 'default', 'scrolled', 'transitioning'
+  
+  // Animation constants
+  const FADE_DURATION = 800; // Longer transition duration (ms)
+  const THROTTLE_DELAY = 100; // Throttle delay for scroll events
   
   // Feature detection
   const supportsPassive = (function() {
@@ -55,9 +58,17 @@
     // Exit if header doesn't exist
     if (!header) return;
     
+    // Add transition class for enhanced animations
+    header.classList.add('header-transitions');
+    
+    // Set CSS variable for transition duration
+    document.documentElement.style.setProperty('--header-transition-duration', `${FADE_DURATION}ms`);
+    
     // Initial scroll state check
     if (window.scrollY > 50) {
+      // Immediate transition for initial load
       header.classList.add('scrolled');
+      headerState = 'scrolled';
     }
     
     // Initialize all functionality
@@ -74,11 +85,19 @@
   }
   
   /**
-   * Setup header scroll behavior
+   * Setup header scroll behavior with enhanced transitions
    */
   function setupScrollBehavior() {
-    // Efficient scroll handling with requestAnimationFrame
+    // Efficient scroll handling with throttling and requestAnimationFrame
+    let lastScrollHandled = 0;
+    
     window.addEventListener('scroll', function() {
+      const now = Date.now();
+      
+      // Throttle scroll events
+      if (now - lastScrollHandled < THROTTLE_DELAY) return;
+      lastScrollHandled = now;
+      
       const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
       
       // Determine scroll direction
@@ -97,18 +116,50 @@
   }
   
   /**
-   * Handle scroll events
+   * Handle scroll events with enhanced transitions
    * @param {number} scrollTop - Current scroll position
    * @param {string} direction - Scroll direction ('up' or 'down')
    */
   function handleScroll(scrollTop, direction) {
-    // Toggle scrolled class
+    // Smooth transition for scrolled state
     if (scrollTop > 50) {
-      if (!header.classList.contains('scrolled')) {
+      if (headerState !== 'scrolled' && headerState !== 'transitioning') {
+        // Start transition
+        headerState = 'transitioning';
+        
+        // Apply transition-in class
+        header.classList.add('transition-in');
         header.classList.add('scrolled');
+        
+        // Clear any existing transition timer
+        if (transitionTimer) clearTimeout(transitionTimer);
+        
+        // Set timer to remove transition class after animation completes
+        transitionTimer = setTimeout(() => {
+          header.classList.remove('transition-in');
+          headerState = 'scrolled';
+          transitionTimer = null;
+        }, FADE_DURATION);
       }
     } else {
-      header.classList.remove('scrolled');
+      if (headerState !== 'default' && headerState !== 'transitioning') {
+        // Start transition
+        headerState = 'transitioning';
+        
+        // Apply transition-out class
+        header.classList.add('transition-out');
+        
+        // Clear any existing transition timer
+        if (transitionTimer) clearTimeout(transitionTimer);
+        
+        // Set timer to remove classes after animation completes
+        transitionTimer = setTimeout(() => {
+          header.classList.remove('scrolled');
+          header.classList.remove('transition-out');
+          headerState = 'default';
+          transitionTimer = null;
+        }, FADE_DURATION);
+      }
     }
     
     // Handle header visibility based on scroll direction
@@ -146,8 +197,8 @@
       document.body.style.overflow = isOpen ? 'hidden' : '';
       
       // Add scrolled class if necessary
-      if (!isOpen && window.scrollY > 50) {
-        header.classList.add('scrolled');
+      if (!isOpen && window.scrollY > 50 && !header.classList.contains('scrolled')) {
+        handleScroll(window.scrollY, 'down');
       }
       
       // Add/remove escape key listener
