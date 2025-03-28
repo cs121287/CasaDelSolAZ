@@ -6,42 +6,138 @@
     <meta name="description" content="Casa Del Sol AZ - Premier event venue in Phoenix, Arizona for weddings, quinceañeras, and special events.">
     <title>Casa Del Sol AZ | Luxury Event Venue</title>
     
-    <!-- Performance Optimizations: DNS prefetching & preconnect -->
+    <!-- Performance: HTTP/2 optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     
-    <!-- Cache Control -->
+    <!-- Cache-Control for faster repeat visits -->
     <meta http-equiv="Cache-Control" content="max-age=31536000">
     
-    <!-- Preload Critical Assets -->
+    <!-- Critical CSS inlined for faster render -->
+    <style>
+        /* Critical rendering path CSS */
+        :root {
+            --color-black: #000000;
+            --color-white: #ffffff;
+            --color-gold: #d4af37;
+            --color-gold-light: #e5c158;
+            --color-header-height: 120px;
+            --color-header-height-scrolled: 90px;
+            --radius-xl: 24px;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Raleway', sans-serif;
+            height: 100%;
+            background-color: var(--color-black);
+            color: var(--color-white);
+            overflow-x: hidden;
+        }
+        
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-black);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--color-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Header styles */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--color-header-height);
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.7);
+            transition: height 0.3s ease;
+        }
+        
+        .header-container {
+            max-width: 1600px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .header-fade {
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent);
+            pointer-events: none;
+        }
+        
+        /* Video container styles */
+        .video-container {
+            position: absolute;
+            top: var(--color-header-height);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: calc(100vh - var(--color-header-height));
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            z-index: 1;
+        }
+    </style>
+    
+    <!-- Preload critical assets -->
     <link rel="preload" href="css/main.css" as="style">
     <link rel="preload" href="img/logo.png" as="image" fetchpriority="high">
+	<link rel="preload" href="css/video-effects.css" as="style">
     
-    <!-- Primary Stylesheet -->
+    <!-- Main CSS (non-blocking) -->
     <link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/video-effects.css">
     
-    <!-- Font Awesome - Optimized Loading -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-    
-    <!-- Google Fonts -->
+    <!-- Optimized font loading -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet"></noscript>
     
-    <!-- GSAP Core - Critical for initial animations -->
+    <!-- Font Awesome (non-blocking) -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    
+    <!-- Core GSAP (critical for animations) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
     <!-- Loading screen -->
     <div class="loading-screen" id="loading-screen">
-        <div class="loader">
-            <span class="loader-circle"></span>
-        </div>
+        <div class="loader"></div>
     </div>
 
-    <!-- Main Container -->
-    <div class="page-wrapper">
+    <!-- Site container -->
+    <div class="site-container">
         <!-- Header with centered logo and split navigation -->
         <header class="site-header" id="header">
             <div class="header-container">
@@ -54,8 +150,8 @@
                 </nav>
                 
                 <div class="center-logo">
-                    <a href="#" class="logo" aria-label="Casa Del Sol - Home">
-                        <img src="img/logo.png" alt="Casa Del Sol AZ" width="240" height="110" fetchpriority="high">
+                    <a href="#" class="logo">
+                        <img src="img/logo.png" alt="Casa Del Sol AZ" width="220" height="100" fetchpriority="high">
                     </a>
                 </div>
                 
@@ -67,41 +163,34 @@
                     </ul>
                 </nav>
                 
-                <!-- Mobile navigation toggle -->
-                <div class="mobile-toggle">
-                    <button class="hamburger" aria-label="Toggle menu">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
+                <button class="mobile-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
             <div class="header-fade"></div>
         </header>
-
-        <!-- Mobile Navigation Menu -->
+        
+        <!-- Mobile navigation -->
         <div class="mobile-menu">
-            <div class="mobile-menu-content">
-                <nav class="mobile-nav">
-                    <ul>
-                        <li><a href="#about" class="mobile-nav-link">About</a></li>
-                        <li><a href="#services" class="mobile-nav-link">Services</a></li>
-                        <li><a href="#rentals" class="mobile-nav-link">Rentals</a></li>
-                        <li><a href="#faq" class="mobile-nav-link">FAQ</a></li>
-                        <li><a href="#gallery" class="mobile-nav-link">Gallery</a></li>
-                        <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
-                    </ul>
-                </nav>
-            </div>
+            <nav class="mobile-nav">
+                <ul>
+                    <li><a href="#about" class="mobile-link">About</a></li>
+                    <li><a href="#services" class="mobile-link">Services</a></li>
+                    <li><a href="#rentals" class="mobile-link">Rentals</a></li>
+                    <li><a href="#faq" class="mobile-link">FAQ</a></li>
+                    <li><a href="#gallery" class="mobile-link">Gallery</a></li>
+                    <li><a href="#contact" class="mobile-link">Contact</a></li>
+                </ul>
+            </nav>
         </div>
 
-        <!-- Hero Section with Video Background -->
+        <!-- Hero Section with rounded video container -->
         <section id="hero" class="hero-section">
             <div class="video-container">
-                <!-- Video will be loaded via JS for better performance -->
-                <div class="video-placeholder"></div>
+                <!-- Video loaded via JS for better performance -->
             </div>
-            <div class="hero-overlay"></div>
             <div class="hero-content">
                 <h1 class="hero-title">Casa Del Sol</h1>
                 <p class="hero-subtitle">Where memorable celebrations come to life</p>
@@ -110,7 +199,7 @@
                     <a href="#gallery" class="btn btn-secondary">View Gallery</a>
                 </div>
             </div>
-            <div class="scroll-arrow">
+            <div class="scroll-indicator">
                 <span></span>
                 <span></span>
             </div>
@@ -407,7 +496,7 @@
             </div>
         </section>
 
-        <!-- Gallery Preview Section -->
+        <!-- Gallery Section -->
         <section id="gallery" class="section gallery-section">
             <div class="container">
                 <h2 class="section-title">Gallery</h2>
@@ -593,297 +682,297 @@
     <button id="scroll-top" aria-label="Scroll to top">
         <i class="fas fa-chevron-up"></i>
     </button>
-
-    <!-- Core JavaScript - Defer loading of non-critical scripts -->
+    
+    <!-- Performance-optimized JavaScript loading -->
     <script>
-        // Loading screen and initial animations
+        // Immediate execution for critical functionality
         document.addEventListener('DOMContentLoaded', function() {
-            // Helper for smooth scrolling
-            function smoothScroll(target, duration) {
-                const targetElement = document.querySelector(target);
-                if (!targetElement) return;
-                
-                const targetPosition = targetElement.getBoundingClientRect().top;
-                const startPosition = window.pageYOffset;
-                const distance = targetPosition - 100; // Offset for header
-                let startTime = null;
-                
-                function animation(currentTime) {
-                    if (startTime === null) startTime = currentTime;
-                    const timeElapsed = currentTime - startTime;
-                    const progress = Math.min(timeElapsed / duration, 1);
-                    const ease = progress => --progress * progress * progress + 1; // Easing function
-                    window.scrollTo(0, startPosition + distance * ease(progress));
-                    if (timeElapsed < duration) requestAnimationFrame(animation);
-                }
-                
-                requestAnimationFrame(animation);
-            }
+            // Initialize loader and video
+            const loadingScreen = document.getElementById('loading-screen');
+            
+            // Initialize video background with optimal loading
+            initVideoBackground();
+            
+            // Setup basic UI interactions
+            setupMobileNav();
+            setupHeaderScroll();
+            
+            // Load non-critical scripts after page load
+            window.addEventListener('load', function() {
+                // Short delay to ensure smooth initial render
+                setTimeout(() => {
+                    // Hide loading screen with transition
+                    loadingScreen.style.opacity = '0';
+                    loadingScreen.style.transition = 'opacity 0.5s ease';
+                    
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        
+                        // Start hero animations
+                        animateHeroElements();
+                        
+                        // Load GSAP plugins
+                        loadGsapPlugins();
+                        
+                        // Setup scroll effects
+                        setupScrollEffects();
+                    }, 500);
+                }, 200);
+            });
             
             // Initialize video background
             function initVideoBackground() {
                 const videoContainer = document.querySelector('.video-container');
-                const videoPlaceholder = document.querySelector('.video-placeholder');
+                if (!videoContainer) return;
                 
-                if (videoContainer && videoPlaceholder) {
-                    // Create video element
-                    const video = document.createElement('video');
-                    video.muted = true;
-                    video.loop = true;
-                    video.playsInline = true;
-                    video.autoplay = false; // Will be played after loading animation completes
-                    video.className = 'background-video';
-                    
-                    // Create source element
-                    const source = document.createElement('source');
-                    source.src = 'vid/background.mp4';
-                    source.type = 'video/mp4';
-                    
-                    // Append elements
-                    video.appendChild(source);
-                    videoContainer.insertBefore(video, videoPlaceholder);
-                    
-                    // When video can play, remove loading screen
-                    video.addEventListener('canplay', function() {
-                        const loadingScreen = document.getElementById('loading-screen');
-                        
-                        // Wait a bit to ensure smooth transition
-                        setTimeout(() => {
-                            loadingScreen.classList.add('fade-out');
-                            
-                            setTimeout(() => {
-                                loadingScreen.style.display = 'none';
-                                video.play();
-                                
-                                // Start hero animations
-                                animateHero();
-                            }, 500);
-                        }, 500);
-                    });
-                    
-                    // Fallback if video takes too long
-                    setTimeout(() => {
-                        if (document.getElementById('loading-screen').style.display !== 'none') {
-                            document.getElementById('loading-screen').classList.add('fade-out');
-                            setTimeout(() => {
-                                document.getElementById('loading-screen').style.display = 'none';
-                                video.play();
-                                animateHero();
-                            }, 500);
-                        }
-                    }, 3000);
-                }
+                // Create video element
+                const video = document.createElement('video');
+                video.muted = true;
+                video.loop = true;
+                video.playsInline = true;
+                video.autoplay = true;
+                video.className = 'background-video';
+                
+                // Create source element
+                const source = document.createElement('source');
+                source.src = 'vid/background.mp4';
+                source.type = 'video/mp4';
+                
+                // Append to DOM
+                video.appendChild(source);
+                videoContainer.appendChild(video);
+                
+                // Add overlay for better text contrast
+                const overlay = document.createElement('div');
+                overlay.className = 'video-overlay';
+                videoContainer.appendChild(overlay);
+                
+                // Fallback for video loading errors
+                video.addEventListener('error', function() {
+                    videoContainer.classList.add('video-fallback');
+                    console.warn('Video failed to load, using fallback image');
+                });
             }
             
-            // Animate hero content
-            function animateHero() {
-                const heroTitle = document.querySelector('.hero-title');
-                const heroSubtitle = document.querySelector('.hero-subtitle');
-                const heroButtons = document.querySelector('.hero-buttons');
-                const scrollArrow = document.querySelector('.scroll-arrow');
-                
-                // Simple sequential fade-in animation
-                setTimeout(() => {
-                    heroTitle.classList.add('animate-in');
-                    
-                    setTimeout(() => {
-                        heroSubtitle.classList.add('animate-in');
-                        
-                        setTimeout(() => {
-                            heroButtons.classList.add('animate-in');
-                            
-                            setTimeout(() => {
-                                scrollArrow.classList.add('animate-in');
-                            }, 400);
-                        }, 400);
-                    }, 400);
-                }, 100);
-            }
-            
-            // Initialize mobile menu
-            function initMobileMenu() {
-                const hamburger = document.querySelector('.hamburger');
+            // Setup mobile navigation
+            function setupMobileNav() {
+                const mobileToggle = document.querySelector('.mobile-toggle');
                 const mobileMenu = document.querySelector('.mobile-menu');
                 const body = document.body;
-                const mobileLinks = document.querySelectorAll('.mobile-nav-link');
                 
-                hamburger.addEventListener('click', function() {
-                    this.classList.toggle('is-active');
-                    mobileMenu.classList.toggle('is-active');
+                if (!mobileToggle || !mobileMenu) return;
+                
+                mobileToggle.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
                     body.classList.toggle('menu-open');
                 });
                 
-                // Close mobile menu when clicking a link
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        hamburger.classList.remove('is-active');
-                        mobileMenu.classList.remove('is-active');
-                        body.classList.remove('menu-open');
-                        
-                        // Smooth scroll to section
-                        const target = this.getAttribute('href');
-                        smoothScroll(target, 1000);
-                    });
-                });
-            }
-            
-            // Initialize scroll to top button
-            function initScrollToTop() {
-                const scrollButton = document.getElementById('scroll-top');
-                
-                window.addEventListener('scroll', function() {
-                    if (window.scrollY > window.innerHeight / 2) {
-                        scrollButton.classList.add('visible');
-                    } else {
-                        scrollButton.classList.remove('visible');
-                    }
-                });
-                
-                scrollButton.addEventListener('click', function() {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-            
-            // Handle navigation click events
-            function initNavigation() {
-                const navLinks = document.querySelectorAll('.nav-btn');
-                const logoLink = document.querySelector('.logo');
-                
-                navLinks.forEach(link => {
+                // Close menu when clicking links
+                document.querySelectorAll('.mobile-link').forEach(link => {
                     link.addEventListener('click', function(e) {
                         e.preventDefault();
-                        const target = this.getAttribute('href');
-                        smoothScroll(target, 1000);
-                    });
-                });
-                
-                // Logo link scrolls to top
-                logoLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-            
-            // Initialize header scroll effects
-            function initHeaderScroll() {
-                const header = document.getElementById('header');
-                
-                window.addEventListener('scroll', function() {
-                    if (window.scrollY > 50) {
-                        header.classList.add('scrolled');
-                    } else {
-                        header.classList.remove('scrolled');
-                    }
-                });
-            }
-            
-            // Initialize FAQ accordion
-            function initFaqAccordion() {
-                const faqItems = document.querySelectorAll('.faq-item');
-                
-                faqItems.forEach(item => {
-                    const question = item.querySelector('.faq-question');
-                    
-                    question.addEventListener('click', function() {
-                        // Check if this item is already open
-                        const isOpen = item.classList.contains('active');
+                        mobileToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        body.classList.remove('menu-open');
                         
-                        // Close all FAQ items
-                        faqItems.forEach(faq => {
-                            faq.classList.remove('active');
-                        });
-                        
-                        // If the clicked item wasn't open, open it
-                        if (!isOpen) {
-                            item.classList.add('active');
+                        // Smooth scroll to target
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            smoothScroll(targetElement);
                         }
                     });
                 });
+                
+                // Desktop nav smooth scroll
+                document.querySelectorAll('.nav-btn').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            smoothScroll(targetElement);
+                        }
+                    });
+                });
+                
+                // Logo click scrolls to top
+                document.querySelector('.logo').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
             }
             
-            // Initialize service tabs
-            function initServiceTabs() {
-                const tabButtons = document.querySelectorAll('.tab-btn');
+            // Smooth scroll function
+            function smoothScroll(targetElement) {
+                const headerHeight = document.querySelector('.site-header').offsetHeight;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
                 
-                tabButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        // Remove active class from all buttons
-                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+            
+            // Header scroll effect
+            function setupHeaderScroll() {
+                const header = document.getElementById('header');
+                if (!header) return;
+                
+                // Use requestAnimationFrame for better performance
+                let ticking = false;
+                
+                window.addEventListener('scroll', function() {
+                    if (!ticking) {
+                        window.requestAnimationFrame(function() {
+                            if (window.scrollY > 50) {
+                                header.classList.add('scrolled');
+                            } else {
+                                header.classList.remove('scrolled');
+                            }
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                });
+                
+                // Check initial scroll position
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                }
+            }
+            
+            // Simple hero animations
+            function animateHeroElements() {
+                const heroTitle = document.querySelector('.hero-title');
+                const heroSubtitle = document.querySelector('.hero-subtitle');
+                const heroButtons = document.querySelector('.hero-buttons');
+                const scrollIndicator = document.querySelector('.scroll-indicator');
+                
+                if (!heroTitle || !heroSubtitle || !heroButtons || !scrollIndicator) return;
+                
+                // Sequential animation with delays
+                setTimeout(() => {
+                    heroTitle.classList.add('animate');
+                    
+                    setTimeout(() => {
+                        heroSubtitle.classList.add('animate');
                         
-                        // Add active class to clicked button
-                        this.classList.add('active');
+                        setTimeout(() => {
+                            heroButtons.classList.add('animate');
+                            
+                            setTimeout(() => {
+                                scrollIndicator.classList.add('animate');
+                            }, 300);
+                        }, 300);
+                    }, 300);
+                }, 100);
+            }
+            
+            // Setup scroll effects
+            function setupScrollEffects() {
+                // Reveal elements on scroll
+                const revealElements = document.querySelectorAll('.reveal-element');
+                
+                if ('IntersectionObserver' in window) {
+                    const revealObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('revealed');
+                                revealObserver.unobserve(entry.target);
+                            }
+                        });
+                    }, {
+                        threshold: 0.15,
+                        rootMargin: '0px 0px -50px 0px'
+                    });
+                    
+                    revealElements.forEach(element => {
+                        revealObserver.observe(element);
+                    });
+                } else {
+                    // Fallback for browsers without IntersectionObserver
+                    revealElements.forEach(element => {
+                        element.classList.add('revealed');
+                    });
+                }
+                
+                // Scroll to top button
+                const scrollTopBtn = document.getElementById('scroll-top');
+                if (scrollTopBtn) {
+                    window.addEventListener('scroll', function() {
+                        if (window.scrollY > 600) {
+                            scrollTopBtn.classList.add('visible');
+                        } else {
+                            scrollTopBtn.classList.remove('visible');
+                        }
+                    });
+                    
+                    scrollTopBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    });
+                }
+                
+                // FAQ accordion functionality
+                document.querySelectorAll('.faq-question').forEach(question => {
+                    question.addEventListener('click', function() {
+                        const faqItem = this.parentElement;
+                        const isExpanded = faqItem.classList.contains('active');
                         
-                        // Update active panel
-                        const tabId = this.getAttribute('data-tab');
-                        const panels = document.querySelectorAll('.tab-panel');
-                        
-                        panels.forEach(panel => {
-                            panel.classList.remove('active');
+                        // Close all items
+                        document.querySelectorAll('.faq-item').forEach(item => {
+                            item.classList.remove('active');
                         });
                         
+                        // If not already expanded, expand this item
+                        if (!isExpanded) {
+                            faqItem.classList.add('active');
+                        }
+                    });
+                });
+                
+                // Tab functionality
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        // Remove active class from all buttons and panels
+                        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                        
+                        // Add active class to clicked button and corresponding panel
+                        this.classList.add('active');
+                        const tabId = this.getAttribute('data-tab');
                         document.getElementById(tabId + '-panel').classList.add('active');
                     });
                 });
             }
             
-            // Initialize all functionality
-            initVideoBackground();
-            initMobileMenu();
-            initScrollToTop();
-            initNavigation();
-            initHeaderScroll();
-            initFaqAccordion();
-            initServiceTabs();
-            
-            // Load GSAP plugins after page load
-            window.addEventListener('load', function() {
-                // Load GSAP plugins
-                const gsapPlugins = [
-                    'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js',
-                    'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/SplitText.min.js'
-                ];
-                
-                gsapPlugins.forEach(plugin => {
-                    const script = document.createElement('script');
-                    script.src = plugin;
-                    document.body.appendChild(script);
-                });
-                
-                // Load animations script after plugins
-                setTimeout(() => {
-                    const animationScript = document.createElement('script');
-                    animationScript.src = 'js/animations.js';
-                    document.body.appendChild(animationScript);
-                }, 100);
-                
-                // Simple reveal animation for elements when scrolled into view
-                const revealElements = document.querySelectorAll('.reveal-element');
-                
-                function checkReveal() {
-                    const windowHeight = window.innerHeight;
-                    
-                    revealElements.forEach(element => {
-                        const elementTop = element.getBoundingClientRect().top;
-                        
-                        if (elementTop < windowHeight - 100) {
-                            element.classList.add('revealed');
-                        }
+            // Load GSAP plugins after initial render
+            function loadGsapPlugins() {
+                // Load GSAP plugins sequentially for proper dependencies
+                function loadScript(src) {
+                    return new Promise((resolve, reject) => {
+                        const script = document.createElement('script');
+                        script.src = src;
+                        script.async = true;
+                        script.onload = resolve;
+                        script.onerror = reject;
+                        document.body.appendChild(script);
                     });
                 }
                 
-                // Initial check
-                checkReveal();
-                
-                // Check on scroll
-                window.addEventListener('scroll', checkReveal);
-            });
+                // First ScrollTrigger, then other plugins, then our animations
+                loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js')
+                    .then(() => loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/SplitText.min.js'))
+                    .then(() => loadScript('js/animations.js'))
+                    .catch(err => console.warn('Error loading GSAP plugins:', err));
+            }
         });
     </script>
+	<script async src="js/video-init.js"></script>
 </body>
 </html>
