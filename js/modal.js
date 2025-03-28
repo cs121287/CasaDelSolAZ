@@ -4,7 +4,7 @@
  * - Event delegation
  * - Throttled events
  * - Form data persistence
- * - Minimizable interface
+ * - EmailJS integration
  */
 
 (function() {
@@ -20,17 +20,6 @@
     isMinimized: false,
     isOpen: false,
     formData: {} // Store form data here
-  };
-  
-  // Form field configuration for validation
-  const formFields = {
-    name: { required: true, pattern: /^[a-zA-Z\s'-]{2,50}$/ },
-    email: { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
-    phone: { required: false, pattern: /^[0-9()\-\s+]{7,20}$/ },
-    'event-date': { required: false },
-    'event-type': { required: false },
-    guests: { required: false, pattern: /^\d{1,4}$/ },
-    message: { required: true, pattern: /^[\s\S]{10,1000}$/ }
   };
 
   // Initialize when DOM is ready
@@ -119,8 +108,10 @@
       const enhancedForm = createEnhancedForm(originalForm);
       modalBody.appendChild(enhancedForm);
       
-      // Set up form submission handling
-      enhancedForm.addEventListener('submit', handleFormSubmit);
+      // Initialize form effects if available
+      if (window.FormModalHandler && typeof window.FormModalHandler.initFormEffects === 'function') {
+        window.FormModalHandler.initFormEffects(enhancedForm);
+      }
     }
     
     // Set up feedback modal event listeners
@@ -131,6 +122,10 @@
     // Set up modal-specific events
     contactModal.querySelector('.minimize-modal').addEventListener('click', minimizeModal);
     minimizeIndicator.addEventListener('click', maximizeModal);
+    
+    // Implement FormModalHandler methods for form-handler.js
+    window.FormModalHandler.showSuccess = showSuccessModal;
+    window.FormModalHandler.showError = showErrorModal;
   }
   
   function createEnhancedForm(originalForm) {
@@ -145,7 +140,7 @@
     timeField.type = 'hidden';
     timeField.name = 'time';
     timeField.id = 'form_time';
-    timeField.value = new Date().toISOString();
+    timeField.value = new Date().toLocaleString('en-US');
     enhancedForm.appendChild(timeField);
     
     // Name field
@@ -184,7 +179,7 @@
     
     // Event date
     const dateGroup = document.createElement('div');
-    dateGroup.className = 'form-group half';
+    dateGroup.className = 'form-group half date-input';
     dateGroup.innerHTML = `
       <label for="modal-event-date">Preferred Event Date</label>
       <input type="date" id="modal-event-date" name="event-date">
@@ -193,7 +188,7 @@
     
     // Event type
     const typeGroup = document.createElement('div');
-    typeGroup.className = 'form-group half';
+    typeGroup.className = 'form-group half select-input';
     typeGroup.innerHTML = `
       <label for="modal-event-type">Event Type</label>
       <div class="select-wrapper">
@@ -239,7 +234,7 @@
     // Submit button
     const submitButton = document.createElement('button');
     submitButton.type = 'submit';
-    submitButton.className = 'btn btn-primary';
+    submitButton.className = 'submit-button';
     submitButton.innerHTML = `
       <span class="button-text">Submit Inquiry</span>
       <span class="button-icon"><i class="fas fa-paper-plane"></i></span>
@@ -257,12 +252,12 @@
     }
     
     // Close modal when clicking overlay
-    if (e.target === contactModalOverlay) {
+    if (e.target === contactModalOverlay && !successModal.classList.contains('active') && !errorModal.classList.contains('active')) {
       minimizeModal();
     }
     
     // Close feedback modals when clicking overlay
-    if (e.target.classList.contains('modal-overlay') && 
+    if (e.target === contactModalOverlay && 
         (successModal.classList.contains('active') || 
          errorModal.classList.contains('active'))) {
       closeFeedbackModal();
@@ -278,11 +273,11 @@
       
       // Set current timestamp
       const timeField = document.getElementById('form_time');
-      if (timeField) timeField.value = new Date().toISOString();
+      if (timeField) timeField.value = new Date().toLocaleString('en-US');
       
       // Focus first form field for accessibility
       setTimeout(() => {
-        const firstInput = contactModal.querySelector('input[type="text"]');
+        const firstInput = contactModal.querySelector('input[name="name"]');
         if (firstInput) firstInput.focus();
       }, 300);
     } else if (modalState.isMinimized) {
@@ -310,12 +305,10 @@
   }
   
   function setupFormTracking() {
-    const modalForm = document.getElementById('modal-contact-form');
-    if (!modalForm) return;
-    
-    // Capture all input changes for persistence
-    modalForm.addEventListener('input', function(e) {
-      if (e.target.name) {
+    // Use event delegation for better performance
+    document.addEventListener('input', function(e) {
+      const modalForm = document.getElementById('modal-contact-form');
+      if (modalForm && modalForm.contains(e.target) && e.target.name) {
         modalState.formData[e.target.name] = e.target.value;
       }
     });
@@ -329,107 +322,46 @@
       const input = modalForm.elements[name];
       if (input && name !== 'time') {
         input.value = value;
+        
+        // Update has-value class for styling
+        const fieldGroup = input.closest('.form-group');
+        if (fieldGroup && value) {
+          fieldGroup.classList.add('has-value');
+        }
       }
     });
   }
   
-  function validateForm(form) {
-    let isValid = true;
-    const errors = {};
-    
-    // Check each field against its validation rules
-    Object.keys(formFields).forEach(fieldName => {
-      const field = form.elements[fieldName];
-      if (!field) return;
-      
-      const rules = formFields[fieldName];
-      const value = field.value.trim();
-      
-      // Check required fields
-      if (rules.required && !value) {
-        errors[fieldName] = 'This field is required';
-        isValid = false;
-      } 
-      // Check pattern if value exists
-      else if (value && rules.pattern && !rules.pattern.test(value)) {
-        errors[fieldName] = 'Please enter a valid value';
-        isValid = false;
-      }
-    });
-    
-    return { isValid, errors };
-  }
-  
-  function handleFormSubmit(e) {
-    e.preventDefault();
-    
-    // Validate form
-    const { isValid, errors } = validateForm(e.target);
-    
-    if (!isValid) {
-      // Show error message - we could highlight fields but keeping it simple
-      showErrorModal('Please fill in all required fields correctly.');
-      return;
-    }
-    
-    // Visual feedback during submission
-    const submitBtn = e.target.querySelector('[type="submit"]');
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.classList.add('sending');
-      submitBtn.querySelector('.button-icon').innerHTML = '<i class="fas fa-spinner"></i>';
-    }
-    
-    // Gather form data
-    const formData = new FormData(e.target);
-    const formObject = {};
-    formData.forEach((value, key) => {
-      formObject[key] = value;
-    });
-    
-    // Simulate form submission - in production, replace with actual API call
-    setTimeout(() => {
-      // Simulate successful submission
-      formSubmissionSuccess(e.target);
-      
-      // Reset button state
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.classList.remove('sending');
-        submitBtn.querySelector('.button-icon').innerHTML = '<i class="fas fa-paper-plane"></i>';
-      }
-    }, 1500);
-  }
-  
-  function formSubmissionSuccess(form) {
-    // Clear form data from state
+  function showSuccessModal() {
+    // Clear form data since submission was successful
     modalState.formData = {};
-    
-    // Reset form
-    form.reset();
+    modalState.isOpen = false;
+    modalState.isMinimized = false;
     
     // Hide contact modal
-    contactModal.classList.remove('active');
-    contactModalOverlay.classList.remove('active');
+    contactModal.classList.remove('active', 'minimized');
     minimizeIndicator.classList.remove('show');
     
     // Show success modal
     successModal.classList.add('active');
     contactModalOverlay.classList.add('active');
-  }
-  
-  function formSubmissionError(message) {
-    // Show error modal
-    showErrorModal(message || 'There was a problem sending your message. Please try again.');
+    document.body.style.overflow = 'hidden';
   }
   
   function showErrorModal(message) {
+    // Hide contact modal but keep it open
+    contactModal.classList.remove('active');
+    
     // Set error message
-    document.getElementById('error-message').textContent = message;
+    const errorMessageElement = document.getElementById('error-message');
+    if (errorMessageElement) {
+      errorMessageElement.textContent = message || 'There was a problem sending your message. Please try again.';
+    }
     
     // Show error modal
     errorModal.classList.add('active');
     contactModalOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
   
   function closeFeedbackModal() {
@@ -437,8 +369,16 @@
     successModal.classList.remove('active');
     errorModal.classList.remove('active');
     
-    // Hide overlay if no modal is active
-    if (!contactModal.classList.contains('active')) {
+    // If contact form had an error, show it again
+    if (modalState.isOpen && !modalState.isMinimized) {
+      contactModal.classList.add('active');
+    } else if (modalState.isOpen && modalState.isMinimized) {
+      // If it was minimized, keep it minimized
+      minimizeIndicator.classList.add('show');
+      contactModalOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    } else {
+      // If form was successfully submitted, hide overlay
       contactModalOverlay.classList.remove('active');
       document.body.style.overflow = '';
     }
