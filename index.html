@@ -6,14 +6,23 @@
     <meta name="description" content="Casa Del Sol AZ - Premier event venue in Phoenix, Arizona for weddings, quinceañeras, and special events.">
     <title>Casa Del Sol AZ | Luxury Event Venue</title>
     
-    <!-- Performance: HTTP/2 optimizations -->
+    <!-- HTTP/2 optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://cdn.emailjs.com" crossorigin>
     
-    <!-- Cache-Control for faster repeat visits -->
+    <!-- HTTP Cache-Control directives for better performance -->
     <meta http-equiv="Cache-Control" content="max-age=31536000">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="css/main.css" as="style">
+    <link rel="preload" href="img/logo.png" as="image" fetchpriority="high">
+    <link rel="preload" href="css/video-effects.css" as="style">
+    <link rel="preload" href="css/modal.css" as="style">
+    <link rel="preload" href="vid/background.mp4" as="video" type="video/mp4" fetchpriority="high">
+    <link rel="preload" href="js/form-validation.js" as="script" fetchpriority="high">
+    <link rel="preload" href="js/modal.js" as="script" fetchpriority="high">
     
     <!-- Critical CSS inlined for faster render -->
     <style>
@@ -116,26 +125,6 @@
             z-index: 1;
         }
     </style>
-	<!-- Preload critical assets -->
-<link rel="preload" href="css/main.css" as="style">
-<link rel="preload" href="img/logo.png" as="image" fetchpriority="high">
-<link rel="preload" href="css/video-effects.css" as="style">
-<link rel="preload" href="css/modal.css" as="style">
-<link rel="preload" href="vid/background.mp4" as="video" fetchpriority="high">
-<link rel="preload" href="js/modal.js" as="script" fetchpriority="high">
-
-<!-- Early connection to required domains for faster resource loading -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-<link rel="preconnect" href="https://cdn.emailjs.com" crossorigin>
-
-<!-- Add HTTP Cache-Control -->
-<meta http-equiv="Cache-Control" content="max-age=31536000">
-
-<!-- Additional performance meta tags -->
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <!-- Main CSS (non-blocking) -->
     <link rel="stylesheet" href="css/main.css">
@@ -153,9 +142,6 @@
     
     <!-- EmailJS for form submission (defer loading) -->
     <script src="https://cdn.emailjs.com/dist/email.min.js" defer></script>
-    
-    <!-- Core GSAP (critical for animations) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
     <!-- Loading screen -->
@@ -721,7 +707,7 @@
     }
     </script>
     
-    <!-- Critical JS inlined for faster loading -->
+    <!-- Critical initialization for core functionality -->
     <script>
     // Immediate initialization for critical functionality
     document.addEventListener('DOMContentLoaded', function() {
@@ -731,9 +717,6 @@
         // Basic UI setup
         setupMobileNav();
         setupHeaderScroll();
-        
-        // Load remaining scripts in a performant way
-        loadScriptsEfficiently();
         
         // Clean up loading screen after page is mostly ready
         window.addEventListener('load', function() {
@@ -845,193 +828,65 @@
                 header.classList.add('scrolled');
             }
         }
-        
-        // HTTP/2 optimized script loading
-        function loadScriptsEfficiently() {
-            // Helper function to load scripts with performance tracking
-            function loadScript(url, priority = 'auto') {
-                return new Promise((resolve, reject) => {
-                    const script = document.createElement('script');
-                    script.src = url;
-                    script.async = true;
-                    
-                    // Add importance hint for resource prioritization
-                    if ('fetchpriority' in script) {
-                        script.fetchpriority = priority;
-                    }
-                    
-                    // Performance metrics
-                    const startTime = performance.now();
-                    
-                    script.onload = () => {
-                        const loadTime = Math.round(performance.now() - startTime);
-                        console.debug(`Loaded ${url} in ${loadTime}ms`);
-                        resolve();
-                    };
-                    
-                    script.onerror = (err) => {
-                        console.warn(`Failed to load script: ${url}`);
-                        // Resolve anyway to not block other scripts
-                        resolve();
-                    };
-                    
-                    document.body.appendChild(script);
-                });
-            }
-            
-            // Animate hero elements first for perceived performance
-            animateHeroElements();
-            
-            // Phase 1: Load critical UI functionality (ScrollTrigger + Modal)
-            Promise.resolve()
-                .then(() => loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js', 'high'))
-                .then(() => {
-                    // Phase 2: Load modal system 
-                    return loadScript('js/modal.js', 'high');
-                })
-                .then(() => {
-                    // Phase 3: Load parallel non-critical scripts
-                    return Promise.all([
-                        loadScript('js/form-handler.js'),
-                        loadScript('js/animations.js')
-                    ]);
-                })
-                .then(() => {
-                    // Phase 4: Initialize scroll effects after all scripts are loaded
-                    setupScrollEffects();
-                })
-                .catch(err => {
-                    console.warn('Error loading scripts:', err);
-                    // Ensure core functionality still works
-                    setupScrollEffects();
-                });
-        }
-        
-        // Hero animations - prioritized for visual appeal
-        function animateHeroElements() {
-            const heroTitle = document.querySelector('.hero-title');
-            const heroSubtitle = document.querySelector('.hero-subtitle');
-            const heroButtons = document.querySelector('.hero-buttons');
-            const scrollIndicator = document.querySelector('.scroll-indicator');
-            
-            if (!heroTitle || !heroSubtitle || !heroButtons || !scrollIndicator) return;
-            
-            // Stagger animations for more professional feel
-            setTimeout(() => {
-                heroTitle.classList.add('animate');
-                
-                setTimeout(() => {
-                    heroSubtitle.classList.add('animate');
-                    
-                    setTimeout(() => {
-                        heroButtons.classList.add('animate');
-                        
-                        setTimeout(() => {
-                            scrollIndicator.classList.add('animate');
-                        }, 300);
-                    }, 200);
-                }, 200);
-            }, 100);
-        }
-        
-        // Setup scroll effects with IntersectionObserver for better performance
-        function setupScrollEffects() {
-            // Reveal elements on scroll with IntersectionObserver
-            if ('IntersectionObserver' in window) {
-                const revealElements = document.querySelectorAll('.reveal-element');
-                
-                const revealObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('revealed');
-                            revealObserver.unobserve(entry.target);
-                        }
-                    });
-                }, {
-                    threshold: 0.15,
-                    rootMargin: '0px 0px -50px 0px'
-                });
-                
-                revealElements.forEach(element => {
-                    revealObserver.observe(element);
-                });
-            } else {
-                // Fallback for older browsers
-                document.querySelectorAll('.reveal-element').forEach(element => {
-                    element.classList.add('revealed');
-                });
-            }
-            
-            // FAQ accordion with efficient event delegation
-            document.addEventListener('click', function(e) {
-                const questionElement = e.target.closest('.faq-question');
-                if (!questionElement) return;
-                
-                const faqItem = questionElement.parentElement;
-                const isExpanded = faqItem.classList.contains('active');
-                
-                // Close all items first for accordion behavior
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // Toggle the clicked item
-                if (!isExpanded) {
-                    faqItem.classList.add('active');
-                }
-            });
-            
-            // Service tabs with event delegation
-            document.addEventListener('click', function(e) {
-                const tabButton = e.target.closest('.tab-btn');
-                if (!tabButton) return;
-                
-                const tabId = tabButton.getAttribute('data-tab');
-                if (!tabId) return;
-                
-                // Update active states
-                document.querySelectorAll('.tab-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                document.querySelectorAll('.tab-panel').forEach(panel => {
-                    panel.classList.remove('active');
-                });
-                
-                tabButton.classList.add('active');
-                const panel = document.getElementById(`${tabId}-panel`);
-                if (panel) panel.classList.add('active');
-            });
-            
-            // Back to top button with throttled scroll handler
-            const scrollTopBtn = document.getElementById('scroll-top');
-            if (scrollTopBtn) {
-                let lastScrollY = window.scrollY;
-                let ticking = false;
-                
-                window.addEventListener('scroll', function() {
-                    if (!ticking) {
-                        window.requestAnimationFrame(function() {
-                            if (window.scrollY > 600) {
-                                scrollTopBtn.classList.add('visible');
-                            } else {
-                                scrollTopBtn.classList.remove('visible');
-                            }
-                            ticking = false;
-                        });
-                        ticking = true;
-                    }
-                }, { passive: true });
-                
-                scrollTopBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-        }
     });
+    </script>
+    
+    <!-- Performance-optimized script loading -->
+    <script>
+    // Performance measurement
+    const loadStart = performance.now();
+
+    // Load critical scripts in proper order
+    function loadScripts() {
+      // Helper function for script loading
+      function loadScript(src, priority = 'auto', async = true) {
+        return new Promise((resolve) => {
+          const script = document.createElement('script');
+          script.src = src;
+          script.async = async;
+          
+          // Use fetchpriority if supported
+          if ('fetchpriority' in script) {
+            script.fetchpriority = priority;
+          }
+          
+          script.onload = () => resolve(true);
+          script.onerror = () => {
+            console.warn(`Failed to load: ${src}`);
+            resolve(false);
+          };
+          
+          document.body.appendChild(script);
+        });
+      }
+      
+      // First load core validation module
+      loadScript('js/form-validation.js', 'high')
+        .then(() => {
+          // Then load modal script
+          return loadScript('js/modal.js', 'high');
+        })
+        .then(() => {
+          // Finally load form handler script if needed
+          if (typeof emailjs !== 'undefined') {
+            console.log('EmailJS already loaded');
+          } else {
+            return loadScript('https://cdn.emailjs.com/dist/email.min.js');
+          }
+        })
+        .finally(() => {
+          // Record performance metric
+          const loadTime = Math.round(performance.now() - loadStart);
+          console.log(`Scripts loaded in ${loadTime}ms`);
+        });
+    }
+
+    // Load scripts based on document ready state
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadScripts);
+    } else {
+      loadScripts();
+    }
     </script>
 	<script async src="js/script-loader.js"></script>
 	<script async src="js/video-init.js"></script>
