@@ -1,13 +1,10 @@
 /**
- * Contact Form Modal Styles
- * Optimized for:
- * - Hardware acceleration
- * - Minimal repaints
- * - Animation performance
- * - Floating label form support
+ * Enhanced Modal and Contact Form Styles
+ * Casa Del Sol AZ | 2025
+ * Optimized for HTTP/2 and performance
  */
 
-/* Modal base styles */
+/* Modal overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -29,13 +26,14 @@
   visibility: visible;
 }
 
+/* Main modal container */
 .modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.9);
-  background-color: var(--color-gray-dark);
-  border-radius: var(--radius-lg);
+  background-color: var(--color-gray-dark, #222);
+  border-radius: var(--radius-lg, 16px);
   z-index: 2001;
   width: 90%;
   max-width: 600px;
@@ -49,7 +47,7 @@
               visibility 0.3s ease;
   will-change: transform, opacity;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-gold) rgba(0, 0, 0, 0.2);
+  scrollbar-color: var(--color-gold, #d4af37) rgba(0, 0, 0, 0.2);
 }
 
 /* Custom scrollbar for WebKit browsers */
@@ -63,7 +61,7 @@
 }
 
 .modal::-webkit-scrollbar-thumb {
-  background-color: var(--color-gold);
+  background-color: var(--color-gold, #d4af37);
   border-radius: 4px;
 }
 
@@ -80,6 +78,7 @@
   overflow: hidden;
 }
 
+/* Modal header */
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -90,8 +89,8 @@
 }
 
 .modal-title {
-  font-family: var(--font-heading);
-  color: var(--color-gold);
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  color: var(--color-gold, #d4af37);
   margin: 0;
   font-size: 1.5rem;
 }
@@ -104,10 +103,10 @@
 .modal-controls button {
   background-color: transparent;
   border: none;
-  color: var(--color-white);
+  color: var(--color-white, #fff);
   width: 32px;
   height: 32px;
-  border-radius: var(--radius-round);
+  border-radius: var(--radius-round, 50%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,14 +116,18 @@
 
 .modal-controls button:hover {
   background-color: rgba(255, 255, 255, 0.1);
-  color: var(--color-gold);
+  color: var(--color-gold, #d4af37);
 }
 
 .modal-body {
   padding: 1.5rem;
 }
 
-/* Enhanced floating label form styles */
+/* Enhanced form styling for EmailJS integration */
+.modal-form {
+  color: var(--color-white, #fff);
+}
+
 .modal-form .form-group {
   position: relative;
   margin-bottom: 1.5rem;
@@ -140,6 +143,13 @@
   flex: 1;
 }
 
+/* Date and select input containers */
+.modal-form .date-input,
+.modal-form .select-input {
+  position: relative;
+}
+
+/* Input styling */
 .modal-form input,
 .modal-form select,
 .modal-form textarea {
@@ -147,11 +157,24 @@
   padding: 0.8rem 1rem;
   background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--color-white);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-body);
+  color: var(--form-text, #fff);
+  border-radius: var(--radius-sm, 4px);
+  font-family: var(--font-body, 'Raleway', sans-serif);
   font-size: 1rem;
   transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.modal-form input::placeholder,
+.modal-form textarea::placeholder {
+  color: transparent;
+}
+
+.modal-form input:focus,
+.modal-form select:focus,
+.modal-form textarea:focus {
+  outline: none;
+  border-color: var(--color-gold, #d4af37);
+  background-color: rgba(255, 255, 255, 0.07);
 }
 
 .modal-form textarea {
@@ -159,19 +182,12 @@
   resize: vertical;
 }
 
-.modal-form input:focus,
-.modal-form select:focus,
-.modal-form textarea:focus {
-  outline: none;
-  border-color: var(--color-gold);
-  background-color: rgba(255, 255, 255, 0.07);
-}
-
+/* Floating labels */
 .modal-form .floating-label {
   position: absolute;
   top: 0.8rem;
   left: 1rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--form-placeholder, rgba(255, 255, 255, 0.6));
   font-size: 1rem;
   pointer-events: none;
   transition: transform 0.3s ease, color 0.3s ease, font-size 0.3s ease;
@@ -181,18 +197,32 @@
 .modal-form input:focus ~ .floating-label,
 .modal-form textarea:focus ~ .floating-label,
 .modal-form input:not(:placeholder-shown) ~ .floating-label,
-.modal-form textarea:not(:placeholder-shown) ~ .floating-label {
+.modal-form textarea:not(:placeholder-shown) ~ .floating-label,
+.modal-form .has-value .floating-label {
   transform: translateY(-130%) scale(0.85);
-  color: var(--color-gold);
+  color: var(--color-gold, #d4af37);
 }
 
+/* Standard labels for date and select */
+.modal-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--form-placeholder, rgba(255, 255, 255, 0.8));
+  font-size: 0.9rem;
+}
+
+.modal-form .has-value label {
+  color: var(--color-gold, #d4af37);
+}
+
+/* Form highlight effect */
 .modal-form .form-highlight {
   position: absolute;
   bottom: 0;
   left: 0;
   height: 2px;
   width: 0;
-  background-color: var(--color-gold);
+  background-color: var(--color-gold, #d4af37);
   transition: width 0.3s ease;
 }
 
@@ -201,6 +231,12 @@
   width: 100%;
 }
 
+/* Required field indicator */
+.modal-form .required {
+  color: var(--color-gold, #d4af37);
+}
+
+/* Select styling */
 .modal-form .select-wrapper {
   position: relative;
 }
@@ -210,20 +246,11 @@
   top: 50%;
   right: 1rem;
   transform: translateY(-50%);
-  color: var(--color-gold);
+  color: var(--color-gold, #d4af37);
   pointer-events: none;
 }
 
-.modal-form label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.modal-form .required {
-  color: var(--color-gold);
-}
-
+/* Form submit button */
 .modal-form button[type="submit"] {
   width: 100%;
   padding: 0.9rem 1.5rem;
@@ -232,9 +259,9 @@
   justify-content: center;
   gap: 0.5rem;
   border: none;
-  border-radius: var(--radius-md);
-  background-color: var(--color-gold);
-  color: var(--color-black);
+  border-radius: var(--radius-md, 8px);
+  background-color: var(--color-gold, #d4af37);
+  color: var(--color-black, #000);
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
@@ -242,7 +269,7 @@
 }
 
 .modal-form button[type="submit"]:hover {
-  background-color: var(--color-gold-light);
+  background-color: var(--color-gold-light, #e5c158);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -264,18 +291,39 @@
   pointer-events: none;
 }
 
-.modal-form button[type="submit"].sending .button-icon {
-  animation: spin 1s linear infinite;
+/* Spinner for sending state */
+.modal-form .spinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  border-top-color: var(--color-black, #000);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
-/* Feedback modal styles */
+/* Error states */
+.modal-form .has-error input,
+.modal-form .has-error textarea,
+.modal-form .has-error select {
+  border-color: #FF5252;
+}
+
+.modal-form .error-message {
+  color: #FF5252;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+  font-weight: 500;
+}
+
+/* Feedback modals */
 .feedback-modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.9);
-  background-color: var(--color-gray-dark);
-  border-radius: var(--radius-lg);
+  background-color: var(--color-gray-dark, #222);
+  border-radius: var(--radius-lg, 16px);
   z-index: 2002;
   width: 90%;
   max-width: 400px;
@@ -306,7 +354,7 @@
 }
 
 .feedback-modal .error-icon {
-  color: #F44336;
+  color: #FF5252;
 }
 
 .feedback-modal h3 {
@@ -323,8 +371,8 @@
   bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--color-gold);
-  color: var(--color-black);
+  background-color: var(--color-gold, #d4af37);
+  color: var(--color-black, #000);
   padding: 8px 16px;
   border-radius: 20px;
   font-weight: bold;
@@ -353,6 +401,7 @@
   font-size: 0.9rem;
 }
 
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .modal {
     width: 95%;
@@ -362,9 +411,14 @@
     flex-direction: column;
     gap: 1.5rem;
   }
+  
+  .contact-fab {
+    width: 50px;
+    height: 50px;
+  }
 }
 
-/* Animation for loading spinner */
+/* Animation keyframes */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
