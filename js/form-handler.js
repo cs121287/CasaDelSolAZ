@@ -20,14 +20,14 @@
     // Initialize EmailJS when DOM is ready
     if (typeof emailjs !== 'undefined') {
       emailjs.init({
-        publicKey: "b3T2GoOXJmt08AM0y"
+        publicKey: "LsO58YvEzZmXTSZ2q"
       });
     } else {
       // EmailJS library not available, wait for it to load
       window.addEventListener('load', function() {
         if (typeof emailjs !== 'undefined') {
           emailjs.init({
-            publicKey: "b3T2GoOXJmt08AM0y"
+            publicKey: "LsO58YvEzZmXTSZ2q"
           });
         } else {
           console.warn('EmailJS library not loaded');
