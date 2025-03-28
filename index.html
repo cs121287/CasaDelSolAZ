@@ -23,17 +23,21 @@
             --color-white: #ffffff;
             --color-gold: #d4af37;
             --color-gold-light: #e5c158;
+            --color-gold-dark: #b89929;
             --color-header-height: 120px;
             --color-header-height-scrolled: 90px;
             --radius-xl: 24px;
-            --form-text: #ffffff;
-            --form-placeholder: rgba(255, 255, 255, 0.6);
+            --radius-lg: 16px;
+            --radius-md: 8px;
+            --radius-sm: 4px;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Raleway', sans-serif;
         }
         
         body, html {
             margin: 0;
             padding: 0;
-            font-family: 'Raleway', sans-serif;
+            font-family: var(--font-body);
             height: 100%;
             background-color: var(--color-black);
             color: var(--color-white);
@@ -111,42 +115,27 @@
             overflow: hidden;
             z-index: 1;
         }
-        
-        /* Fixed contact button */
-        .contact-fab {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: var(--color-gold);
-            color: var(--color-black);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-            z-index: 1100;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-        
-        .contact-fab:hover {
-            background-color: var(--color-gold-light);
-            transform: translateY(-5px);
-        }
-        
-        .contact-fab i {
-            font-size: 1.5rem;
-        }
     </style>
-    
-    <!-- Preload critical assets -->
-    <link rel="preload" href="css/main.css" as="style">
-    <link rel="preload" href="img/logo.png" as="image" fetchpriority="high">
-    <link rel="preload" href="css/video-effects.css" as="style">
-    <link rel="preload" href="css/modal.css" as="style">
-    <link rel="preload" href="vid/background.mp4" as="video">
+	<!-- Preload critical assets -->
+<link rel="preload" href="css/main.css" as="style">
+<link rel="preload" href="img/logo.png" as="image" fetchpriority="high">
+<link rel="preload" href="css/video-effects.css" as="style">
+<link rel="preload" href="css/modal.css" as="style">
+<link rel="preload" href="vid/background.mp4" as="video" fetchpriority="high">
+<link rel="preload" href="js/modal.js" as="script" fetchpriority="high">
+
+<!-- Early connection to required domains for faster resource loading -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://cdn.emailjs.com" crossorigin>
+
+<!-- Add HTTP Cache-Control -->
+<meta http-equiv="Cache-Control" content="max-age=31536000">
+
+<!-- Additional performance meta tags -->
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <!-- Main CSS (non-blocking) -->
     <link rel="stylesheet" href="css/main.css">
@@ -162,22 +151,17 @@
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
+    <!-- EmailJS for form submission (defer loading) -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js" defer></script>
+    
     <!-- Core GSAP (critical for animations) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    
-    <!-- EmailJS for form submission (deferred to not block rendering) -->
-    <script src="https://cdn.emailjs.com/dist/email.min.js" defer></script>
 </head>
 <body>
     <!-- Loading screen -->
     <div class="loading-screen" id="loading-screen">
         <div class="loader"></div>
     </div>
-
-    <!-- Fixed contact button -->
-    <button class="contact-fab btn-contact" aria-label="Contact us">
-        <i class="fas fa-envelope"></i>
-    </button>
 
     <!-- Site container -->
     <div class="site-container">
@@ -232,7 +216,7 @@
         <!-- Hero Section with rounded video container -->
         <section id="hero" class="hero-section">
             <div class="video-container">
-                <video autoplay muted loop playsinline class="background-video">
+                <video autoplay loop muted playsinline class="background-video" fetchpriority="high">
                     <source src="vid/background.mp4" type="video/mp4">
                 </video>
                 <div class="video-overlay"></div>
@@ -241,7 +225,7 @@
                 <h1 class="hero-title">Casa Del Sol</h1>
                 <p class="hero-subtitle">Where memorable celebrations come to life</p>
                 <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary btn-contact">Book Your Event</a>
+                    <a href="#" class="btn btn-primary btn-contact">Book Your Event</a>
                     <a href="#gallery" class="btn btn-secondary">View Gallery</a>
                 </div>
             </div>
@@ -320,7 +304,7 @@
                                     <li>Custom lighting options</li>
                                     <li>Dedicated event coordinator</li>
                                 </ul>
-                                <a href="#contact" class="btn btn-text btn-contact">Inquire About Weddings <i class="fas fa-arrow-right"></i></a>
+                                <a href="#" class="btn btn-text btn-contact">Inquire About Weddings <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                         
@@ -342,7 +326,7 @@
                                     <li>Custom lighting options</li>
                                     <li>Dedicated event coordinator</li>
                                 </ul>
-                                <a href="#contact" class="btn btn-text btn-contact">Inquire About Quinceañeras <i class="fas fa-arrow-right"></i></a>
+                                <a href="#" class="btn btn-text btn-contact">Inquire About Quinceañeras <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                         
@@ -363,7 +347,7 @@
                                     <li>Catering options</li>
                                     <li>Dedicated event coordinator</li>
                                 </ul>
-                                <a href="#contact" class="btn btn-text btn-contact">Inquire About Corporate Events <i class="fas fa-arrow-right"></i></a>
+                                <a href="#" class="btn btn-text btn-contact">Inquire About Corporate Events <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                         
@@ -384,7 +368,7 @@
                                     <li>Custom lighting options</li>
                                     <li>Dedicated event coordinator</li>
                                 </ul>
-                                <a href="#contact" class="btn btn-text btn-contact">Inquire About Special Events <i class="fas fa-arrow-right"></i></a>
+                                <a href="#" class="btn btn-text btn-contact">Inquire About Special Events <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -591,7 +575,7 @@
             </div>
         </section>
 
-        <!-- Contact Section (simplified with CTA only) -->
+        <!-- Contact Section (simplified to show venue contact info) -->
         <section id="contact" class="section contact-section">
             <div class="container">
                 <h2 class="section-title">Contact Us</h2>
@@ -653,60 +637,16 @@
                         </div>
                     </div>
                     
-                    <div class="contact-form-container">
-                        <!-- Hidden template form for modal -->
-                        <form id="contact-form" class="contact-form" style="display: none;">
-                            <input type="hidden" name="time" id="form_time">
-                            
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="tel" id="phone" name="phone">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="event-date">Event Date</label>
-                                <input type="date" id="event-date" name="event-date">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="event-type">Event Type</label>
-                                <select id="event-type" name="event-type">
-                                    <option value="">Select event type...</option>
-                                    <option value="wedding">Wedding</option>
-                                    <option value="quinceanera">Quinceañera</option>
-                                    <option value="corporate">Corporate Event</option>
-                                    <option value="special">Special Event</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="guests">Guest Count</label>
-                                <input type="number" id="guests" name="guests" min="1">
-                            </div>
-                            
-                            <div class="form-group full-width">
-                                <label for="message">Message</label>
-                                <textarea id="message" name="message" rows="4" required></textarea>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary">Send Message</button>
-                        </form>
-                        
-                        <!-- Contact CTA -->
-                        <div class="contact-cta reveal-element">
+                    <div class="contact-cta-wrapper reveal-element">
+                        <div class="contact-cta">
                             <h3>Ready to start planning your event?</h3>
                             <p>Get in touch with our event specialists to check availability and start bringing your vision to life.</p>
                             <button class="btn btn-primary btn-contact">Contact Us Now</button>
+                        </div>
+                        
+                        <!-- Map or additional image -->
+                        <div class="contact-image">
+                            <img src="img/venue-2.jpg" alt="Casa Del Sol AZ venue" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -729,7 +669,7 @@
                             <li><a href="#rentals">Rentals</a></li>
                             <li><a href="#faq">FAQ</a></li>
                             <li><a href="#gallery">Gallery</a></li>
-                            <li><a href="#contact" class="btn-contact">Contact</a></li>
+                            <li><a href="#" class="btn-contact">Contact</a></li>
                         </ul>
                     </div>
                 </div>
@@ -781,277 +721,317 @@
     }
     </script>
     
-    <!-- Performance-optimized JavaScript loading -->
+    <!-- Critical JS inlined for faster loading -->
     <script>
-        // Immediate execution for critical functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize loader
-            const loadingScreen = document.getElementById('loading-screen');
-            
-            // Setup basic UI interactions
-            setupMobileNav();
-            setupHeaderScroll();
-            
-            // Load non-critical scripts after page load
-            window.addEventListener('load', function() {
-                // Short delay to ensure smooth initial render
+    // Immediate initialization for critical functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Loading indicator
+        const loadingScreen = document.getElementById('loading-screen');
+        
+        // Basic UI setup
+        setupMobileNav();
+        setupHeaderScroll();
+        
+        // Load remaining scripts in a performant way
+        loadScriptsEfficiently();
+        
+        // Clean up loading screen after page is mostly ready
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                loadingScreen.style.transition = 'opacity 0.5s ease';
+                
                 setTimeout(() => {
-                    // Hide loading screen with transition
-                    loadingScreen.style.opacity = '0';
-                    loadingScreen.style.transition = 'opacity 0.5s ease';
-                    
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                        
-                        // Start hero animations
-                        animateHeroElements();
-                        
-                        // Load scripts in parallel using Promise.all for better performance
-                        loadScripts();
-                    }, 500);
-                }, 200);
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 200);
+        });
+        
+        // Setup mobile navigation with event delegation
+        function setupMobileNav() {
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const body = document.body;
+            
+            if (!mobileToggle || !mobileMenu) return;
+            
+            mobileToggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                body.classList.toggle('menu-open');
             });
             
-            // Setup mobile navigation
-            function setupMobileNav() {
-                const mobileToggle = document.querySelector('.mobile-toggle');
-                const mobileMenu = document.querySelector('.mobile-menu');
-                const body = document.body;
+            // Use event delegation for better performance
+            document.addEventListener('click', function(e) {
+                // Handle mobile links
+                if (e.target.closest('.mobile-link:not(.btn-contact)')) {
+                    e.preventDefault();
+                    const link = e.target.closest('.mobile-link');
+                    const targetId = link.getAttribute('href');
+                    
+                    mobileToggle.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    body.classList.remove('menu-open');
+                    
+                    if (targetId) {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) smoothScroll(targetElement);
+                    }
+                }
                 
-                if (!mobileToggle || !mobileMenu) return;
+                // Handle desktop nav buttons
+                if (e.target.closest('.nav-btn:not(.btn-contact)')) {
+                    e.preventDefault();
+                    const link = e.target.closest('.nav-btn');
+                    const targetId = link.getAttribute('href');
+                    
+                    if (targetId) {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) smoothScroll(targetElement);
+                    }
+                }
                 
-                mobileToggle.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    mobileMenu.classList.toggle('active');
-                    body.classList.toggle('menu-open');
-                });
-                
-                // Close menu when clicking links
-                document.querySelectorAll('.mobile-link').forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        if (!link.classList.contains('btn-contact')) {
-                            e.preventDefault();
-                            mobileToggle.classList.remove('active');
-                            mobileMenu.classList.remove('active');
-                            body.classList.remove('menu-open');
-                            
-                            // Smooth scroll to target
-                            const targetId = this.getAttribute('href');
-                            const targetElement = document.querySelector(targetId);
-                            if (targetElement) {
-                                smoothScroll(targetElement);
-                            }
-                        }
-                    });
-                });
-                
-                // Desktop nav smooth scroll
-                document.querySelectorAll('.nav-btn').forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        if (!link.classList.contains('btn-contact')) {
-                            e.preventDefault();
-                            const targetId = this.getAttribute('href');
-                            const targetElement = document.querySelector(targetId);
-                            if (targetElement) {
-                                smoothScroll(targetElement);
-                            }
-                        }
-                    });
-                });
-                
-                // Logo click scrolls to top
-                document.querySelector('.logo').addEventListener('click', function(e) {
+                // Logo click to top
+                if (e.target.closest('.logo')) {
                     e.preventDefault();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        }
+        
+        // Smooth scroll with performance optimizations
+        function smoothScroll(targetElement) {
+            if (!targetElement) return;
+            
+            const headerHeight = document.querySelector('.site-header')?.offsetHeight || 0;
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Header scroll effect using requestAnimationFrame for performance
+        function setupHeaderScroll() {
+            const header = document.getElementById('header');
+            if (!header) return;
+            
+            let lastScrollPosition = 0;
+            let ticking = false;
+            
+            function onScroll() {
+                lastScrollPosition = window.scrollY;
+                
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        if (lastScrollPosition > 50) {
+                            header.classList.add('scrolled');
+                        } else {
+                            header.classList.remove('scrolled');
+                        }
+                        ticking = false;
+                    });
+                    
+                    ticking = true;
+                }
+            }
+            
+            // Passive event listener for better scroll performance
+            window.addEventListener('scroll', onScroll, { passive: true });
+            
+            // Initial check
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            }
+        }
+        
+        // HTTP/2 optimized script loading
+        function loadScriptsEfficiently() {
+            // Helper function to load scripts with performance tracking
+            function loadScript(url, priority = 'auto') {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = url;
+                    script.async = true;
+                    
+                    // Add importance hint for resource prioritization
+                    if ('fetchpriority' in script) {
+                        script.fetchpriority = priority;
+                    }
+                    
+                    // Performance metrics
+                    const startTime = performance.now();
+                    
+                    script.onload = () => {
+                        const loadTime = Math.round(performance.now() - startTime);
+                        console.debug(`Loaded ${url} in ${loadTime}ms`);
+                        resolve();
+                    };
+                    
+                    script.onerror = (err) => {
+                        console.warn(`Failed to load script: ${url}`);
+                        // Resolve anyway to not block other scripts
+                        resolve();
+                    };
+                    
+                    document.body.appendChild(script);
                 });
             }
             
-            // Smooth scroll function
-            function smoothScroll(targetElement) {
-                const headerHeight = document.querySelector('.site-header').offsetHeight;
-                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            // Animate hero elements first for perceived performance
+            animateHeroElements();
+            
+            // Phase 1: Load critical UI functionality (ScrollTrigger + Modal)
+            Promise.resolve()
+                .then(() => loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js', 'high'))
+                .then(() => {
+                    // Phase 2: Load modal system 
+                    return loadScript('js/modal.js', 'high');
+                })
+                .then(() => {
+                    // Phase 3: Load parallel non-critical scripts
+                    return Promise.all([
+                        loadScript('js/form-handler.js'),
+                        loadScript('js/animations.js')
+                    ]);
+                })
+                .then(() => {
+                    // Phase 4: Initialize scroll effects after all scripts are loaded
+                    setupScrollEffects();
+                })
+                .catch(err => {
+                    console.warn('Error loading scripts:', err);
+                    // Ensure core functionality still works
+                    setupScrollEffects();
+                });
+        }
+        
+        // Hero animations - prioritized for visual appeal
+        function animateHeroElements() {
+            const heroTitle = document.querySelector('.hero-title');
+            const heroSubtitle = document.querySelector('.hero-subtitle');
+            const heroButtons = document.querySelector('.hero-buttons');
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            
+            if (!heroTitle || !heroSubtitle || !heroButtons || !scrollIndicator) return;
+            
+            // Stagger animations for more professional feel
+            setTimeout(() => {
+                heroTitle.classList.add('animate');
                 
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
+                setTimeout(() => {
+                    heroSubtitle.classList.add('animate');
+                    
+                    setTimeout(() => {
+                        heroButtons.classList.add('animate');
+                        
+                        setTimeout(() => {
+                            scrollIndicator.classList.add('animate');
+                        }, 300);
+                    }, 200);
+                }, 200);
+            }, 100);
+        }
+        
+        // Setup scroll effects with IntersectionObserver for better performance
+        function setupScrollEffects() {
+            // Reveal elements on scroll with IntersectionObserver
+            if ('IntersectionObserver' in window) {
+                const revealElements = document.querySelectorAll('.reveal-element');
+                
+                const revealObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                            revealObserver.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.15,
+                    rootMargin: '0px 0px -50px 0px'
+                });
+                
+                revealElements.forEach(element => {
+                    revealObserver.observe(element);
+                });
+            } else {
+                // Fallback for older browsers
+                document.querySelectorAll('.reveal-element').forEach(element => {
+                    element.classList.add('revealed');
                 });
             }
             
-            // Header scroll effect
-            function setupHeaderScroll() {
-                const header = document.getElementById('header');
-                if (!header) return;
+            // FAQ accordion with efficient event delegation
+            document.addEventListener('click', function(e) {
+                const questionElement = e.target.closest('.faq-question');
+                if (!questionElement) return;
                 
-                // Use requestAnimationFrame for better performance
+                const faqItem = questionElement.parentElement;
+                const isExpanded = faqItem.classList.contains('active');
+                
+                // Close all items first for accordion behavior
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Toggle the clicked item
+                if (!isExpanded) {
+                    faqItem.classList.add('active');
+                }
+            });
+            
+            // Service tabs with event delegation
+            document.addEventListener('click', function(e) {
+                const tabButton = e.target.closest('.tab-btn');
+                if (!tabButton) return;
+                
+                const tabId = tabButton.getAttribute('data-tab');
+                if (!tabId) return;
+                
+                // Update active states
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-panel').forEach(panel => {
+                    panel.classList.remove('active');
+                });
+                
+                tabButton.classList.add('active');
+                const panel = document.getElementById(`${tabId}-panel`);
+                if (panel) panel.classList.add('active');
+            });
+            
+            // Back to top button with throttled scroll handler
+            const scrollTopBtn = document.getElementById('scroll-top');
+            if (scrollTopBtn) {
+                let lastScrollY = window.scrollY;
                 let ticking = false;
                 
                 window.addEventListener('scroll', function() {
                     if (!ticking) {
                         window.requestAnimationFrame(function() {
-                            if (window.scrollY > 50) {
-                                header.classList.add('scrolled');
+                            if (window.scrollY > 600) {
+                                scrollTopBtn.classList.add('visible');
                             } else {
-                                header.classList.remove('scrolled');
+                                scrollTopBtn.classList.remove('visible');
                             }
                             ticking = false;
                         });
                         ticking = true;
                     }
-                });
+                }, { passive: true });
                 
-                // Check initial scroll position
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                }
-            }
-            
-            // Simple hero animations
-            function animateHeroElements() {
-                const heroTitle = document.querySelector('.hero-title');
-                const heroSubtitle = document.querySelector('.hero-subtitle');
-                const heroButtons = document.querySelector('.hero-buttons');
-                const scrollIndicator = document.querySelector('.scroll-indicator');
-                
-                if (!heroTitle || !heroSubtitle || !heroButtons || !scrollIndicator) return;
-                
-                // Sequential animation with delays
-                setTimeout(() => {
-                    heroTitle.classList.add('animate');
-                    
-                    setTimeout(() => {
-                        heroSubtitle.classList.add('animate');
-                        
-                        setTimeout(() => {
-                            heroButtons.classList.add('animate');
-                            
-                            setTimeout(() => {
-                                scrollIndicator.classList.add('animate');
-                            }, 300);
-                        }, 300);
-                    }, 300);
-                }, 100);
-            }
-            
-            // Load scripts efficiently using Promise.all
-            function loadScripts() {
-                // Helper to load scripts with error handling
-                function loadScript(url) {
-                    return new Promise((resolve, reject) => {
-                        const script = document.createElement('script');
-                        script.src = url;
-                        script.async = true;
-                        script.onload = resolve;
-                        script.onerror = () => {
-                            console.warn(`Failed to load script: ${url}`);
-                            resolve(); // Resolve anyway to not block other scripts
-                        };
-                        document.body.appendChild(script);
-                    });
-                }
-                
-                // Load core plugins first
-                Promise.resolve()
-                    .then(() => loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js'))
-                    .then(() => {
-                        // Load site-specific scripts in parallel for better performance
-                        return Promise.all([
-                            loadScript('js/animations.js'),
-                            loadScript('js/modal.js'),
-                            loadScript('js/form-handler.js')
-                        ]);
-                    })
-                    .then(() => {
-                        // After scripts are loaded, set up scroll effects
-                        setupScrollEffects();
-                    })
-                    .catch(err => {
-                        console.warn('Some scripts failed to load:', err);
-                        // Ensure UI is still functional
-                        setupScrollEffects();
-                    });
-            }
-            
-            // Setup scroll effects (can work without GSAP)
-            function setupScrollEffects() {
-                // Reveal elements on scroll
-                const revealElements = document.querySelectorAll('.reveal-element');
-                
-                if ('IntersectionObserver' in window) {
-                    const revealObserver = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('revealed');
-                                revealObserver.unobserve(entry.target);
-                            }
-                        });
-                    }, {
-                        threshold: 0.15,
-                        rootMargin: '0px 0px -50px 0px'
-                    });
-                    
-                    revealElements.forEach(element => {
-                        revealObserver.observe(element);
-                    });
-                } else {
-                    // Fallback for browsers without IntersectionObserver
-                    revealElements.forEach(element => {
-                        element.classList.add('revealed');
-                    });
-                }
-                
-                // Scroll to top button
-                const scrollTopBtn = document.getElementById('scroll-top');
-                if (scrollTopBtn) {
-                    window.addEventListener('scroll', function() {
-                        if (window.scrollY > 600) {
-                            scrollTopBtn.classList.add('visible');
-                        } else {
-                            scrollTopBtn.classList.remove('visible');
-                        }
-                    });
-                    
-                    scrollTopBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        window.scrollTo({
-                            top: 0,
-                            behavior: 'smooth'
-                        });
-                    });
-                }
-                
-                // FAQ accordion functionality
-                document.querySelectorAll('.faq-question').forEach(question => {
-                    question.addEventListener('click', function() {
-                        const faqItem = this.parentElement;
-                        const isExpanded = faqItem.classList.contains('active');
-                        
-                        // Close all items
-                        document.querySelectorAll('.faq-item').forEach(item => {
-                            item.classList.remove('active');
-                        });
-                        
-                        // If not already expanded, expand this item
-                        if (!isExpanded) {
-                            faqItem.classList.add('active');
-                        }
-                    });
-                });
-                
-                // Tab functionality
-                document.querySelectorAll('.tab-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        // Remove active class from all buttons and panels
-                        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-                        
-                        // Add active class to clicked button and corresponding panel
-                        this.classList.add('active');
-                        const tabId = this.getAttribute('data-tab');
-                        document.getElementById(tabId + '-panel').classList.add('active');
+                scrollTopBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
                     });
                 });
             }
-        });
+        }
+    });
     </script>
 	<script async src="js/script-loader.js"></script>
 	<script async src="js/video-init.js"></script>
