@@ -113,11 +113,14 @@
     <!-- Preload critical assets -->
     <link rel="preload" href="css/main.css" as="style">
     <link rel="preload" href="img/logo.png" as="image" fetchpriority="high">
-	<link rel="preload" href="css/video-effects.css" as="style">
+    <link rel="preload" href="css/video-effects.css" as="style">
+    <link rel="preload" href="css/modal.css" as="style">
     
     <!-- Main CSS (non-blocking) -->
     <link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/video-effects.css">
+    <link rel="stylesheet" href="css/video-effects.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/cursor.css">
     
     <!-- Optimized font loading -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -159,7 +162,7 @@
                     <ul>
                         <li><a href="#faq" class="nav-btn">FAQ</a></li>
                         <li><a href="#gallery" class="nav-btn">Gallery</a></li>
-                        <li><a href="#contact" class="nav-btn">Contact</a></li>
+                        <li><a href="#contact" class="nav-btn btn-contact">Contact</a></li>
                     </ul>
                 </nav>
                 
@@ -181,7 +184,7 @@
                     <li><a href="#rentals" class="mobile-link">Rentals</a></li>
                     <li><a href="#faq" class="mobile-link">FAQ</a></li>
                     <li><a href="#gallery" class="mobile-link">Gallery</a></li>
-                    <li><a href="#contact" class="mobile-link">Contact</a></li>
+                    <li><a href="#contact" class="mobile-link btn-contact">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -195,7 +198,7 @@
                 <h1 class="hero-title">Casa Del Sol</h1>
                 <p class="hero-subtitle">Where memorable celebrations come to life</p>
                 <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">Book Your Event</a>
+                    <a href="#contact" class="btn btn-primary btn-contact">Book Your Event</a>
                     <a href="#gallery" class="btn btn-secondary">View Gallery</a>
                 </div>
             </div>
@@ -274,7 +277,7 @@
                                     <li>Custom lighting options</li>
                                     <li>Dedicated event coordinator</li>
                                 </ul>
-                                <a href="#contact" class="btn btn-text">Inquire About Weddings <i class="fas fa-arrow-right"></i></a>
+                                <a href="#contact" class="btn btn-text btn-contact">Inquire About Weddings <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                         
@@ -296,7 +299,7 @@
                                     <li>Custom lighting options</li>
                                     <li>Dedicated event coordinator</li>
                                 </ul>
-                                <a href="#contact" class="btn btn-text">Inquire About Quinceañeras <i class="fas fa-arrow-right"></i></a>
+                                <a href="#contact" class="btn btn-text btn-contact">Inquire About Quinceañeras <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                         
@@ -317,7 +320,7 @@
                                     <li>Catering options</li>
                                     <li>Dedicated event coordinator</li>
                                 </ul>
-                                <a href="#contact" class="btn btn-text">Inquire About Corporate Events <i class="fas fa-arrow-right"></i></a>
+                                <a href="#contact" class="btn btn-text btn-contact">Inquire About Corporate Events <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                         
@@ -338,7 +341,7 @@
                                     <li>Custom lighting options</li>
                                     <li>Dedicated event coordinator</li>
                                 </ul>
-                                <a href="#contact" class="btn btn-text">Inquire About Special Events <i class="fas fa-arrow-right"></i></a>
+                                <a href="#contact" class="btn btn-text btn-contact">Inquire About Special Events <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -606,7 +609,8 @@
                     </div>
                     
                     <div class="contact-form-container">
-                        <form id="contact-form" class="contact-form">
+                        <!-- Hidden form - used as template for modal -->
+                        <form id="contact-form" class="contact-form" style="display: none;">
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" id="name" name="name" required>
@@ -645,6 +649,12 @@
                             
                             <button type="submit" class="btn btn-primary">Send Message</button>
                         </form>
+                        
+                        <!-- Contact CTA Button -->
+                        <div class="contact-cta">
+                            <p>Ready to start planning your event at Casa Del Sol?</p>
+                            <button class="btn btn-primary btn-contact">Contact Us Now</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -666,7 +676,7 @@
                             <li><a href="#rentals">Rentals</a></li>
                             <li><a href="#faq">FAQ</a></li>
                             <li><a href="#gallery">Gallery</a></li>
-                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="#contact" class="btn-contact">Contact</a></li>
                         </ul>
                     </div>
                 </div>
@@ -684,41 +694,41 @@
     </button>
     
     <!-- Performance-optimized JavaScript loading -->
-    <script>
-        // Immediate execution for critical functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize loader and video
-            const loadingScreen = document.getElementById('loading-screen');
-            
-            // Initialize video background with optimal loading
-            initVideoBackground();
-            
-            // Setup basic UI interactions
-            setupMobileNav();
-            setupHeaderScroll();
-            
-            // Load non-critical scripts after page load
-            window.addEventListener('load', function() {
-                // Short delay to ensure smooth initial render
+<script>
+    // Immediate execution for critical functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize loader and video
+        const loadingScreen = document.getElementById('loading-screen');
+        
+        // Initialize video background with optimal loading
+        initVideoBackground();
+        
+        // Setup basic UI interactions
+        setupMobileNav();
+        setupHeaderScroll();
+        
+        // Load non-critical scripts after page load
+        window.addEventListener('load', function() {
+            // Short delay to ensure smooth initial render
+            setTimeout(() => {
+                // Hide loading screen with transition
+                loadingScreen.style.opacity = '0';
+                loadingScreen.style.transition = 'opacity 0.5s ease';
+                
                 setTimeout(() => {
-                    // Hide loading screen with transition
-                    loadingScreen.style.opacity = '0';
-                    loadingScreen.style.transition = 'opacity 0.5s ease';
+                    loadingScreen.style.display = 'none';
                     
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                        
-                        // Start hero animations
-                        animateHeroElements();
-                        
-                        // Load GSAP plugins
-                        loadGsapPlugins();
-                        
-                        // Setup scroll effects
-                        setupScrollEffects();
-                    }, 500);
-                }, 200);
-            });
+                    // Start hero animations
+                    animateHeroElements();
+                    
+                    // Load GSAP plugins with error handling
+                    loadGsapPlugins();
+                    
+                    // Setup scroll effects
+                    setupScrollEffects();
+                }, 500);
+            }, 200);
+        });
             
             // Initialize video background
             function initVideoBackground() {
@@ -771,16 +781,18 @@
                 // Close menu when clicking links
                 document.querySelectorAll('.mobile-link').forEach(link => {
                     link.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        mobileToggle.classList.remove('active');
-                        mobileMenu.classList.remove('active');
-                        body.classList.remove('menu-open');
-                        
-                        // Smooth scroll to target
-                        const targetId = this.getAttribute('href');
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            smoothScroll(targetElement);
+                        if (!link.classList.contains('btn-contact')) {
+                            e.preventDefault();
+                            mobileToggle.classList.remove('active');
+                            mobileMenu.classList.remove('active');
+                            body.classList.remove('menu-open');
+                            
+                            // Smooth scroll to target
+                            const targetId = this.getAttribute('href');
+                            const targetElement = document.querySelector(targetId);
+                            if (targetElement) {
+                                smoothScroll(targetElement);
+                            }
                         }
                     });
                 });
@@ -788,11 +800,13 @@
                 // Desktop nav smooth scroll
                 document.querySelectorAll('.nav-btn').forEach(link => {
                     link.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const targetId = this.getAttribute('href');
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            smoothScroll(targetElement);
+                        if (!link.classList.contains('btn-contact')) {
+                            e.preventDefault();
+                            const targetId = this.getAttribute('href');
+                            const targetElement = document.querySelector(targetId);
+                            if (targetElement) {
+                                smoothScroll(targetElement);
+                            }
                         }
                     });
                 });
@@ -968,11 +982,21 @@
                 // First ScrollTrigger, then other plugins, then our animations
                 loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js')
                     .then(() => loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/SplitText.min.js'))
-                    .then(() => loadScript('js/animations.js'))
+                    .then(() => {
+                        // Load site-specific scripts in parallel for better performance
+                        return Promise.all([
+                            loadScript('js/animations.js'),
+                            loadScript('js/modal.js')
+                        ]);
+                    })
                     .catch(err => console.warn('Error loading GSAP plugins:', err));
             }
         });
     </script>
+    <!-- Load video initialization script -->
+	<script async src="js/script-loader.js"></script>
 	<script async src="js/video-init.js"></script>
+	<script async src="js/modal.js"></script>
+	<script async src="js/animations.js"></script>
 </body>
 </html>
