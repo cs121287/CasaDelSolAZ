@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.emailjs.com" crossorigin>
     
     <!-- Cache-Control for faster repeat visits -->
     <meta http-equiv="Cache-Control" content="max-age=31536000">
@@ -25,6 +26,8 @@
             --color-header-height: 120px;
             --color-header-height-scrolled: 90px;
             --radius-xl: 24px;
+            --form-text: #ffffff;
+            --form-placeholder: rgba(255, 255, 255, 0.6);
         }
         
         body, html {
@@ -108,6 +111,34 @@
             overflow: hidden;
             z-index: 1;
         }
+        
+        /* Fixed contact button */
+        .contact-fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--color-gold);
+            color: var(--color-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 1100;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .contact-fab:hover {
+            background-color: var(--color-gold-light);
+            transform: translateY(-5px);
+        }
+        
+        .contact-fab i {
+            font-size: 1.5rem;
+        }
     </style>
     
     <!-- Preload critical assets -->
@@ -115,6 +146,7 @@
     <link rel="preload" href="img/logo.png" as="image" fetchpriority="high">
     <link rel="preload" href="css/video-effects.css" as="style">
     <link rel="preload" href="css/modal.css" as="style">
+    <link rel="preload" href="vid/background.mp4" as="video">
     
     <!-- Main CSS (non-blocking) -->
     <link rel="stylesheet" href="css/main.css">
@@ -132,12 +164,20 @@
     
     <!-- Core GSAP (critical for animations) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- EmailJS for form submission (deferred to not block rendering) -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js" defer></script>
 </head>
 <body>
     <!-- Loading screen -->
     <div class="loading-screen" id="loading-screen">
         <div class="loader"></div>
     </div>
+
+    <!-- Fixed contact button -->
+    <button class="contact-fab btn-contact" aria-label="Contact us">
+        <i class="fas fa-envelope"></i>
+    </button>
 
     <!-- Site container -->
     <div class="site-container">
@@ -192,7 +232,10 @@
         <!-- Hero Section with rounded video container -->
         <section id="hero" class="hero-section">
             <div class="video-container">
-                <!-- Video loaded via JS for better performance -->
+                <video autoplay muted loop playsinline class="background-video">
+                    <source src="vid/background.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay"></div>
             </div>
             <div class="hero-content">
                 <h1 class="hero-title">Casa Del Sol</h1>
@@ -611,8 +654,10 @@
                     </div>
                     
                     <div class="contact-form-container">
-                        <!-- Hidden form template for modal use -->
+                        <!-- Hidden template form for modal -->
                         <form id="contact-form" class="contact-form" style="display: none;">
+                            <input type="hidden" name="time" id="form_time">
+                            
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" id="name" name="name" required>
@@ -740,11 +785,8 @@
     <script>
         // Immediate execution for critical functionality
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize loader and video
+            // Initialize loader
             const loadingScreen = document.getElementById('loading-screen');
-            
-            // Initialize video background with optimal loading
-            initVideoBackground();
             
             // Setup basic UI interactions
             setupMobileNav();
@@ -769,40 +811,6 @@
                     }, 500);
                 }, 200);
             });
-            
-            // Initialize video background
-            function initVideoBackground() {
-                const videoContainer = document.querySelector('.video-container');
-                if (!videoContainer) return;
-                
-                // Create video element
-                const video = document.createElement('video');
-                video.muted = true;
-                video.loop = true;
-                video.playsInline = true;
-                video.autoplay = true;
-                video.className = 'background-video';
-                
-                // Create source element
-                const source = document.createElement('source');
-                source.src = 'vid/background.mp4';
-                source.type = 'video/mp4';
-                
-                // Append to DOM
-                video.appendChild(source);
-                videoContainer.appendChild(video);
-                
-                // Add overlay for better text contrast
-                const overlay = document.createElement('div');
-                overlay.className = 'video-overlay';
-                videoContainer.appendChild(overlay);
-                
-                // Fallback for video loading errors
-                video.addEventListener('error', function() {
-                    videoContainer.classList.add('video-fallback');
-                    console.warn('Video failed to load, using fallback image');
-                });
-            }
             
             // Setup mobile navigation
             function setupMobileNav() {
@@ -949,7 +957,7 @@
                         return Promise.all([
                             loadScript('js/animations.js'),
                             loadScript('js/modal.js'),
-                            loadScript('js/video-init.js')
+                            loadScript('js/form-handler.js')
                         ]);
                     })
                     .then(() => {
@@ -1049,5 +1057,6 @@
 	<script async src="js/video-init.js"></script>
 	<script async src="js/modal.js"></script>
 	<script async src="js/animations.js"></script>
+	<script async src="js/form-handler.js"></script>
 </body>
 </html>
