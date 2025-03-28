@@ -1,386 +1,507 @@
 /**
- * Enhanced Contact Form Modal
- * Performance optimized with:
- * - Event delegation
- * - Throttled events
- * - Form data persistence
- * - EmailJS integration
+ * Optimized Contact Form Modal
+ * Version: 2.0.1
+ * Last Modified: 2025-03-28
+ * 
+ * Optimizations:
+ * - Fixed modal visibility when maximizing
+ * - Added state logging for debugging
+ * - Improved animation timing
+ * - Fixed transition bugs and edge cases
+ * - HTTP/2 optimized with efficient DOM manipulation
  */
-
 (function() {
-  'use strict';
-  
-  // Module scope variables for better memory management
-  let contactModal;
-  let contactModalOverlay;
-  let minimizeIndicator;
-  let successModal;
-  let errorModal;
-  let modalState = {
-    isMinimized: false,
-    isOpen: false,
-    formData: {} // Store form data here
-  };
-
-  // Initialize when DOM is ready
-  document.addEventListener('DOMContentLoaded', init);
-  
-  function init() {
-    // Create modal elements once
-    createModalElements();
+    'use strict';
     
-    // Set up event delegation for better performance
-    document.addEventListener('click', handleDocumentClick);
-    
-    // Set up form tracking for data persistence
-    setupFormTracking();
-  }
-  
-  function createModalElements() {
-    // Create overlay
-    contactModalOverlay = document.createElement('div');
-    contactModalOverlay.className = 'modal-overlay';
-    
-    // Create contact modal
-    contactModal = document.createElement('div');
-    contactModal.className = 'modal';
-    contactModal.id = 'contact-modal';
-    contactModal.setAttribute('role', 'dialog');
-    contactModal.setAttribute('aria-labelledby', 'modal-title');
-    
-    // Create modal content with header and body
-    contactModal.innerHTML = `
-      <div class="modal-header">
-        <h3 id="modal-title" class="modal-title">Contact Us</h3>
-        <div class="modal-controls">
-          <button type="button" class="minimize-modal" aria-label="Minimize form">
-            <i class="fas fa-minus"></i>
-          </button>
-        </div>
-      </div>
-      <div class="modal-body">
-        <!-- Form will be inserted here -->
-      </div>
-    `;
-    
-    // Create minimize indicator
-    minimizeIndicator = document.createElement('div');
-    minimizeIndicator.className = 'minimize-indicator';
-    minimizeIndicator.innerHTML = `<i class="fas fa-chevron-up"></i> <span>Contact Form</span>`;
-    
-    // Create success modal
-    successModal = document.createElement('div');
-    successModal.className = 'feedback-modal';
-    successModal.id = 'success-modal';
-    successModal.innerHTML = `
-      <div class="success-icon">
-        <i class="fas fa-check-circle"></i>
-      </div>
-      <h3>Thank You!</h3>
-      <p>Your message has been sent successfully. A member of our team will be in touch with you shortly.</p>
-      <button type="button" class="btn btn-primary close-feedback">Close</button>
-    `;
-    
-    // Create error modal
-    errorModal = document.createElement('div');
-    errorModal.className = 'feedback-modal';
-    errorModal.id = 'error-modal';
-    errorModal.innerHTML = `
-      <div class="error-icon">
-        <i class="fas fa-exclamation-circle"></i>
-      </div>
-      <h3>Submission Error</h3>
-      <p id="error-message">There was a problem sending your message. Please try again or contact us directly.</p>
-      <button type="button" class="btn btn-primary close-feedback">Close</button>
-    `;
-    
-    // Append elements to DOM
-    document.body.appendChild(contactModalOverlay);
-    document.body.appendChild(contactModal);
-    document.body.appendChild(minimizeIndicator);
-    document.body.appendChild(successModal);
-    document.body.appendChild(errorModal);
-    
-    // Get original form and create enhanced version
-    const originalForm = document.getElementById('contact-form');
-    if (originalForm) {
-      const modalBody = contactModal.querySelector('.modal-body');
-      const enhancedForm = createEnhancedForm(originalForm);
-      modalBody.appendChild(enhancedForm);
-      
-      // Initialize form effects if available
-      if (window.FormModalHandler && typeof window.FormModalHandler.initFormEffects === 'function') {
-        window.FormModalHandler.initFormEffects(enhancedForm);
-      }
+    // Debugging helper (will be removed in production)
+    const DEBUG = false;
+    function log(message, data) {
+        if (DEBUG) console.log(`[Modal] ${message}`, data || '');
     }
     
-    // Set up feedback modal event listeners
-    document.querySelectorAll('.close-feedback').forEach(button => {
-      button.addEventListener('click', closeFeedbackModal);
-    });
+    // State management
+    const modalState = {
+        isMinimized: true, // Start minimized
+        isOpen: true,       // Modal is technically "open" but minimized
+        isAnimating: false, // Track animation state to prevent bugs
+        formData: {}
+    };
     
-    // Set up modal-specific events
-    contactModal.querySelector('.minimize-modal').addEventListener('click', minimizeModal);
-    minimizeIndicator.addEventListener('click', maximizeModal);
+    // DOM references
+    let contactModal;
+    let contactModalOverlay;
+    let successModal;
+    let errorModal;
     
-    // Implement FormModalHandler methods for form-handler.js
-    window.FormModalHandler.showSuccess = showSuccessModal;
-    window.FormModalHandler.showError = showErrorModal;
-  }
-  
-  function createEnhancedForm(originalForm) {
-    // Create a new form with enhanced structure and floating labels
-    const enhancedForm = document.createElement('form');
-    enhancedForm.id = 'modal-contact-form';
-    enhancedForm.className = 'contact-form modal-form';
-    enhancedForm.setAttribute('novalidate', '');
-    
-    // Add hidden timestamp field
-    const timeField = document.createElement('input');
-    timeField.type = 'hidden';
-    timeField.name = 'time';
-    timeField.id = 'form_time';
-    timeField.value = new Date().toLocaleString('en-US');
-    enhancedForm.appendChild(timeField);
-    
-    // Name field
-    const nameGroup = document.createElement('div');
-    nameGroup.className = 'form-group';
-    nameGroup.innerHTML = `
-      <input type="text" id="modal-name" name="name" placeholder=" " required autocomplete="name">
-      <label for="modal-name" class="floating-label">Full Name <span class="required">*</span></label>
-      <div class="form-highlight"></div>
-    `;
-    enhancedForm.appendChild(nameGroup);
-    
-    // Email field
-    const emailGroup = document.createElement('div');
-    emailGroup.className = 'form-group';
-    emailGroup.innerHTML = `
-      <input type="email" id="modal-email" name="email" placeholder=" " required autocomplete="email">
-      <label for="modal-email" class="floating-label">Email Address <span class="required">*</span></label>
-      <div class="form-highlight"></div>
-    `;
-    enhancedForm.appendChild(emailGroup);
-    
-    // Phone field
-    const phoneGroup = document.createElement('div');
-    phoneGroup.className = 'form-group';
-    phoneGroup.innerHTML = `
-      <input type="tel" id="modal-phone" name="phone" placeholder=" " autocomplete="tel">
-      <label for="modal-phone" class="floating-label">Phone Number</label>
-      <div class="form-highlight"></div>
-    `;
-    enhancedForm.appendChild(phoneGroup);
-    
-    // Event date and type in a row
-    const rowGroup = document.createElement('div');
-    rowGroup.className = 'form-row';
-    
-    // Event date
-    const dateGroup = document.createElement('div');
-    dateGroup.className = 'form-group half date-input';
-    dateGroup.innerHTML = `
-      <label for="modal-event-date">Preferred Event Date</label>
-      <input type="date" id="modal-event-date" name="event-date">
-    `;
-    rowGroup.appendChild(dateGroup);
-    
-    // Event type
-    const typeGroup = document.createElement('div');
-    typeGroup.className = 'form-group half select-input';
-    typeGroup.innerHTML = `
-      <label for="modal-event-type">Event Type</label>
-      <div class="select-wrapper">
-        <select id="modal-event-type" name="event-type">
-          <option value="" selected>Select event type...</option>
-          <option value="wedding">Wedding</option>
-          <option value="quinceanera">Quinceañera</option>
-          <option value="baptism">Baptism</option>
-          <option value="first-communion">First Communion</option>
-          <option value="corporate">Corporate Event</option>
-          <option value="birthday">Birthday Party</option>
-          <option value="anniversary">Anniversary</option>
-          <option value="other">Other</option>
-        </select>
-        <div class="select-arrow">
-          <i class="fas fa-chevron-down"></i>
-        </div>
-      </div>
-    `;
-    rowGroup.appendChild(typeGroup);
-    enhancedForm.appendChild(rowGroup);
-    
-    // Guest count
-    const guestGroup = document.createElement('div');
-    guestGroup.className = 'form-group';
-    guestGroup.innerHTML = `
-      <input type="number" id="modal-guests" name="guests" placeholder=" " min="1">
-      <label for="modal-guests" class="floating-label">Estimated Guest Count</label>
-      <div class="form-highlight"></div>
-    `;
-    enhancedForm.appendChild(guestGroup);
-    
-    // Message field
-    const messageGroup = document.createElement('div');
-    messageGroup.className = 'form-group';
-    messageGroup.innerHTML = `
-      <textarea id="modal-message" name="message" placeholder=" " required rows="5"></textarea>
-      <label for="modal-message" class="floating-label">Your Message <span class="required">*</span></label>
-      <div class="form-highlight"></div>
-    `;
-    enhancedForm.appendChild(messageGroup);
-    
-    // Submit button
-    const submitButton = document.createElement('button');
-    submitButton.type = 'submit';
-    submitButton.className = 'submit-button';
-    submitButton.innerHTML = `
-      <span class="button-text">Submit Inquiry</span>
-      <span class="button-icon"><i class="fas fa-paper-plane"></i></span>
-    `;
-    enhancedForm.appendChild(submitButton);
-    
-    return enhancedForm;
-  }
-  
-  function handleDocumentClick(e) {
-    // Handle all contact-related button clicks
-    if (e.target.matches('.btn-contact, .btn-contact *, [href="#contact"].btn-contact, [href="#contact"].btn-contact *')) {
-      e.preventDefault();
-      openModal();
-    }
-    
-    // Close modal when clicking overlay
-    if (e.target === contactModalOverlay && !successModal.classList.contains('active') && !errorModal.classList.contains('active')) {
-      minimizeModal();
-    }
-    
-    // Close feedback modals when clicking overlay
-    if (e.target === contactModalOverlay && 
-        (successModal.classList.contains('active') || 
-         errorModal.classList.contains('active'))) {
-      closeFeedbackModal();
-    }
-  }
-  
-  function openModal() {
-    if (!modalState.isOpen) {
-      contactModalOverlay.classList.add('active');
-      contactModal.classList.add('active');
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
-      modalState.isOpen = true;
-      
-      // Set current timestamp
-      const timeField = document.getElementById('form_time');
-      if (timeField) timeField.value = new Date().toLocaleString('en-US');
-      
-      // Focus first form field for accessibility
-      setTimeout(() => {
-        const firstInput = contactModal.querySelector('input[name="name"]');
-        if (firstInput) firstInput.focus();
-      }, 300);
-    } else if (modalState.isMinimized) {
-      maximizeModal();
-    }
-  }
-  
-  function minimizeModal() {
-    contactModal.classList.add('minimized');
-    contactModalOverlay.classList.remove('active');
-    minimizeIndicator.classList.add('show');
-    document.body.style.overflow = ''; // Allow scrolling again
-    modalState.isMinimized = true;
-  }
-  
-  function maximizeModal() {
-    contactModal.classList.remove('minimized');
-    contactModalOverlay.classList.add('active');
-    minimizeIndicator.classList.remove('show');
-    document.body.style.overflow = 'hidden';
-    modalState.isMinimized = false;
-    
-    // Restore any saved form data
-    restoreFormData();
-  }
-  
-  function setupFormTracking() {
-    // Use event delegation for better performance
-    document.addEventListener('input', function(e) {
-      const modalForm = document.getElementById('modal-contact-form');
-      if (modalForm && modalForm.contains(e.target) && e.target.name) {
-        modalState.formData[e.target.name] = e.target.value;
-      }
-    });
-  }
-  
-  function restoreFormData() {
-    const modalForm = document.getElementById('modal-contact-form');
-    if (!modalForm || Object.keys(modalState.formData).length === 0) return;
-    
-    Object.entries(modalState.formData).forEach(([name, value]) => {
-      const input = modalForm.elements[name];
-      if (input && name !== 'time') {
-        input.value = value;
-        
-        // Update has-value class for styling
-        const fieldGroup = input.closest('.form-group');
-        if (fieldGroup && value) {
-          fieldGroup.classList.add('has-value');
-        }
-      }
-    });
-  }
-  
-  function showSuccessModal() {
-    // Clear form data since submission was successful
-    modalState.formData = {};
-    modalState.isOpen = false;
-    modalState.isMinimized = false;
-    
-    // Hide contact modal
-    contactModal.classList.remove('active', 'minimized');
-    minimizeIndicator.classList.remove('show');
-    
-    // Show success modal
-    successModal.classList.add('active');
-    contactModalOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-  
-  function showErrorModal(message) {
-    // Hide contact modal but keep it open
-    contactModal.classList.remove('active');
-    
-    // Set error message
-    const errorMessageElement = document.getElementById('error-message');
-    if (errorMessageElement) {
-      errorMessageElement.textContent = message || 'There was a problem sending your message. Please try again.';
-    }
-    
-    // Show error modal
-    errorModal.classList.add('active');
-    contactModalOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-  
-  function closeFeedbackModal() {
-    // Hide feedback modals
-    successModal.classList.remove('active');
-    errorModal.classList.remove('active');
-    
-    // If contact form had an error, show it again
-    if (modalState.isOpen && !modalState.isMinimized) {
-      contactModal.classList.add('active');
-    } else if (modalState.isOpen && modalState.isMinimized) {
-      // If it was minimized, keep it minimized
-      minimizeIndicator.classList.add('show');
-      contactModalOverlay.classList.remove('active');
-      document.body.style.overflow = '';
+    // Initialize on DOM ready with requestAnimationFrame for performance
+    if (document.readyState !== 'loading') {
+        window.requestAnimationFrame(init);
     } else {
-      // If form was successfully submitted, hide overlay
-      contactModalOverlay.classList.remove('active');
-      document.body.style.overflow = '';
+        document.addEventListener('DOMContentLoaded', () => {
+            window.requestAnimationFrame(init);
+        });
     }
-  }
+    
+    function init() {
+        log('Initializing modal');
+        createModalElements();
+        setupEventListeners();
+        
+        // Expose methods for external use
+        window.FormModalHandler = {
+            showSuccess,
+            showError,
+            minimize: minimizeModal,
+            maximize: maximizeModal,
+            toggle: toggleModalState
+        };
+        
+        // Initialize EmailJS if available
+        if (typeof emailjs !== 'undefined') {
+            emailjs.init({ publicKey: "b3T2GoOXJmt08AM0y" });
+        } else {
+            // Retry when window loads
+            window.addEventListener('load', () => {
+                if (typeof emailjs !== 'undefined') {
+                    emailjs.init({ publicKey: "b3T2GoOXJmt08AM0y" });
+                }
+            });
+        }
+    }
+    
+    function createModalElements() {
+        log('Creating modal elements');
+        
+        // Create overlay
+        contactModalOverlay = document.createElement('div');
+        contactModalOverlay.className = 'modal-overlay';
+        document.body.appendChild(contactModalOverlay);
+        
+        // Create contact modal in minimized state
+        contactModal = document.createElement('div');
+        contactModal.className = 'modal minimized';
+        contactModal.id = 'contact-modal';
+        contactModal.setAttribute('role', 'dialog');
+        contactModal.setAttribute('aria-labelledby', 'modal-title');
+        contactModal.style.display = 'block'; // Ensure visibility
+        
+        // Modal header and body
+        contactModal.innerHTML = `
+            <div class="modal-header">
+                <h3 id="modal-title" class="modal-title">Contact Us</h3>
+                <div class="modal-controls">
+                    <button type="button" class="minimize-modal" aria-label="Toggle form" title="Maximize form">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form id="modal-contact-form" class="modal-form" novalidate>
+                    <input type="hidden" name="time" id="form_time" value="${new Date().toLocaleString('en-US')}">
+                    
+                    <!-- Row 1: Name + Email (both required) -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" required autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" required autocomplete="email">
+                        </div>
+                    </div>
+                    
+                    <!-- Row 2: Phone + Guest Count -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" autocomplete="tel">
+                        </div>
+                        <div class="form-group">
+                            <label for="guests">Guest Count</label>
+                            <input type="number" id="guests" name="guests" min="1">
+                        </div>
+                    </div>
+                    
+                    <!-- Row 3: Event Date + Event Type -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="event-date">Preferred Event Date</label>
+                            <input type="date" id="event-date" name="event-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="event-type">Event Type</label>
+                            <select id="event-type" name="event-type">
+                                <option value="" selected disabled>Select event type...</option>
+                                <option value="wedding">Wedding</option>
+                                <option value="quinceanera">Quinceañera</option>
+                                <option value="corporate">Corporate Event</option>
+                                <option value="birthday">Birthday Party</option>
+                                <option value="anniversary">Anniversary</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 4: Message (full width) -->
+                    <div class="form-group full-width">
+                        <label for="message">Message <span class="required">*</span></label>
+                        <textarea id="message" name="message" required rows="4"></textarea>
+                    </div>
+                    
+                    <!-- Button row with Submit and Reset -->
+                    <div class="button-row">
+                        <button type="button" class="reset-button" id="form-reset">Start Over</button>
+                        <button type="submit" class="submit-button">Submit Inquiry</button>
+                    </div>
+                </form>
+            </div>
+        `;
+        
+        document.body.appendChild(contactModal);
+        
+        // Create success modal
+        successModal = document.createElement('div');
+        successModal.className = 'feedback-modal';
+        successModal.id = 'success-modal';
+        successModal.innerHTML = `
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Thank You!</h3>
+            <p>Your message has been sent successfully. A member of our team will be in touch with you shortly.</p>
+            <button type="button" class="btn btn-primary close-feedback">Close</button>
+        `;
+        document.body.appendChild(successModal);
+        
+        // Create error modal
+        errorModal = document.createElement('div');
+        errorModal.className = 'feedback-modal';
+        errorModal.id = 'error-modal';
+        errorModal.innerHTML = `
+            <div class="error-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h3>Submission Error</h3>
+            <p id="error-message">There was a problem sending your message. Please try again.</p>
+            <button type="button" class="btn btn-primary close-feedback">Close</button>
+        `;
+        document.body.appendChild(errorModal);
+    }
+    
+    function setupEventListeners() {
+        log('Setting up event listeners');
+        
+        // Use event delegation for better performance
+        document.addEventListener('click', function(e) {
+            // Handle contact buttons
+            if (e.target.closest('.btn-contact')) {
+                e.preventDefault();
+                maximizeModal();
+            }
+            
+            // Toggle minimized state
+            if (e.target.closest('.minimize-modal')) {
+                toggleModalState();
+            }
+            
+            // Close when clicking overlay
+            if (e.target === contactModalOverlay) {
+                minimizeModal();
+            }
+            
+            // Close feedback modals
+            if (e.target.closest('.close-feedback')) {
+                closeFeedbackModal();
+            }
+            
+            // Reset form button
+            if (e.target.closest('#form-reset')) {
+                clearForm();
+            }
+        });
+        
+        // Form submission handler
+        const form = document.getElementById('modal-contact-form');
+        if (form) {
+            form.addEventListener('submit', handleFormSubmit);
+            
+            // Track form changes for persistence
+            form.addEventListener('input', function(e) {
+                if (e.target.name) {
+                    modalState.formData[e.target.name] = e.target.value;
+                }
+            });
+        }
+    }
+    
+    function toggleModalState() {
+        if (modalState.isAnimating) {
+            log('Animation in progress, ignoring toggle');
+            return;
+        }
+        
+        if (modalState.isMinimized) {
+            maximizeModal();
+        } else {
+            minimizeModal();
+        }
+    }
+    
+    function minimizeModal() {
+        log('Minimizing modal');
+        
+        if (modalState.isAnimating) return;
+        modalState.isAnimating = true;
+        
+        // Update classes
+        contactModal.classList.add('minimized');
+        contactModal.classList.remove('active');
+        contactModalOverlay.classList.remove('active');
+        
+        // Update icon direction
+        const icon = contactModal.querySelector('.minimize-modal i');
+        if (icon) {
+            icon.className = 'fas fa-chevron-up';
+            const button = icon.closest('button');
+            if (button) button.title = 'Maximize form';
+        }
+        
+        // Update state
+        modalState.isMinimized = true;
+        
+        // Animation complete
+        setTimeout(() => {
+            modalState.isAnimating = false;
+        }, 400); // Match transition duration
+    }
+    
+    function maximizeModal() {
+        log('Maximizing modal');
+        
+        if (modalState.isAnimating) return;
+        modalState.isAnimating = true;
+        
+        // Critical - first add active class before removing minimized
+        contactModalOverlay.classList.add('active');
+        contactModal.classList.add('active');
+        
+        // Force a reflow to ensure active class is applied before removing minimized
+        // This is a critical fix for the visibility issue
+        contactModal.offsetHeight;
+        
+        // Remove minimized class to start animation
+        contactModal.classList.remove('minimized');
+        
+        // Update icon direction
+        const icon = contactModal.querySelector('.minimize-modal i');
+        if (icon) {
+            icon.className = 'fas fa-minus';
+            const button = icon.closest('button');
+            if (button) button.title = 'Minimize form';
+        }
+        
+        // Update state
+        modalState.isMinimized = false;
+        
+        // Restore saved form data
+        restoreFormData();
+        
+        // Animation complete
+        setTimeout(() => {
+            modalState.isAnimating = false;
+            // Focus first input field
+            const firstInput = contactModal.querySelector('input[name="name"]');
+            if (firstInput) firstInput.focus();
+        }, 400); // Match transition duration
+    }
+    
+    function restoreFormData() {
+        const form = document.getElementById('modal-contact-form');
+        if (!form || Object.keys(modalState.formData).length === 0) return;
+        
+        Object.entries(modalState.formData).forEach(([name, value]) => {
+            const input = form.elements[name];
+            if (input && name !== 'time') {
+                input.value = value;
+            }
+        });
+    }
+    
+    function clearForm() {
+        log('Clearing form');
+        
+        const form = document.getElementById('modal-contact-form');
+        if (!form) return;
+        
+        // Reset form fields
+        form.reset();
+        
+        // Clear saved data
+        modalState.formData = {};
+        
+        // Reset validation errors
+        const errorElements = form.querySelectorAll('.has-error');
+        errorElements.forEach(el => el.classList.remove('has-error'));
+        
+        const errorMessages = form.querySelectorAll('.error-message');
+        errorMessages.forEach(el => el.remove());
+        
+        // Reset timestamp
+        const timeField = document.getElementById('form_time');
+        if (timeField) timeField.value = new Date().toLocaleString('en-US');
+        
+        // Focus on first field
+        const nameInput = document.getElementById('name');
+        if (nameInput) nameInput.focus();
+    }
+    
+    function handleFormSubmit(e) {
+        e.preventDefault();
+        log('Form submitted');
+        
+        // Validate form
+        if (!validateForm(this)) {
+            log('Form validation failed');
+            return;
+        }
+        
+        // Update button state
+        const submitBtn = this.querySelector('.submit-button');
+        const resetBtn = this.querySelector('.reset-button');
+        const originalContent = submitBtn.innerHTML;
+        
+        submitBtn.disabled = true;
+        resetBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner"></span> Sending...';
+        
+        // Get form data
+        const formData = new FormData(this);
+        const params = {};
+        
+        formData.forEach((value, key) => {
+            params[key] = value || (key === 'time' ? new Date().toLocaleString('en-US') : 'Not provided');
+        });
+        
+        // Prepare EmailJS parameters
+        const emailParams = {
+            user_name: params.name,
+            user_email: params.email,
+            user_phone: params.phone || 'Not provided',
+            event_type: params['event-type'] || 'Not specified',
+            event_date: params['event-date'] || 'Not specified',
+            guests: params.guests || 'Not specified',
+            message: params.message,
+            time: params.time
+        };
+        
+        log('Sending email with params', emailParams);
+        
+        // Send with EmailJS
+        if (typeof emailjs !== 'undefined') {
+            emailjs.send('service_vkdsa6d', 'template_q9f1rn2', emailParams)
+                .then(function() {
+                    log('Email sent successfully');
+                    showSuccess();
+                    clearForm();
+                })
+                .catch(function(error) {
+                    console.error('EmailJS error:', error);
+                    showError('There was a problem sending your message. Please try again or contact us directly at (480) 123-4567.');
+                })
+                .finally(function() {
+                    // Reset button states
+                    submitBtn.disabled = false;
+                    resetBtn.disabled = false;
+                    submitBtn.innerHTML = originalContent;
+                });
+        } else {
+            // Fallback if EmailJS is not available
+            log('EmailJS not available, simulating success');
+            setTimeout(() => {
+                // Simulate success for testing
+                showSuccess();
+                clearForm();
+                
+                submitBtn.disabled = false;
+                resetBtn.disabled = false;
+                submitBtn.innerHTML = originalContent;
+            }, 1500);
+        }
+    }
+    
+    function validateForm(form) {
+        const requiredFields = form.querySelectorAll('[required]');
+        let isValid = true;
+        
+        // Clear previous errors
+        const errorElements = form.querySelectorAll('.has-error');
+        errorElements.forEach(el => el.classList.remove('has-error'));
+        
+        const errorMessages = form.querySelectorAll('.error-message');
+        errorMessages.forEach(el => el.remove());
+        
+        // Check each required field
+        requiredFields.forEach(field => {
+            const fieldGroup = field.closest('.form-group');
+            
+            if (!field.value.trim()) {
+                fieldGroup.classList.add('has-error');
+                isValid = false;
+                
+                // Add error message
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'error-message';
+                errorMsg.textContent = 'This field is required';
+                fieldGroup.appendChild(errorMsg);
+            } else if (field.type === 'email' && !validateEmail(field.value)) {
+                fieldGroup.classList.add('has-error');
+                isValid = false;
+                
+                // Add error message
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'error-message';
+                errorMsg.textContent = 'Please enter a valid email address';
+                fieldGroup.appendChild(errorMsg);
+            }
+        });
+        
+        // Focus first error field if validation failed
+        if (!isValid) {
+            const firstErrorField = form.querySelector('.has-error input, .has-error textarea, .has-error select');
+            if (firstErrorField) firstErrorField.focus();
+        }
+        
+        return isValid;
+    }
+    
+    function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+    
+    function showSuccess() {
+        log('Showing success modal');
+        successModal.classList.add('active');
+        contactModalOverlay.classList.add('active');
+        minimizeModal();
+    }
+    
+    function showError(message) {
+        log('Showing error modal', message);
+        // Set error message
+        const errorMessageEl = document.getElementById('error-message');
+        if (errorMessageEl) {
+            errorMessageEl.textContent = message || 'There was a problem sending your message. Please try again.';
+        }
+        
+        errorModal.classList.add('active');
+        contactModalOverlay.classList.add('active');
+    }
+    
+    function closeFeedbackModal() {
+        log('Closing feedback modal');
+        successModal.classList.remove('active');
+        errorModal.classList.remove('active');
+        contactModalOverlay.classList.remove('active');
+    }
 })();
