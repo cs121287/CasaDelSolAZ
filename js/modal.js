@@ -45,9 +45,6 @@
     
     // Set up form tracking for data persistence
     setupFormTracking();
-    
-    // Pre-fetch assets needed when form opens (for faster rendering)
-    prefetchAssets();
   }
   
   function createModalElements() {
@@ -206,15 +203,9 @@
           <option value="quinceanera">Quinceañera</option>
           <option value="baptism">Baptism</option>
           <option value="first-communion">First Communion</option>
-          <option value="confirmation">Confirmation Party</option>
+          <option value="corporate">Corporate Event</option>
           <option value="birthday">Birthday Party</option>
           <option value="anniversary">Anniversary</option>
-          <option value="graduation">Graduation</option>
-          <option value="engagement">Engagement Party</option>
-          <option value="bridal-shower">Bridal Shower</option>
-          <option value="baby-shower">Baby Shower</option>
-          <option value="corporate">Corporate Event</option>
-          <option value="memorial">Memorial Service</option>
           <option value="other">Other</option>
         </select>
         <div class="select-arrow">
@@ -260,7 +251,7 @@
   
   function handleDocumentClick(e) {
     // Handle all contact-related button clicks
-    if (e.target.matches('.btn-contact, .btn-contact *, [href="#contact"], [href="#contact"] *')) {
+    if (e.target.matches('.btn-contact, .btn-contact *, [href="#contact"].btn-contact, [href="#contact"].btn-contact *')) {
       e.preventDefault();
       openModal();
     }
@@ -270,7 +261,7 @@
       minimizeModal();
     }
     
-    // Close feedback modals when clicking outside
+    // Close feedback modals when clicking overlay
     if (e.target.classList.contains('modal-overlay') && 
         (successModal.classList.contains('active') || 
          errorModal.classList.contains('active'))) {
@@ -398,12 +389,8 @@
     
     // Simulate form submission - in production, replace with actual API call
     setTimeout(() => {
-      // Simulate successful submission (93% of the time)
-      if (Math.random() > 0.07) {
-        formSubmissionSuccess(e.target);
-      } else {
-        formSubmissionError('Server error. Please try again later.');
-      }
+      // Simulate successful submission
+      formSubmissionSuccess(e.target);
       
       // Reset button state
       if (submitBtn) {
@@ -429,9 +416,6 @@
     // Show success modal
     successModal.classList.add('active');
     contactModalOverlay.classList.add('active');
-    
-    // Track submission (could be replaced with analytics)
-    console.log('Form submitted successfully');
   }
   
   function formSubmissionError(message) {
@@ -457,26 +441,6 @@
     if (!contactModal.classList.contains('active')) {
       contactModalOverlay.classList.remove('active');
       document.body.style.overflow = '';
-    }
-  }
-  
-  function prefetchAssets() {
-    // Prefetch assets needed for form submission to improve perceived performance
-    const prefetchLinks = [
-      // Add any assets needed for modals/form submission
-    ];
-    
-    // Only prefetch on fast connections
-    if (navigator.connection && 
-        (navigator.connection.effectiveType === '4g' || 
-         navigator.connection.downlink > 1.5)) {
-      
-      prefetchLinks.forEach(href => {
-        const link = document.createElement('link');
-        link.rel = 'prefetch';
-        link.href = href;
-        document.head.appendChild(link);
-      });
     }
   }
 })();
