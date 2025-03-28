@@ -1,12 +1,13 @@
 /**
  * Optimized Contact Form Modal
  * CasaDelSolAZ - Version 2.1.0
- * Last Modified: 2025-03-28 13:08
+ * Last Modified: 2025-03-28 13:19:08
  * 
  * Performance optimizations:
  * - HTTP/2 compatible script loading
  * - Efficient DOM operations
- * - Form input validation and formatting
+ * - Enhanced event type options
+ * - Phone number formatting
  */
 (function() {
   'use strict';

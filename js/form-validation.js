@@ -1,13 +1,13 @@
 /**
  * Form Validation & Input Formatting Module
  * CasaDelSolAZ - Version 1.0.2
- * Last Modified: 2025-03-28 13:08
+ * Last Modified: 2025-03-28 13:19:08
  * 
  * Features:
- * - Automatic phone number formatting
- * - Input validation & constraints
+ * - Automatic phone number formatting (555) 555-1212
+ * - Guest count numeric validation
  * - Performance optimized with passive event listeners
- * - No jQuery dependencies
+ * - HTTP/2 optimization ready
  */
 (function() {
   'use strict';
