@@ -13,7 +13,6 @@
 function initGSAP() {
   // Check if required GSAP plugins are loaded
   const hasScrollTrigger = typeof ScrollTrigger !== 'undefined';
-  const hasSplitText = typeof SplitText !== 'undefined';
   
   // Initialize animations
   function init() {
@@ -28,27 +27,50 @@ function initGSAP() {
     }
   }
   
-  // Enhanced hero animations with SplitText
+  // Enhanced hero animations - fallback to basic animations if SplitText isn't available
   function enhanceHeroAnimation() {
     const heroTitle = document.querySelector('.hero-title');
     const heroSubtitle = document.querySelector('.hero-subtitle');
     
-    // If SplitText available, enhance text animation
-    if (hasSplitText && heroTitle) {
-      // Create timeline
+    // Standard animation without SplitText dependency
+    if (heroTitle) {
+      // Create timeline for sequenced animations
       const heroTl = gsap.timeline();
       
-      // Split text for character-by-character animation
-      const splitTitle = new SplitText(heroTitle, { type: "chars" });
+      // Animate the whole title with a professional fade + slide
+      heroTl.fromTo(heroTitle, 
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
+      );
+
+      // Animate subtitle after title
+      if (heroSubtitle) {
+        heroTl.fromTo(heroSubtitle,
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
+          "-=0.2" // Start slightly before previous animation completes
+        );
+      }
       
-      heroTl.from(splitTitle.chars, {
-        opacity: 0,
-        y: 80,
-        rotationX: -90,
-        stagger: 0.03,
-        duration: 0.8,
-        ease: "back.out(1.7)"
-      });
+      // Animate buttons and indicators
+      const heroButtons = document.querySelector('.hero-buttons');
+      const scrollIndicator = document.querySelector('.scroll-indicator');
+      
+      if (heroButtons) {
+        heroTl.fromTo(heroButtons,
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: "back.out(1.2)" },
+          "-=0.1"
+        );
+      }
+      
+      if (scrollIndicator) {
+        heroTl.fromTo(scrollIndicator,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.5, ease: "power1.in" },
+          "+=0.5"
+        );
+      }
     }
   }
   
