@@ -548,7 +548,7 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
+        <!-- Contact Section (simplified with CTA only) -->
         <section id="contact" class="section contact-section">
             <div class="container">
                 <h2 class="section-title">Contact Us</h2>
@@ -561,7 +561,7 @@
                             </div>
                             <div>
                                 <h3>Address</h3>
-                                <p>123 Venue St, Phoenix, AZ 85001</p>
+                                <p>18401 W Moreland St<br>Goodyear, AZ 85338</p>
                             </div>
                         </div>
                         
@@ -571,7 +571,7 @@
                             </div>
                             <div>
                                 <h3>Phone</h3>
-                                <p>(555) 123-4567</p>
+                                <p><a href="tel:+14801234567">(480) 123-4567</a></p>
                             </div>
                         </div>
                         
@@ -581,7 +581,7 @@
                             </div>
                             <div>
                                 <h3>Email</h3>
-                                <p>info@casadesolaz.com</p>
+                                <p><a href="mailto:info@casadesolaz.com">info@casadesolaz.com</a></p>
                             </div>
                         </div>
                         
@@ -591,7 +591,9 @@
                             </div>
                             <div>
                                 <h3>Office Hours</h3>
-                                <p>Tuesday - Saturday: 10AM - 6PM</p>
+                                <p>Monday - Friday: 9am - 5pm<br>
+                                Saturday: 10am - 4pm<br>
+                                Sunday: By Appointment Only</p>
                             </div>
                         </div>
                         
@@ -609,7 +611,7 @@
                     </div>
                     
                     <div class="contact-form-container">
-                        <!-- Hidden form - used as template for modal -->
+                        <!-- Hidden form template for modal use -->
                         <form id="contact-form" class="contact-form" style="display: none;">
                             <div class="form-group">
                                 <label for="name">Name</label>
@@ -634,12 +636,17 @@
                             <div class="form-group">
                                 <label for="event-type">Event Type</label>
                                 <select id="event-type" name="event-type">
-                                    <option value="">Select event type</option>
+                                    <option value="">Select event type...</option>
                                     <option value="wedding">Wedding</option>
                                     <option value="quinceanera">Quinceañera</option>
                                     <option value="corporate">Corporate Event</option>
                                     <option value="special">Special Event</option>
                                 </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="guests">Guest Count</label>
+                                <input type="number" id="guests" name="guests" min="1">
                             </div>
                             
                             <div class="form-group full-width">
@@ -650,9 +657,10 @@
                             <button type="submit" class="btn btn-primary">Send Message</button>
                         </form>
                         
-                        <!-- Contact CTA Button -->
-                        <div class="contact-cta">
-                            <p>Ready to start planning your event at Casa Del Sol?</p>
+                        <!-- Contact CTA -->
+                        <div class="contact-cta reveal-element">
+                            <h3>Ready to start planning your event?</h3>
+                            <p>Get in touch with our event specialists to check availability and start bringing your vision to life.</p>
                             <button class="btn btn-primary btn-contact">Contact Us Now</button>
                         </div>
                     </div>
@@ -671,332 +679,3 @@
                     
                     <div class="footer-links">
                         <ul>
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#services">Services</a></li>
-                            <li><a href="#rentals">Rentals</a></li>
-                            <li><a href="#faq">FAQ</a></li>
-                            <li><a href="#gallery">Gallery</a></li>
-                            <li><a href="#contact" class="btn-contact">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="copyright">
-                    <p>&copy; 2025 Casa Del Sol AZ. All Rights Reserved.</p>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- Scroll to top button -->
-    <button id="scroll-top" aria-label="Scroll to top">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-    
-    <!-- Performance-optimized JavaScript loading -->
-<script>
-    // Immediate execution for critical functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize loader and video
-        const loadingScreen = document.getElementById('loading-screen');
-        
-        // Initialize video background with optimal loading
-        initVideoBackground();
-        
-        // Setup basic UI interactions
-        setupMobileNav();
-        setupHeaderScroll();
-        
-        // Load non-critical scripts after page load
-        window.addEventListener('load', function() {
-            // Short delay to ensure smooth initial render
-            setTimeout(() => {
-                // Hide loading screen with transition
-                loadingScreen.style.opacity = '0';
-                loadingScreen.style.transition = 'opacity 0.5s ease';
-                
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                    
-                    // Start hero animations
-                    animateHeroElements();
-                    
-                    // Load GSAP plugins with error handling
-                    loadGsapPlugins();
-                    
-                    // Setup scroll effects
-                    setupScrollEffects();
-                }, 500);
-            }, 200);
-        });
-            
-            // Initialize video background
-            function initVideoBackground() {
-                const videoContainer = document.querySelector('.video-container');
-                if (!videoContainer) return;
-                
-                // Create video element
-                const video = document.createElement('video');
-                video.muted = true;
-                video.loop = true;
-                video.playsInline = true;
-                video.autoplay = true;
-                video.className = 'background-video';
-                
-                // Create source element
-                const source = document.createElement('source');
-                source.src = 'vid/background.mp4';
-                source.type = 'video/mp4';
-                
-                // Append to DOM
-                video.appendChild(source);
-                videoContainer.appendChild(video);
-                
-                // Add overlay for better text contrast
-                const overlay = document.createElement('div');
-                overlay.className = 'video-overlay';
-                videoContainer.appendChild(overlay);
-                
-                // Fallback for video loading errors
-                video.addEventListener('error', function() {
-                    videoContainer.classList.add('video-fallback');
-                    console.warn('Video failed to load, using fallback image');
-                });
-            }
-            
-            // Setup mobile navigation
-            function setupMobileNav() {
-                const mobileToggle = document.querySelector('.mobile-toggle');
-                const mobileMenu = document.querySelector('.mobile-menu');
-                const body = document.body;
-                
-                if (!mobileToggle || !mobileMenu) return;
-                
-                mobileToggle.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    mobileMenu.classList.toggle('active');
-                    body.classList.toggle('menu-open');
-                });
-                
-                // Close menu when clicking links
-                document.querySelectorAll('.mobile-link').forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        if (!link.classList.contains('btn-contact')) {
-                            e.preventDefault();
-                            mobileToggle.classList.remove('active');
-                            mobileMenu.classList.remove('active');
-                            body.classList.remove('menu-open');
-                            
-                            // Smooth scroll to target
-                            const targetId = this.getAttribute('href');
-                            const targetElement = document.querySelector(targetId);
-                            if (targetElement) {
-                                smoothScroll(targetElement);
-                            }
-                        }
-                    });
-                });
-                
-                // Desktop nav smooth scroll
-                document.querySelectorAll('.nav-btn').forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        if (!link.classList.contains('btn-contact')) {
-                            e.preventDefault();
-                            const targetId = this.getAttribute('href');
-                            const targetElement = document.querySelector(targetId);
-                            if (targetElement) {
-                                smoothScroll(targetElement);
-                            }
-                        }
-                    });
-                });
-                
-                // Logo click scrolls to top
-                document.querySelector('.logo').addEventListener('click', function(e) {
-                    e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
-            }
-            
-            // Smooth scroll function
-            function smoothScroll(targetElement) {
-                const headerHeight = document.querySelector('.site-header').offsetHeight;
-                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-            
-            // Header scroll effect
-            function setupHeaderScroll() {
-                const header = document.getElementById('header');
-                if (!header) return;
-                
-                // Use requestAnimationFrame for better performance
-                let ticking = false;
-                
-                window.addEventListener('scroll', function() {
-                    if (!ticking) {
-                        window.requestAnimationFrame(function() {
-                            if (window.scrollY > 50) {
-                                header.classList.add('scrolled');
-                            } else {
-                                header.classList.remove('scrolled');
-                            }
-                            ticking = false;
-                        });
-                        ticking = true;
-                    }
-                });
-                
-                // Check initial scroll position
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                }
-            }
-            
-            // Simple hero animations
-            function animateHeroElements() {
-                const heroTitle = document.querySelector('.hero-title');
-                const heroSubtitle = document.querySelector('.hero-subtitle');
-                const heroButtons = document.querySelector('.hero-buttons');
-                const scrollIndicator = document.querySelector('.scroll-indicator');
-                
-                if (!heroTitle || !heroSubtitle || !heroButtons || !scrollIndicator) return;
-                
-                // Sequential animation with delays
-                setTimeout(() => {
-                    heroTitle.classList.add('animate');
-                    
-                    setTimeout(() => {
-                        heroSubtitle.classList.add('animate');
-                        
-                        setTimeout(() => {
-                            heroButtons.classList.add('animate');
-                            
-                            setTimeout(() => {
-                                scrollIndicator.classList.add('animate');
-                            }, 300);
-                        }, 300);
-                    }, 300);
-                }, 100);
-            }
-            
-            // Setup scroll effects
-            function setupScrollEffects() {
-                // Reveal elements on scroll
-                const revealElements = document.querySelectorAll('.reveal-element');
-                
-                if ('IntersectionObserver' in window) {
-                    const revealObserver = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('revealed');
-                                revealObserver.unobserve(entry.target);
-                            }
-                        });
-                    }, {
-                        threshold: 0.15,
-                        rootMargin: '0px 0px -50px 0px'
-                    });
-                    
-                    revealElements.forEach(element => {
-                        revealObserver.observe(element);
-                    });
-                } else {
-                    // Fallback for browsers without IntersectionObserver
-                    revealElements.forEach(element => {
-                        element.classList.add('revealed');
-                    });
-                }
-                
-                // Scroll to top button
-                const scrollTopBtn = document.getElementById('scroll-top');
-                if (scrollTopBtn) {
-                    window.addEventListener('scroll', function() {
-                        if (window.scrollY > 600) {
-                            scrollTopBtn.classList.add('visible');
-                        } else {
-                            scrollTopBtn.classList.remove('visible');
-                        }
-                    });
-                    
-                    scrollTopBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        window.scrollTo({
-                            top: 0,
-                            behavior: 'smooth'
-                        });
-                    });
-                }
-                
-                // FAQ accordion functionality
-                document.querySelectorAll('.faq-question').forEach(question => {
-                    question.addEventListener('click', function() {
-                        const faqItem = this.parentElement;
-                        const isExpanded = faqItem.classList.contains('active');
-                        
-                        // Close all items
-                        document.querySelectorAll('.faq-item').forEach(item => {
-                            item.classList.remove('active');
-                        });
-                        
-                        // If not already expanded, expand this item
-                        if (!isExpanded) {
-                            faqItem.classList.add('active');
-                        }
-                    });
-                });
-                
-                // Tab functionality
-                document.querySelectorAll('.tab-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        // Remove active class from all buttons and panels
-                        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-                        
-                        // Add active class to clicked button and corresponding panel
-                        this.classList.add('active');
-                        const tabId = this.getAttribute('data-tab');
-                        document.getElementById(tabId + '-panel').classList.add('active');
-                    });
-                });
-            }
-            
-            // Load GSAP plugins after initial render
-            function loadGsapPlugins() {
-                // Load GSAP plugins sequentially for proper dependencies
-                function loadScript(src) {
-                    return new Promise((resolve, reject) => {
-                        const script = document.createElement('script');
-                        script.src = src;
-                        script.async = true;
-                        script.onload = resolve;
-                        script.onerror = reject;
-                        document.body.appendChild(script);
-                    });
-                }
-                
-                // First ScrollTrigger, then other plugins, then our animations
-                loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js')
-                    .then(() => loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/SplitText.min.js'))
-                    .then(() => {
-                        // Load site-specific scripts in parallel for better performance
-                        return Promise.all([
-                            loadScript('js/animations.js'),
-                            loadScript('js/modal.js')
-                        ]);
-                    })
-                    .catch(err => console.warn('Error loading GSAP plugins:', err));
-            }
-        });
-    </script>
-    <!-- Load video initialization script -->
-	<script async src="js/script-loader.js"></script>
-	<script async src="js/video-init.js"></script>
-	<script async src="js/modal.js"></script>
-	<script async src="js/animations.js"></script>
-</body>
-</html>
