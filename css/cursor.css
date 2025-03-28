@@ -1,0 +1,50 @@
+/* Custom cursor styles - loaded only for non-touch devices */
+.custom-cursor {
+  position: fixed;
+  width: 16px;
+  height: 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  transition: transform 0.1s, background-color 0.3s, border 0.3s;
+  will-change: transform;
+}
+
+.cursor-trail {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  opacity: 0.4;
+  transition: opacity 0.3s;
+  will-change: transform, opacity;
+}
+
+/* Hide default cursor when custom cursor is active */
+body:has(.custom-cursor) {
+  cursor: none !important;
+}
+
+body:has(.custom-cursor) a, 
+body:has(.custom-cursor) button,
+body:has(.custom-cursor) .nav-btn, 
+body:has(.custom-cursor) .gallery-item,
+body:has(.custom-cursor) .tab-btn,
+body:has(.custom-cursor) .faq-question {
+  cursor: none !important;
+}
+
+/* Hide custom cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor, .cursor-trail {
+    display: none !important;
+  }
+}

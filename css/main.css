@@ -1,13 +1,12 @@
 /**
  * Casa Del Sol AZ - Main Stylesheet
  * Version: 2.0
- * 
+ *
  * Performance optimized with:
- * - Minimal HTTP requests
- * - Optimized selectors
+ * - Minimal HTTP requests via HTTP/2 optimizations
  * - Hardware acceleration for animations
- * - CSS containment
- * - will-change property usage
+ * - CSS containment for rendering performance
+ * - Content-visibility for below-fold content
  */
 
 /* ======= Variables and Reset ======= */
@@ -48,6 +47,7 @@
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 16px;
+  --radius-xl: 24px;
   --radius-round: 50%;
 }
 
@@ -62,12 +62,13 @@ html {
   font-size: 16px;
   scroll-behavior: smooth;
   height: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   font-family: var(--font-body);
-  color: var(--color-gray);
-  background-color: var(--color-white);
+  color: var(--color-white);
+  background-color: var(--color-black);
   line-height: 1.6;
   overflow-x: hidden;
   min-height: 100vh;
@@ -100,52 +101,22 @@ button {
   border: none;
   cursor: pointer;
   font-family: inherit;
+  color: inherit;
 }
 
-/* ======= Loading Screen ======= */
-.loading-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--color-black);
-  z-index: 9999;
+/* ======= Layout ======= */
+.site-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.5s ease;
-}
-
-.loading-screen.fade-out {
-  opacity: 0;
-}
-
-.loader {
+  flex-direction: column;
+  min-height: 100vh;
   position: relative;
-  width: 60px;
-  height: 60px;
 }
 
-.loader-circle {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 4px solid rgba(255, 255, 255, 0.1);
-  border-top-color: var(--color-gold);
-  border-radius: 50%;
-  animation: spin 1s infinite linear;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* ======= Layout and Container ======= */
-.page-wrapper {
+.section {
+  padding: var(--spacing-xl) 0;
+  position: relative;
   overflow: hidden;
-  position: relative;
+  contain: content;
 }
 
 .container {
@@ -153,12 +124,6 @@ button {
   max-width: var(--container-width);
   margin: 0 auto;
   padding: 0 var(--spacing-md);
-}
-
-.section {
-  padding: var(--spacing-xl) 0;
-  position: relative;
-  overflow: hidden;
 }
 
 /* ======= Typography ======= */
@@ -201,6 +166,39 @@ p {
   margin: var(--spacing-sm) auto 0;
 }
 
+/* ======= Loading Screen ======= */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-black);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-screen.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.loader {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--color-gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* ======= Header and Navigation ======= */
 .site-header {
   position: fixed;
@@ -210,24 +208,27 @@ p {
   height: var(--header-height);
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.7);
-  transition: height var(--transition-medium), background-color var(--transition-medium);
-  will-change: height, background-color;
+  transition: height var(--transition-medium);
+  will-change: height;
   contain: layout style;
 }
 
 .site-header.scrolled {
   height: var(--header-height-scrolled);
-  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.site-header.scrolled .logo img {
+  height: 70px;
 }
 
 .header-container {
+  max-width: 1600px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 100%;
-  padding: 0 var(--spacing-md);
-  max-width: 1600px;
-  margin: 0 auto;
 }
 
 .header-fade {
@@ -253,12 +254,7 @@ p {
   height: 90px;
   width: auto;
   transition: height var(--transition-medium);
-  transform: translateY(0);
   will-change: transform, height;
-}
-
-.site-header.scrolled .logo img {
-  height: 70px;
 }
 
 /* Left and right navigation */
@@ -305,17 +301,13 @@ p {
 /* Mobile navigation */
 .mobile-toggle {
   display: none;
-  z-index: 1001;
-}
-
-.hamburger {
   width: 30px;
   height: 22px;
   position: relative;
-  cursor: pointer;
+  z-index: 1001;
 }
 
-.hamburger span {
+.mobile-toggle span {
   display: block;
   position: absolute;
   height: 2px;
@@ -328,20 +320,20 @@ p {
   transition: transform 0.25s ease-in-out, opacity 0.25s ease-in-out;
 }
 
-.hamburger span:nth-child(1) { top: 0px; }
-.hamburger span:nth-child(2) { top: 10px; }
-.hamburger span:nth-child(3) { top: 20px; }
+.mobile-toggle span:nth-child(1) { top: 0px; }
+.mobile-toggle span:nth-child(2) { top: 10px; }
+.mobile-toggle span:nth-child(3) { top: 20px; }
 
-.hamburger.is-active span:nth-child(1) {
+.mobile-toggle.active span:nth-child(1) {
   top: 10px;
   transform: rotate(135deg);
 }
 
-.hamburger.is-active span:nth-child(2) {
+.mobile-toggle.active span:nth-child(2) {
   opacity: 0;
 }
 
-.hamburger.is-active span:nth-child(3) {
+.mobile-toggle.active span:nth-child(3) {
   top: 10px;
   transform: rotate(-135deg);
 }
@@ -364,7 +356,7 @@ p {
   -webkit-backdrop-filter: blur(10px);
 }
 
-.mobile-menu.is-active {
+.mobile-menu.active {
   opacity: 1;
   visibility: visible;
 }
@@ -376,7 +368,7 @@ p {
   text-align: center;
 }
 
-.mobile-nav-link {
+.mobile-link {
   font-size: 1.5rem;
   color: var(--color-white);
   text-transform: uppercase;
@@ -387,7 +379,7 @@ p {
   transition: color var(--transition-medium);
 }
 
-.mobile-nav-link::after {
+.mobile-link::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -398,16 +390,16 @@ p {
   transition: width 0.3s ease, left 0.3s ease;
 }
 
-.mobile-nav-link:hover {
+.mobile-link:hover {
   color: var(--color-gold);
 }
 
-.mobile-nav-link:hover::after {
+.mobile-link:hover::after {
   width: 100%;
   left: 0;
 }
 
-/* ======= Hero Section ======= */
+/* ======= Hero Section & Video Container ======= */
 .hero-section {
   position: relative;
   height: 100vh;
@@ -417,18 +409,23 @@ p {
   align-items: center;
   text-align: center;
   overflow: hidden;
-  background-color: var(--color-black); /* Fallback */
+  padding-top: var(--header-height);
   contain: layout paint style;
 }
 
+/* Video container positioned directly below header with rounded corners */
 .video-container {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+  top: var(--header-height);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: calc(100vh - var(--header-height));
+  border-radius: var(--radius-xl);
   overflow: hidden;
+  z-index: 1;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  will-change: transform;
 }
 
 .background-video {
@@ -443,7 +440,7 @@ p {
   object-fit: cover;
 }
 
-.hero-overlay {
+.video-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -455,7 +452,7 @@ p {
 
 .hero-content {
   position: relative;
-  z-index: 3;
+  z-index: 10;
   color: var(--color-white);
   padding: 0 var(--spacing-md);
   max-width: 1000px;
@@ -492,29 +489,29 @@ p {
   will-change: transform, opacity;
 }
 
-.hero-title.animate-in,
-.hero-subtitle.animate-in,
-.hero-buttons.animate-in {
+.hero-title.animate,
+.hero-subtitle.animate,
+.hero-buttons.animate {
   opacity: 1;
   transform: translateY(0);
 }
 
-.scroll-arrow {
+.scroll-indicator {
   position: absolute;
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 3;
+  z-index: 10;
   opacity: 0;
   transition: opacity var(--transition-medium);
   transition-delay: 0.6s;
 }
 
-.scroll-arrow.animate-in {
+.scroll-indicator.animate {
   opacity: 1;
 }
 
-.scroll-arrow span {
+.scroll-indicator span {
   display: block;
   width: 20px;
   height: 20px;
@@ -525,7 +522,7 @@ p {
   animation: scroll-down 2s infinite;
 }
 
-.scroll-arrow span:nth-child(2) {
+.scroll-indicator span:nth-child(2) {
   animation-delay: -0.2s;
 }
 
@@ -613,6 +610,7 @@ p {
   align-items: center;
   gap: 0.5rem;
   position: relative;
+  box-shadow: none;
 }
 
 .btn-text::after {
@@ -633,10 +631,6 @@ p {
   transform-origin: left;
 }
 
-.btn-text:hover {
-  color: var(--color-gold-light);
-}
-
 .btn-text:hover i {
   transform: translateX(5px);
 }
@@ -647,7 +641,9 @@ p {
 
 /* ======= About Section ======= */
 .about-section {
-  background-color: var(--color-white);
+  background-color: var(--color-black);
+  content-visibility: auto;
+  contain-intrinsic-size: 700px;
 }
 
 .about-grid {
@@ -661,7 +657,6 @@ p {
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  position: relative;
   transform: translateY(30px);
   opacity: 0;
   transition: transform var(--transition-slow), opacity var(--transition-slow);
@@ -722,7 +717,9 @@ p {
 
 /* ======= Services Section ======= */
 .services-section {
-  background-color: var(--color-gray-light);
+  background-color: var(--color-gray-dark);
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
 }
 
 .services-tabs {
@@ -759,6 +756,7 @@ p {
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-lg);
   align-items: center;
+  contain: content;
 }
 
 .tab-panel.active {
@@ -813,7 +811,9 @@ p {
 
 /* ======= Rentals Section ======= */
 .rentals-section {
-  background-color: var(--color-white);
+  background-color: var(--color-black);
+  content-visibility: auto;
+  contain-intrinsic-size: 600px;
 }
 
 .rentals-grid {
@@ -823,7 +823,7 @@ p {
 }
 
 .rental-card {
-  background-color: var(--color-white);
+  background-color: rgba(34, 34, 34, 0.5);
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -832,7 +832,8 @@ p {
   will-change: transform, box-shadow;
   transform: translateY(30px);
   opacity: 0;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  contain: layout style;
 }
 
 .rental-card.revealed {
@@ -872,7 +873,9 @@ p {
 
 /* ======= FAQ Section ======= */
 .faq-section {
-  background-color: var(--color-gray-light);
+  background-color: var(--color-gray-dark);
+  content-visibility: auto;
+  contain-intrinsic-size: 600px;
 }
 
 .faq-container {
@@ -881,7 +884,7 @@ p {
 }
 
 .faq-item {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -896,7 +899,7 @@ p {
 .faq-question h3 {
   margin: 0;
   font-size: 1.2rem;
-  color: var(--color-gray);
+  color: var(--color-white);
   transition: color var(--transition-medium);
 }
 
@@ -938,7 +941,9 @@ p {
 
 /* ======= Gallery Section ======= */
 .gallery-section {
-  background-color: var(--color-white);
+  background-color: var(--color-black);
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
 }
 
 .gallery-grid {
@@ -958,6 +963,7 @@ p {
   opacity: 0;
   transition: transform var(--transition-medium), opacity var(--transition-medium);
   will-change: transform, opacity;
+  contain: layout paint style;
 }
 
 .gallery-item.revealed {
@@ -1007,7 +1013,9 @@ p {
 
 /* ======= Contact Section ======= */
 .contact-section {
-  background-color: var(--color-gray-light);
+  background-color: var(--color-gray-dark);
+  content-visibility: auto;
+  contain-intrinsic-size: 700px;
 }
 
 .contact-grid {
@@ -1076,7 +1084,7 @@ p {
 
 .contact-social a:hover {
   transform: translateY(-5px);
-  background-color: var(--color-black);
+  background-color: var(--color-white);
   color: var(--color-gold);
 }
 
@@ -1105,10 +1113,10 @@ p {
 .form-group textarea {
   width: 100%;
   padding: 12px 16px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-sm);
-  background-color: var(--color-white);
-  color: var(--color-gray);
+  background-color: rgba(0, 0, 0, 0.2);
+  color: var(--color-white);
   font-family: var(--font-body);
   transition: border-color var(--transition-fast);
 }
@@ -1192,8 +1200,7 @@ p {
   transition: opacity var(--transition-medium), visibility var(--transition-medium), transform var(--transition-medium);
   z-index: 999;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  will-change: transform, opacity;
-  border: none;
+  will-change: transform;
 }
 
 #scroll-top.visible {
@@ -1206,16 +1213,11 @@ p {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* ======= Animation Helper Classes ======= */
-.reveal-element {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity var(--transition-slow), transform var(--transition-slow);
-}
-
-.reveal-element.revealed {
-  opacity: 1;
-  transform: translateY(0);
+/* Video fallback for error handling */
+.video-fallback {
+  background-image: url('../img/bg2.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
 /* ======= Responsive Styles ======= */
@@ -1225,12 +1227,12 @@ p {
     --header-height-scrolled: 80px;
   }
   
-  .hero-title {
-    font-size: 4rem;
+  .video-container {
+    width: 95%;
   }
   
-  .hero-subtitle {
-    font-size: 1.5rem;
+  .hero-title {
+    font-size: 4rem;
   }
 }
 
@@ -1240,31 +1242,20 @@ p {
     --spacing-xl: 5rem;
   }
   
-  h1 {
-    font-size: 3.5rem;
-  }
-  
-  h2 {
-    font-size: 2.5rem;
-  }
-  
   .hero-title {
     font-size: 3.5rem;
   }
   
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-md);
-  }
-  
-  .tab-panel {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-md);
-  }
-  
+  .about-grid,
+  .tab-panel,
   .contact-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
+  }
+  
+  .about-image {
+    max-width: 600px;
+    margin: 0 auto;
   }
 }
 
@@ -1319,6 +1310,11 @@ p {
     padding: var(--spacing-lg) 0;
   }
   
+  .video-container {
+    width: 100%;
+    border-radius: var(--radius-md);
+  }
+  
   .rentals-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
@@ -1332,6 +1328,7 @@ p {
   
   .footer-links ul {
     justify-content: center;
+    margin-top: var(--spacing-sm);
   }
 }
 
@@ -1363,18 +1360,21 @@ p {
   .contact-form {
     grid-template-columns: 1fr;
   }
+  
+  .btn {
+    padding: 0.8rem 1.6rem;
+  }
 }
 
 /* ======= Print Styles ======= */
 @media print {
   .site-header,
   #scroll-top,
-  .hero-section video,
-  .hero-overlay,
+  .video-container,
+  .hero-buttons,
+  .scroll-indicator,
   .mobile-menu,
-  .mobile-toggle,
-  .scroll-arrow,
-  .hero-buttons {
+  .mobile-toggle {
     display: none !important;
   }
   
@@ -1395,37 +1395,6 @@ p {
     opacity: 1 !important;
     transform: none !important;
   }
-  
-  a {
-    color: black !important;
-    text-decoration: underline;
-  }
-  
-  .section {
-    padding: 1cm 0;
-    page-break-inside: avoid;
-  }
-  
-  .faq-answer {
-    max-height: none !important;
-    display: block !important;
-    opacity: 1 !important;
-    padding-bottom: var(--spacing-sm);
-  }
-  
-  .tab-panel {
-    display: block !important;
-    opacity: 1 !important;
-    page-break-inside: avoid;
-  }
-  
-  .contact-form-container {
-    display: none;
-  }
-  
-  .section-title::after {
-    background-color: black;
-  }
 }
 
 /* ======= Accessibility Optimizations ======= */
@@ -1439,7 +1408,7 @@ p {
     scroll-behavior: auto !important;
   }
   
-  .scroll-arrow,
+  .scroll-indicator span,
   .reveal-element,
   .hero-title,
   .hero-subtitle,
@@ -1451,45 +1420,15 @@ p {
   }
 }
 
-/* ======= Performance Optimizations ======= */
-.hero-section,
-.video-container,
-.site-header,
-.footer,
-.gallery-item,
-.tab-panel,
-.rental-card {
-  contain: layout style;
-}
-
-/* Content visibility optimizations for below-fold sections */
-.about-section,
-.services-section,
-.rentals-section,
-.faq-section,
-.gallery-section,
-.contact-section {
-  content-visibility: auto;
-  contain-intrinsic-size: 500px;
-}
-
-/* High-performance animation elements */
-.hero-title,
-.hero-subtitle,
-.hero-buttons,
-.background-video,
-.gallery-item img,
-.about-image img,
-.scroll-arrow {
+/* ======= Animation Helper Classes ======= */
+.reveal-element {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
   will-change: transform, opacity;
 }
 
-/* GPU Acceleration for smooth animations */
-.site-header,
-.logo,
-.btn:hover,
-#scroll-top,
-.rental-card:hover {
-  transform: translateZ(0);
-  backface-visibility: hidden;
+.reveal-element.revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
