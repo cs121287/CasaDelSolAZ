@@ -15,15 +15,17 @@
     <!-- HTTP Cache-Control directives for better performance -->
     <meta http-equiv="Cache-Control" content="max-age=31536000">
     
-    <!-- Preload critical assets -->
+    <!-- Preload critical assets - FIXED video preloading -->
     <link rel="preload" href="css/main.css" as="style">
     <link rel="preload" href="img/logo.png" as="image" fetchpriority="high">
     <link rel="preload" href="css/video-effects.css" as="style">
     <link rel="preload" href="css/modal.css" as="style">
-    <link rel="preload" href="vid/background.mp4" as="video" type="video/mp4">
+    <!-- Video preload fixed with correct media type -->
+    <link rel="preload" href="vid/background.mp4" as="fetch" type="video/mp4" fetchpriority="high" crossorigin>
     <link rel="preload" href="js/form-validation.js" as="script" fetchpriority="high">
     <link rel="preload" href="js/modal.js" as="script" fetchpriority="high">
-	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" as="script">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" as="script" fetchpriority="high">
+    <link rel="preload" href="https://cdn.emailjs.com/dist/email.min.js" as="script" fetchpriority="high">
     
     <!-- Critical CSS inlined for faster render -->
     <style>
@@ -141,9 +143,13 @@
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
+    <!-- Core GSAP (load before animations.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
     <!-- EmailJS for form submission (defer loading) -->
     <script src="https://cdn.emailjs.com/dist/email.min.js" defer></script>
 </head>
+
 <body>
     <!-- Loading screen -->
     <div class="loading-screen" id="loading-screen">
