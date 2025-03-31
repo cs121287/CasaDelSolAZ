@@ -1,13 +1,16 @@
 /**
  * Optimized Contact Form Modal
- * CasaDelSolAZ - Version 2.1.2
- * Last Modified: 2025-03-31 02:16:54
+ * CasaDelSolAZ - Version 2.1.5
+ * Last Modified: 2025-03-31 03:11:07
  * 
  * Performance optimizations:
  * - HTTP/2 compatible script loading
  * - Efficient DOM operations
  * - Enhanced event type options
  * - Phone number formatting
+ * - Fixed modal minimization after submission
+ * - Fixed multiple overlay issue
+ * - Fixed contact button appearance after submission
  */
 (function() {
   'use strict';
@@ -16,7 +19,8 @@
   const modalState = {
     isMinimized: true, // Start minimized
     isAnimating: false,
-    formData: {}
+    formData: {},
+    initialized: false // Track if elements are already created
   };
   
   // DOM references
@@ -35,8 +39,12 @@
   }
   
   function init() {
-    createModalElements();
-    setupEventListeners();
+    // Only create elements if they don't exist yet
+    if (!modalState.initialized) {
+      createModalElements();
+      setupEventListeners();
+      modalState.initialized = true;
+    }
     
     // Expose methods for external use
     window.FormModalHandler = {
@@ -44,16 +52,20 @@
       showError,
       minimize: minimizeModal,
       maximize: maximizeModal,
-      toggle: toggleModalState
+      toggle: toggleModalState,
+      initFormEffects: window.FormModalHandler ? window.FormModalHandler.initFormEffects : null,
+      resetModal: resetContactModal // Add new reset method
     };
-    
-    // No EmailJS initialization here - handled in index.html
   }
   
   function createModalElements() {
+    // Clean up any existing elements first to prevent duplication
+    removeExistingModals();
+    
     // Create overlay
     contactModalOverlay = document.createElement('div');
     contactModalOverlay.className = 'modal-overlay';
+    contactModalOverlay.id = 'contact-modal-overlay'; // Add ID for easier selection
     document.body.appendChild(contactModalOverlay);
     
     // Create contact modal in minimized state
@@ -174,41 +186,66 @@
       <button type="button" class="btn btn-primary close-feedback">Close</button>
     `;
     document.body.appendChild(errorModal);
+    
+    console.log('Modal elements created');
+  }
+  
+  // Helper function to remove any existing modal elements to prevent duplication
+  function removeExistingModals() {
+    const existingOverlay = document.getElementById('contact-modal-overlay');
+    if (existingOverlay) {
+      existingOverlay.parentNode.removeChild(existingOverlay);
+    }
+    
+    const existingContactModal = document.getElementById('contact-modal');
+    if (existingContactModal) {
+      existingContactModal.parentNode.removeChild(existingContactModal);
+    }
+    
+    const existingSuccessModal = document.getElementById('success-modal');
+    if (existingSuccessModal) {
+      existingSuccessModal.parentNode.removeChild(existingSuccessModal);
+    }
+    
+    const existingErrorModal = document.getElementById('error-modal');
+    if (existingErrorModal) {
+      existingErrorModal.parentNode.removeChild(existingErrorModal);
+    }
+  }
+  
+  // New function: completely recreate the modal from scratch after submission
+  function resetContactModal() {
+    console.log('Resetting contact modal completely');
+    // Remove the existing modal completely
+    removeExistingModals();
+    modalState.initialized = false;
+    
+    // Reset all state
+    modalState.isMinimized = true;
+    modalState.isAnimating = false;
+    modalState.formData = {};
+    
+    // Re-initialize everything
+    createModalElements();
+    setupEventListeners();
+    modalState.initialized = true;
+    
+    console.log('Contact modal reset completed');
   }
   
   function setupEventListeners() {
     // Use event delegation for better performance
-    document.addEventListener('click', function(e) {
-      // Handle contact buttons
-      if (e.target.closest('.btn-contact')) {
-        e.preventDefault();
-        maximizeModal();
-      }
-      
-      // Toggle minimized state
-      if (e.target.closest('.minimize-modal')) {
-        toggleModalState();
-      }
-      
-      // Close when clicking overlay
-      if (e.target === contactModalOverlay) {
-        minimizeModal();
-      }
-      
-      // Close feedback modals
-      if (e.target.closest('.close-feedback')) {
-        closeFeedbackModal();
-      }
-      
-      // Reset form button
-      if (e.target.closest('#form-reset')) {
-        clearForm();
-      }
-    });
+    // Remove any existing handlers first
+    document.removeEventListener('click', globalClickHandler);
+    document.addEventListener('click', globalClickHandler);
     
-    // Form submission handler
+    // Form submission handler - use once to prevent duplicate handlers
     const form = document.getElementById('modal-contact-form');
     if (form) {
+      // Remove any existing handlers first
+      form.removeEventListener('submit', handleFormSubmit);
+      
+      // Add the handler
       form.addEventListener('submit', handleFormSubmit);
       
       // Track form changes for persistence
@@ -217,6 +254,35 @@
           modalState.formData[e.target.name] = e.target.value;
         }
       });
+    }
+  }
+  
+  // Global click handler as a named function so it can be removed if needed
+  function globalClickHandler(e) {
+    // Handle contact buttons
+    if (e.target.closest('.btn-contact')) {
+      e.preventDefault();
+      maximizeModal();
+    }
+    
+    // Toggle minimized state
+    if (e.target.closest('.minimize-modal')) {
+      toggleModalState();
+    }
+    
+    // Close when clicking overlay
+    if (e.target === contactModalOverlay) {
+      minimizeModal();
+    }
+    
+    // Close feedback modals
+    if (e.target.closest('.close-feedback')) {
+      closeFeedbackModal();
+    }
+    
+    // Reset form button
+    if (e.target.closest('#form-reset')) {
+      clearForm();
     }
   }
   
@@ -233,13 +299,17 @@
   }
   
   function minimizeModal() {
-    if (modalState.isAnimating) return;
+    if (modalState.isAnimating || !contactModal) return;
     modalState.isAnimating = true;
     
     // Update classes
     contactModal.classList.add('minimized');
     contactModal.classList.remove('active');
-    contactModalOverlay.classList.remove('active');
+    
+    // Make sure overlay is handled properly
+    if (contactModalOverlay) {
+      contactModalOverlay.classList.remove('active');
+    }
     
     // Update icon direction
     const icon = contactModal.querySelector('.minimize-modal i');
@@ -259,6 +329,20 @@
   }
   
   function maximizeModal() {
+    // Ensure we have modal elements
+    if (!contactModal || !contactModalOverlay) {
+      if (!modalState.initialized) {
+        createModalElements();
+        setupEventListeners();
+        modalState.initialized = true;
+      } else {
+        console.error('Modal elements missing but initialized state is true');
+        // Try to fix it by recreating the elements
+        resetContactModal();
+        return;
+      }
+    }
+    
     if (modalState.isAnimating) return;
     modalState.isAnimating = true;
     
@@ -367,14 +451,25 @@
       bubbles: true,
       detail: { 
         form,
-        onSuccess: () => {
-          showSuccess();
+        onSuccess: (response) => {
+          console.log('Success callback triggered', response);
+          
+          // First reset the form
           clearForm();
           
-          // Reset button states
-          submitBtn.disabled = false;
-          resetBtn.disabled = false;
-          submitBtn.innerHTML = originalContent;
+          // Completely reset and recreate the modal to ensure clean state
+          setTimeout(() => {
+            resetContactModal();
+            
+            // Then show success modal
+            showSuccess();
+            
+            // Reset button states - just in case, though they'll be recreated
+            if (!submitBtn.parentNode) return; // Check if element still exists
+            submitBtn.disabled = false;
+            resetBtn.disabled = false;
+            submitBtn.innerHTML = originalContent;
+          }, 100);
         },
         onError: (error) => {
           console.error('EmailJS error:', error);
@@ -441,9 +536,19 @@
   }
   
   function showSuccess() {
-    successModal.classList.add('active');
-    contactModalOverlay.classList.add('active');
-    minimizeModal();
+    // Important: First minimize the contact modal, then show success
+    if (contactModal && !modalState.isMinimized) {
+      minimizeModal();
+    }
+    
+    // Show the success modal
+    if (successModal) {
+      successModal.classList.add('active');
+    }
+    
+    if (contactModalOverlay) {
+      contactModalOverlay.classList.add('active');
+    }
   }
   
   function showError(message) {
@@ -453,13 +558,26 @@
       errorMessageEl.textContent = message || 'There was a problem sending your message. Please try again.';
     }
     
-    errorModal.classList.add('active');
-    contactModalOverlay.classList.add('active');
+    if (errorModal) {
+      errorModal.classList.add('active');
+    }
+    
+    if (contactModalOverlay) {
+      contactModalOverlay.classList.add('active');
+    }
   }
   
   function closeFeedbackModal() {
-    successModal.classList.remove('active');
-    errorModal.classList.remove('active');
-    contactModalOverlay.classList.remove('active');
+    if (successModal) {
+      successModal.classList.remove('active');
+    }
+    
+    if (errorModal) {
+      errorModal.classList.remove('active');
+    }
+    
+    if (contactModalOverlay) {
+      contactModalOverlay.classList.remove('active');
+    }
   }
 })();
