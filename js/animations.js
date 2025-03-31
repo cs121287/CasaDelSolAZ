@@ -1,12 +1,13 @@
 /**
  * Casa Del Sol AZ - Advanced GSAP Animations
  * Author: CS121287
- * Version: 2.0
+ * Version: 2.0 - Updated 2025-03-31 04:36:31
  * 
  * Performance optimized animations:
  * - Uses efficient selectors
  * - Batches animations with timelines
  * - Implements scroll-triggered animations
+ * - Added Silk background effect
  */
 
 // Initialize when GSAP is ready
@@ -16,6 +17,9 @@ function initGSAP() {
   
   // Initialize animations
   function init() {
+    // Add silk background effect to problematic sections
+    applySilkBackground();
+    
     // Hero animations enhancement
     enhanceHeroAnimation();
     
@@ -25,6 +29,53 @@ function initGSAP() {
       initVideoParallax();
       initHeaderScroll();
     }
+  }
+  
+  // Apply silk background effect
+  function applySilkBackground() {
+    // Select sections with visibility issues
+    const sectionsNeedingFix = [
+      document.querySelector('.about-section'),
+      document.querySelector('.rentals-section'),
+      document.querySelector('.gallery-section')
+    ];
+    
+    // Apply silk effect
+    sectionsNeedingFix.forEach(section => {
+      if (section) {
+        section.classList.add('fake-shader', 'silk');
+        
+        // Ensure z-index and position are correct
+        gsap.set(section, {
+          position: 'relative',
+          zIndex: 1,
+          backgroundColor: '#000000'
+        });
+        
+        // Ensure content is above the background effect
+        const container = section.querySelector('.container');
+        if (container) {
+          gsap.set(container, {
+            position: 'relative',
+            zIndex: 5
+          });
+        }
+        
+        // Make all text and images visible
+        gsap.set(section.querySelectorAll('.reveal-element, img, h2, h3, p'), {
+          position: 'relative',
+          zIndex: 10,
+          color: '#ffffff',
+          textShadow: '0 1px 2px rgba(0,0,0,0.5)'
+        });
+      }
+    });
+    
+    // Make reveal elements visible
+    gsap.set('.reveal-element', {
+      opacity: 1,
+      visibility: 'visible'
+    });
   }
   
   // Enhanced hero animations - fallback to basic animations if SplitText isn't available
@@ -87,6 +138,25 @@ function initGSAP() {
         onEnter: () => {
           gsap.fromTo(title, 
             { y: 50, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+          );
+        }
+      });
+    });
+    
+    // Modified reveal animations - make elements always visible first
+    gsap.utils.toArray('.reveal-element').forEach(element => {
+      // Ensure element is visible
+      gsap.set(element, { opacity: 1, visibility: 'visible' });
+      
+      // Then add animation
+      ScrollTrigger.create({
+        trigger: element,
+        start: "top 85%",
+        once: true,
+        onEnter: () => {
+          gsap.fromTo(element, 
+            { y: 30, opacity: 0.7 },
             { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
           );
         }
@@ -166,3 +236,11 @@ if (document.readyState !== 'loading') {
 } else {
   document.addEventListener('DOMContentLoaded', initGSAP);
 }
+
+// Fallback - ensure elements are visible even if animations fail
+window.addEventListener('load', function() {
+  document.querySelectorAll('.reveal-element').forEach(el => {
+    el.style.opacity = '1';
+    el.style.visibility = 'visible';
+  });
+});
