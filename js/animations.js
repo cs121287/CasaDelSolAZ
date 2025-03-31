@@ -35,9 +35,6 @@ function initGSAP() {
   function applySilkBackground() {
     // Select sections with visibility issues
     const sectionsNeedingFix = [
-      document.querySelector('.about-section'),
-      document.querySelector('.rentals-section'),
-      document.querySelector('.gallery-section')
     ];
     
     // Apply silk effect
