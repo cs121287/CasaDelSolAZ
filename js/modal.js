@@ -1,7 +1,7 @@
 /**
  * Optimized Contact Form Modal
- * CasaDelSolAZ - Version 2.1.0
- * Last Modified: 2025-03-28 13:19:08
+ * CasaDelSolAZ - Version 2.1.2
+ * Last Modified: 2025-03-31 02:16:54
  * 
  * Performance optimizations:
  * - HTTP/2 compatible script loading
@@ -47,17 +47,7 @@
       toggle: toggleModalState
     };
     
-    // Initialize EmailJS if available
-    if (typeof emailjs !== 'undefined') {
-      emailjs.init({ publicKey: "b3T2GoOXJmt08AM0y" });
-    } else {
-      // Retry when window loads
-      window.addEventListener('load', () => {
-        if (typeof emailjs !== 'undefined') {
-          emailjs.init({ publicKey: "b3T2GoOXJmt08AM0y" });
-        }
-      });
-    }
+    // No EmailJS initialization here - handled in index.html
   }
   
   function createModalElements() {
@@ -360,64 +350,45 @@
     // Validate form
     if (!validateForm(this)) return;
     
-    // Update button state
-    const submitBtn = this.querySelector('.submit-button');
-    const resetBtn = this.querySelector('.reset-button');
+    const form = e.target;
+    
+    // The actual form submission is handled by form-handler.js
+    // Set up UI state for submission
+    const submitBtn = form.querySelector('.submit-button');
+    const resetBtn = form.querySelector('.reset-button');
     const originalContent = submitBtn.innerHTML;
     
     submitBtn.disabled = true;
     resetBtn.disabled = true;
     submitBtn.innerHTML = '<span class="spinner"></span> Sending...';
     
-    // Get form data
-    const formData = new FormData(this);
-    const params = {};
-    
-    formData.forEach((value, key) => {
-      params[key] = value || (key === 'time' ? new Date().toLocaleString('en-US') : 'Not provided');
-    });
-    
-    // Prepare EmailJS parameters
-    const emailParams = {
-      user_name: params.name,
-      user_email: params.email,
-      user_phone: params.phone || 'Not provided',
-      event_type: params['event-type'] || 'Not specified',
-      event_date: params['event-date'] || 'Not specified',
-      guests: params.guests || 'Not specified',
-      message: params.message,
-      time: params.time
-    };
-    
-    // Send with EmailJS
-    if (typeof emailjs !== 'undefined') {
-      emailjs.send('service_vkdsa6d', 'template_q9f1rn2', emailParams)
-        .then(function() {
+    // Dispatch a custom event that form-handler.js will listen for
+    const submissionEvent = new CustomEvent('handle-form-submit', { 
+      bubbles: true,
+      detail: { 
+        form,
+        onSuccess: () => {
           showSuccess();
           clearForm();
-        })
-        .catch(function(error) {
-          console.error('EmailJS error:', error);
-          showError('There was a problem sending your message. Please try again or contact us directly at (480) 123-4567.');
-        })
-        .finally(function() {
+          
           // Reset button states
           submitBtn.disabled = false;
           resetBtn.disabled = false;
           submitBtn.innerHTML = originalContent;
-        });
-    } else {
-      // Fallback if EmailJS is not available
-      setTimeout(() => {
-        // Simulate success for testing
-        showSuccess();
-        clearForm();
-        
-        submitBtn.disabled = false;
-        resetBtn.disabled = false;
-        submitBtn.innerHTML = originalContent;
-      }, 1500);
-    }
+        },
+        onError: (error) => {
+          console.error('EmailJS error:', error);
+          showError('There was a problem sending your message. Please try again or contact us directly at (480) 123-4567.');
+          
+          // Reset button states
+          submitBtn.disabled = false;
+          resetBtn.disabled = false;
+          submitBtn.innerHTML = originalContent;
+        }
+      }
+    });
+    
+    form.dispatchEvent(submissionEvent);
   }
   
   function validateForm(form) {

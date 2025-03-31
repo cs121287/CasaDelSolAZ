@@ -1,13 +1,14 @@
 /**
  * Contact Form Handler with EmailJS Integration
- * Casa Del Sol AZ | 2025-03-28 15:29:04
+ * Casa Del Sol AZ | 2025-03-31 02:29:12
  * Optimized for HTTP/2 and cross-browser compatibility
+ * Using EmailJS Browser V4
  */
 (function() {
   'use strict';
   
   // Global FormModalHandler for communication with modal.js
-  window.FormModalHandler = {
+  window.FormModalHandler = window.FormModalHandler || {
     showSuccess: function() {
       // To be implemented by modal.js
     },
@@ -17,19 +18,7 @@
   };
   
   document.addEventListener('DOMContentLoaded', function() {
-    // Initialize EmailJS with updated key
-    if (typeof emailjs !== 'undefined') {
-      emailjs.init({
-        publicKey: "LsO58YvEzZmXTSZ2q" // Updated key
-      });
-    } else {
-      // Dynamically load EmailJS if not available
-      loadEmailJS().then(() => {
-        emailjs.init({
-          publicKey: "LsO58YvEzZmXTSZ2q" // Updated key
-        });
-      });
-    }
+    // EmailJS is now initialized in index.html using the browser script
     
     // Polyfill for Element.closest
     if (!Element.prototype.closest) {
@@ -51,100 +40,117 @@
       }
     });
     
+    // Listen for custom event from modal.js
+    document.addEventListener('handle-form-submit', function(e) {
+      if (e.detail && e.detail.form) {
+        handleFormSubmit(
+          e.detail.form, 
+          e.detail.onSuccess, 
+          e.detail.onError
+        );
+      }
+    });
+    
     // Initialize form effects
     window.FormModalHandler.initFormEffects = initFormEffects;
     
     // Main form submission handler
-    function handleFormSubmit(form) {
+    function handleFormSubmit(form, onSuccess, onError) {
       // Validate form
       if (!validateForm(form)) return;
       
       // Update button state
       const submitBtn = form.querySelector('.submit-button');
       const resetBtn = form.querySelector('.reset-button') || null;
-      const originalText = submitBtn.innerHTML;
+      const originalText = submitBtn ? submitBtn.innerHTML : '';
       
-      submitBtn.disabled = true;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner"></span> Sending...';
+      }
       if (resetBtn) resetBtn.disabled = true;
-      submitBtn.innerHTML = '<span class="spinner"></span> Sending...';
       
       // Mark form as being processed
       form.classList.add('form-sent');
       
-      // Get form time or create a new timestamp
+      // Ensure the timestamp is set
       const formTime = document.getElementById('form_time');
-      const timestamp = formTime ? formTime.value : new Date().toLocaleString('en-US');
+      if (formTime) {
+        formTime.value = new Date().toLocaleString('en-US');
+      }
       
-      // Prepare form data for EmailJS
-      const params = {
-        user_name: form.querySelector('[name="name"]').value,
-        user_email: form.querySelector('[name="email"]').value,
-        user_phone: form.querySelector('[name="phone"]') ? form.querySelector('[name="phone"]').value : 'Not provided',
-        event_type: form.querySelector('[name="event-type"]') ? form.querySelector('[name="event-type"]').value : 'Not specified',
-        event_date: form.querySelector('[name="event-date"]') ? form.querySelector('[name="event-date"]').value : 'Not specified',
-        guests: form.querySelector('[name="guests"]') ? form.querySelector('[name="guests"]').value : 'Not specified',
-        message: form.querySelector('[name="message"]').value,
-        time: timestamp
-      };
+      // Check if EmailJS is available
+      if (typeof emailjs === 'undefined') {
+        console.error('EmailJS is not loaded');
+        handleError(new Error('Email service is not available'));
+        return;
+      }
+
+      // Log service and template information for debugging
+      console.log('Using EmailJS service ID: service_vkdsa6d');
+      console.log('Using EmailJS template ID: contact_cdsaz');
+      console.log('Sending form:', form.id);
       
-      // Send with EmailJS
-      emailjs.send('service_vkdsa6d', 'template_q9f1rn2', params)
-        .then(function() {
-          // Success handling
-          if (window.FormModalHandler && typeof window.FormModalHandler.showSuccess === 'function') {
-            window.FormModalHandler.showSuccess();
+      // Use sendForm method from EmailJS Browser V4
+      emailjs.sendForm('service_vkdsa6d', 'contact_cdsaz', form)
+        .then(function(response) {
+          console.log('Email sent successfully:', response);
+          if (onSuccess) {
+            onSuccess(response);
           } else {
-            alert('Thank you! Your message has been sent.');
-          }
-          
-          // Reset form
-          form.reset();
-          form.classList.remove('form-sent');
-          
-          // Reset field states
-          const formGroups = form.querySelectorAll('.form-group');
-          formGroups.forEach(group => {
-            if (group) {
-              group.classList.remove('has-value', 'focused', 'has-error');
-              const errorMsg = group.querySelector('.error-message');
-              if (errorMsg) errorMsg.remove();
+            // Success handling
+            if (window.FormModalHandler && typeof window.FormModalHandler.showSuccess === 'function') {
+              window.FormModalHandler.showSuccess();
+            } else {
+              alert('Thank you! Your message has been sent.');
             }
-          });
-          
-          // Reset timestamp
-          if (formTime) formTime.value = new Date().toLocaleString('en-US');
+            
+            // Reset form
+            form.reset();
+            form.classList.remove('form-sent');
+            
+            // Reset field states
+            const formGroups = form.querySelectorAll('.form-group');
+            formGroups.forEach(group => {
+              if (group) {
+                group.classList.remove('has-value', 'focused', 'has-error');
+                const errorMsg = group.querySelector('.error-message');
+                if (errorMsg) errorMsg.remove();
+              }
+            });
+            
+            // Reset timestamp
+            if (formTime) formTime.value = new Date().toLocaleString('en-US');
+          }
         })
         .catch(function(error) {
           console.error('EmailJS error:', error);
-          
-          // Reset form sent state
-          form.classList.remove('form-sent');
-          
+          handleError(error);
+        })
+        .finally(function() {
+          // Reset button states
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+          }
+          if (resetBtn) resetBtn.disabled = false;
+        });
+      
+      function handleError(error) {
+        // Reset form sent state
+        form.classList.remove('form-sent');
+        
+        if (onError) {
+          onError(error);
+        } else {
           // Show error modal or alert
           if (window.FormModalHandler && typeof window.FormModalHandler.showError === 'function') {
             window.FormModalHandler.showError('There was a problem sending your message. Please try again or contact us directly at (480) 123-4567.');
           } else {
             alert('There was a problem sending your message. Please try again or contact us directly at (480) 123-4567.');
           }
-        })
-        .finally(function() {
-          // Reset button states
-          submitBtn.disabled = false;
-          if (resetBtn) resetBtn.disabled = false;
-          submitBtn.innerHTML = originalText;
-        });
-    }
-    
-    // Helper function to load EmailJS dynamically
-    function loadEmailJS() {
-      return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.emailjs.com/dist/email.min.js';
-        script.async = true;
-        script.onload = resolve;
-        script.onerror = reject;
-        document.body.appendChild(script);
-      });
+        }
+      }
     }
     
     // Form validation function
@@ -163,7 +169,7 @@
       // Check each required field
       for (let i = 0; i < requiredFields.length; i++) {
         const field = requiredFields[i];
-        const fieldGroup = field.parentElement;
+        const fieldGroup = field.closest('.form-group');
         
         if (!field.value.trim()) {
           if (fieldGroup) {
@@ -231,7 +237,7 @@
       inputs.forEach(input => {
         // Set initial class based on value
         if (input && input.value) {
-          const parent = input.parentElement;
+          const parent = input.closest('.form-group');
           if (parent) {
             parent.classList.add('has-value');
           }
@@ -239,7 +245,7 @@
         
         // Focus event
         input.addEventListener('focus', function() {
-          const parent = this.parentElement;
+          const parent = this.closest('.form-group');
           if (parent) {
             parent.classList.add('focused');
           }
@@ -247,7 +253,7 @@
         
         // Blur event with compatibility fix
         input.addEventListener('blur', function() {
-          const parent = this.parentElement;
+          const parent = this.closest('.form-group');
           if (!parent) return;
           
           parent.classList.remove('focused');

@@ -1,7 +1,7 @@
 /**
  * Form Validation & Input Formatting Module
- * CasaDelSolAZ - Version 1.1.0
- * Last Modified: 2025-03-28 15:29:04
+ * CasaDelSolAZ - Version 1.1.1
+ * Last Modified: 2025-03-31 02:06:02
  * 
  * Features:
  * - Automatic phone number formatting
@@ -63,7 +63,7 @@
       if (phoneInputs) {
         phoneInputs.forEach(input => {
           // Format existing values
-          if (input.value) {
+          if (input && input.value) {
             input.value = formatPhoneNumber(input.value);
           }
           
@@ -92,14 +92,14 @@
     const input = e.target;
     
     // Phone number formatting
-    const formatType = input.getAttribute('data-format-type');
-    if (formatType === 'phone' || input.name === 'phone' || input.type === 'tel') {
+    const formatType = input.getAttribute && input.getAttribute('data-format-type');
+    if (formatType === 'phone' || (input.name && input.name === 'phone') || (input.type && input.type === 'tel')) {
       
       const cursorPos = input.selectionStart || 0;
-      const oldLength = input.value.length;
+      const oldLength = input.value ? input.value.length : 0;
       
       // Format the phone number
-      input.value = formatPhoneNumber(input.value);
+      input.value = formatPhoneNumber(input.value || '');
       
       // Adjust cursor position after formatting
       const newLength = input.value.length;
@@ -111,12 +111,12 @@
     }
     
     // Guest count validation - ensure numbers only
-    if (formatType === 'number' || input.name === 'guests') {
+    if (formatType === 'number' || (input.name && input.name === 'guests')) {
       // Remove non-numeric characters
-      const numericValue = input.value.replace(/[^0-9]/g, '');
+      const numericValue = input.value ? input.value.replace(/[^0-9]/g, '') : '';
       
       // Only update if changed
-      if (numericValue !== input.value) {
+      if (input.value !== numericValue) {
         input.value = numericValue;
       }
     }
@@ -126,8 +126,13 @@
     if (!e || !e.target) return;
     const input = e.target;
     
+    // Make sure it's a form input element before proceeding
+    if (!input || !input.tagName || !['INPUT', 'TEXTAREA', 'SELECT'].includes(input.tagName.toUpperCase())) {
+      return;
+    }
+    
     // Mark parent form group as focused
-    const parent = input.parentElement;
+    const parent = input.closest ? input.closest('.form-group') : input.parentElement;
     if (parent && parent.classList) {
       parent.classList.add('focused');
     }
@@ -137,17 +142,55 @@
     if (!e || !e.target) return;
     const input = e.target;
     
-    // Remove focus class
-    const parent = input.parentElement;
+    // Make sure it's a form input element before proceeding
+    if (!input || !input.tagName || !['INPUT', 'TEXTAREA', 'SELECT'].includes(input.tagName.toUpperCase())) {
+      return;
+    }
+    
+    // Find parent .form-group element
+    const parent = input.closest ? input.closest('.form-group') : null;
     if (!parent || !parent.classList) return;
     
+    // Remove focus class
     parent.classList.remove('focused');
     
     // Add has-value class if input has value
-    if (input.value.trim()) {
+    if (input.value && input.value.trim()) {
       parent.classList.add('has-value');
     } else {
       parent.classList.remove('has-value');
+    }
+    
+    // Live validation
+    if (input.hasAttribute && input.hasAttribute('required')) {
+      if (!input.value || !input.value.trim()) {
+        parent.classList.add('has-error');
+        
+        if (!parent.querySelector('.error-message')) {
+          const errorMsg = document.createElement('div');
+          errorMsg.className = 'error-message';
+          errorMsg.textContent = 'This field is required';
+          parent.appendChild(errorMsg);
+        }
+      } else {
+        parent.classList.remove('has-error');
+        const errorMsg = parent.querySelector('.error-message');
+        if (errorMsg && errorMsg.parentNode) {
+          errorMsg.parentNode.removeChild(errorMsg);
+        }
+        
+        // Email validation
+        if (input.type === 'email' && !validateEmail(input.value)) {
+          parent.classList.add('has-error');
+          
+          if (!parent.querySelector('.error-message')) {
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'error-message';
+            errorMsg.textContent = 'Please enter a valid email address';
+            parent.appendChild(errorMsg);
+          }
+        }
+      }
     }
   }
   
@@ -167,6 +210,13 @@
     } else {
       return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6, 10)}`;
     }
+  }
+  
+  // Email validation helper
+  function validateEmail(email) {
+    if (!email) return false;
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   }
   
   // Expose API for external use
