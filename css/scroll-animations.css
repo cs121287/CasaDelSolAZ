@@ -1,0 +1,92 @@
+/* Scroll-Snapping Animations with Zoom Effect
+ * Directly adapted from provided example
+ * Last Modified: 2025-03-31 19:20:53
+ */
+
+/* Set up the main scrolling container */
+html {
+  /* Create a snapping rule on the html element */
+  scroll-snap-type: y mandatory;
+
+  /* Create a timeline scope, so we can target any element on the page */
+  timeline-scope: --section;
+}
+
+/* Apply to all sections */
+.section {
+  /* Creating a snapping rule on the section element */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  /* Attach the timeline to the section element */
+  view-timeline: --section;
+
+  /* Set each section to the full dynamic height of the viewport */
+  height: 100dvh;
+  
+  /* Ensure proper stacking */
+  position: relative;
+  z-index: 1;
+}
+
+/* Target the container inside each section */
+.section .container {
+  /* Fix the content, so it doesn't scroll with the section */
+  overflow: hidden;
+  position: fixed;
+  inset: 0;
+  padding-top: var(--header-height, 120px);
+  
+  /* Apply zoom animation by default */
+  animation: zoom-scroll ease-in-out both;
+  animation-timeline: --section;
+  
+  /* Dark background for container */
+  background-color: transparent; /* Changed from black to transparent */
+}
+
+/* Ensure silk background stays visible */
+.silk-background {
+  z-index: -10;
+}
+
+/* Keep header above everything */
+.site-header {
+  z-index: 1000;
+}
+
+/* Zoom scroll animation - exact copy from example */
+@keyframes zoom-scroll {
+  0% {
+    filter: blur(5rem);
+    transform: scale(0);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  50% {
+    filter: blur(0);
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  100% {
+    filter: blur(3rem);
+    transform: scale(1.5);
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Fallback for browsers without animation-timeline */
+@supports not (animation-timeline: scroll()) {
+  .section .container {
+    position: relative;
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+    visibility: visible;
+  }
+}

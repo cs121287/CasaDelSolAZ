@@ -1,0 +1,126 @@
+/* Scroll-Snapping Section Animations
+ * Last Modified: 2025-03-31 19:08:36
+ */
+
+/* Set up the scrolling container with snapping */
+html {
+  /* Force sections to snap into place when scrolling */
+  scroll-snap-type: y mandatory;
+  /* Create a timeline scope to access throughout document */
+  timeline-scope: --section;
+}
+
+/* Make each major section a snap point and timeline source */
+.hero-section,
+.about-section,
+.services-section,
+.rentals-section,
+.faq-section,
+.gallery-section,
+.contact-section {
+  /* Create snapping points */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  
+  /* Set height to full viewport */
+  min-height: 100vh;
+  
+  /* Each section tracks its own position */
+  view-timeline: --section;
+  
+  /* Ensure proper stacking */
+  position: relative;
+  z-index: 1;
+}
+
+/* Section content container for animation */
+.hero-section .hero-content,
+.section .container {
+  /* Fixed positioning to create overlay effect */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  padding-top: var(--header-height, 120px);
+  
+  /* Center content */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  /* Connect animation to section's position */
+  animation: zoom-scroll ease-in-out both;
+  animation-timeline: --section;
+  
+  /* Ensure visibility on top */
+  z-index: 5;
+}
+
+/* Zoom scroll animation keyframes */
+@keyframes zoom-scroll {
+  /* Section entering from below */
+  0% {
+    filter: blur(5rem);
+    transform: scale(0.8);
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  /* Section fully visible */
+  50% {
+    filter: blur(0);
+    transform: scale(1);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Section exiting to above */
+  100% {
+    filter: blur(3rem);
+    transform: scale(1.2);
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Ensure the silk background remains visible behind all content */
+.silk-background {
+  z-index: -10;
+}
+
+/* Make sure header stays above all content */
+.site-header {
+  z-index: 1000;
+}
+
+/* For browsers that don't support scroll-driven animations yet */
+@supports not (animation-timeline: scroll()) {
+  /* Fallback styles - no animations but content still visible */
+  .section .container {
+    position: relative;
+    height: auto;
+    opacity: 1;
+    visibility: visible;
+    filter: none;
+    transform: none;
+  }
+}
+
+/* For users who prefer reduced motion */
+@media (prefers-reduced-motion) {
+  html {
+    scroll-snap-type: none;
+  }
+  
+  .section .container {
+    position: relative;
+    height: auto;
+    animation: none;
+    opacity: 1;
+    visibility: visible;
+    filter: none;
+    transform: none;
+  }
+}
