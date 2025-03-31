@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.emailjs.com" crossorigin>
+	<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     
     <!-- HTTP Cache-Control directives for better performance -->
     <meta http-equiv="Cache-Control" content="max-age=31536000">
@@ -25,7 +25,7 @@
     <link rel="preload" href="js/form-validation.js" as="script" fetchpriority="high">
     <link rel="preload" href="js/modal.js" as="script" fetchpriority="high">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" as="script" fetchpriority="high">
-    <link rel="preload" href="https://cdn.emailjs.com/dist/email.min.js" as="script" fetchpriority="high">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js" as="script" fetchpriority="high">
     
     <!-- Critical CSS inlined for faster render -->
     <style>
@@ -146,8 +146,20 @@
     <!-- Core GSAP (load before animations.js) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     
-    <!-- EmailJS for form submission (defer loading) -->
-    <script src="https://cdn.emailjs.com/dist/email.min.js" defer></script>
+    <!-- EmailJS for form submission using JSDelivr CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+ <!-- EmailJS browser script V4 -->
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "k3ULrYvtaqqqOTKc0",
+      });
+      console.log("EmailJS v4 initialized successfully - " + new Date().toISOString());
+   })();
+</script>
 </head>
 
 <body>
@@ -240,7 +252,7 @@
                     
                     <div class="about-content reveal-element">
                         <h3>Elegant Celebrations in Phoenix</h3>
-                        <p>Located in the heart of Phoenix, Casa Del Sol offers a stunning backdrop for your special event. Our venue combines elegant architecture with breathtaking views of the surrounding desert landscape.</p>
+                        <p>Located in the heart of Phoenix, Casa Del Sol offers a stunning backdrop for your special event. Our venue combines elegant architecture with breathtaking views of the surro[...]
                         <p>Whether you're planning a wedding, quinceañera, corporate event, or any special celebration, our dedicated team will ensure every detail is perfect.</p>
                         
                         <div class="about-features">
@@ -460,7 +472,7 @@
                             </div>
                         </div>
                         <div class="faq-answer">
-                            <p>We work with preferred catering partners who offer a variety of menu options and price points. You can choose from our list of approved caterers, or bring in your own with approval and a kitchen usage fee.</p>
+                            <p>We work with preferred catering partners who offer a variety of menu options and price points. You can choose from our list of approved caterers, or bring in your own wi[...]
                         </div>
                     </div>
                     
@@ -473,7 +485,7 @@
                             </div>
                         </div>
                         <div class="faq-answer">
-                            <p>Deposits are non-refundable. Cancellations made 90+ days before the event date will not incur additional charges. Cancellations made 60-89 days before will be responsible for 50% of the total venue fee. Cancellations made less than 60 days before will be responsible for the full venue fee.</p>
+                            <p>Deposits are non-refundable. Cancellations made 90+ days before the event date will not incur additional charges. Cancellations made 60-89 days before will be responsibl[...]
                         </div>
                     </div>
                     
@@ -512,7 +524,7 @@
                             </div>
                         </div>
                         <div class="faq-answer">
-                            <p>Yes, you can provide your own alcohol. However, it must be served by our licensed bartenders, and you'll need to obtain event insurance that includes liquor liability coverage.</p>
+                            <p>Yes, you can provide your own alcohol. However, it must be served by our licensed bartenders, and you'll need to obtain event insurance that includes liquor liability co[...]
                         </div>
                     </div>
                 </div>
@@ -675,232 +687,223 @@
     </div>
 
     <!-- Scroll to top button -->
-    <button id="scroll-top" aria-label="Scroll to top">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-    
-    <!-- Schema.org structured data for better SEO -->
-    <script type="application/ld+json">
+    <button id="scroll-top" aria-label="Scroll to top"> <i class="fas fa-chevron-up"></i> </button>
+	<!-- Schema.org structured data for better SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Casa Del Sol AZ",
+  "image": "https://casadesolaz.com/img/logo.png",
+  "telephone": "+14801234567",
+  "email": "info@casadesolaz.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "18401 W Moreland St",
+    "addressLocality": "Goodyear",
+    "addressRegion": "AZ",
+    "postalCode": "85338",
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": [
     {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "Casa Del Sol AZ",
-      "image": "https://casadesolaz.com/img/logo.png",
-      "telephone": "+14801234567",
-      "email": "info@casadesolaz.com",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "18401 W Moreland St",
-        "addressLocality": "Goodyear",
-        "addressRegion": "AZ",
-        "postalCode": "85338",
-        "addressCountry": "US"
-      },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "09:00",
-          "closes": "17:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": "Saturday",
-          "opens": "10:00",
-          "closes": "16:00"
-        }
-      ],
-      "url": "https://casadesolaz.com"
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "17:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "10:00",
+      "closes": "16:00"
     }
-    </script>
-    
-    <!-- Critical initialization for core functionality -->
-    <script>
-    // Immediate initialization for critical functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        // Loading indicator
-        const loadingScreen = document.getElementById('loading-screen');
-        
-        // Basic UI setup
-        setupMobileNav();
-        setupHeaderScroll();
-        
-        // Clean up loading screen after page is mostly ready
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                loadingScreen.style.opacity = '0';
-                loadingScreen.style.transition = 'opacity 0.5s ease';
-                
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                }, 500);
-            }, 200);
-        });
-        
-        // Setup mobile navigation with event delegation
-        function setupMobileNav() {
-            const mobileToggle = document.querySelector('.mobile-toggle');
-            const mobileMenu = document.querySelector('.mobile-menu');
-            const body = document.body;
-            
-            if (!mobileToggle || !mobileMenu) return;
-            
-            mobileToggle.addEventListener('click', function() {
-                this.classList.toggle('active');
-                mobileMenu.classList.toggle('active');
-                body.classList.toggle('menu-open');
-            });
-            
-            // Use event delegation for better performance
-            document.addEventListener('click', function(e) {
-                // Handle mobile links
-                if (e.target.closest('.mobile-link:not(.btn-contact)')) {
-                    e.preventDefault();
-                    const link = e.target.closest('.mobile-link');
-                    const targetId = link.getAttribute('href');
-                    
-                    mobileToggle.classList.remove('active');
-                    mobileMenu.classList.remove('active');
-                    body.classList.remove('menu-open');
-                    
-                    if (targetId) {
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) smoothScroll(targetElement);
-                    }
-                }
-                
-                // Handle desktop nav buttons
-                if (e.target.closest('.nav-btn:not(.btn-contact)')) {
-                    e.preventDefault();
-                    const link = e.target.closest('.nav-btn');
-                    const targetId = link.getAttribute('href');
-                    
-                    if (targetId) {
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) smoothScroll(targetElement);
-                    }
-                }
-                
-                // Logo click to top
-                if (e.target.closest('.logo')) {
-                    e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            });
-        }
-        
-        // Smooth scroll with performance optimizations
-        function smoothScroll(targetElement) {
-            if (!targetElement) return;
-            
-            const headerHeight = document.querySelector('.site-header')?.offsetHeight || 0;
-            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }
-        
-        // Header scroll effect using requestAnimationFrame for performance
-        function setupHeaderScroll() {
-            const header = document.getElementById('header');
-            if (!header) return;
-            
-            let lastScrollPosition = 0;
-            let ticking = false;
-            
-            function onScroll() {
-                lastScrollPosition = window.scrollY;
-                
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        if (lastScrollPosition > 50) {
-                            header.classList.add('scrolled');
-                        } else {
-                            header.classList.remove('scrolled');
-                        }
-                        ticking = false;
-                    });
-                    
-                    ticking = true;
-                }
-            }
-            
-            // Passive event listener for better scroll performance
-            window.addEventListener('scroll', onScroll, { passive: true });
-            
-            // Initial check
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            }
-        }
-    });
-    </script>
-    
-    <!-- Performance-optimized script loading -->
-    <script>
-    // Performance measurement
-    const loadStart = performance.now();
+  ],
+  "url": "https://casadesolaz.com"
+}
+</script>
 
-    // Load critical scripts in proper order
-    function loadScripts() {
-      // Helper function for script loading
-      function loadScript(src, priority = 'auto', async = true) {
-        return new Promise((resolve) => {
-          const script = document.createElement('script');
-          script.src = src;
-          script.async = async;
-          
-          // Use fetchpriority if supported
-          if ('fetchpriority' in script) {
-            script.fetchpriority = priority;
-          }
-          
-          script.onload = () => resolve(true);
-          script.onerror = () => {
-            console.warn(`Failed to load: ${src}`);
-            resolve(false);
-          };
-          
-          document.body.appendChild(script);
+<!-- Critical initialization for core functionality -->
+<script>
+// Immediate initialization for critical functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Loading indicator
+    const loadingScreen = document.getElementById('loading-screen');
+    
+    // Basic UI setup
+    setupMobileNav();
+    setupHeaderScroll();
+    
+    // Clean up loading screen after page is mostly ready
+    window.addEventListener('load', function() {
+        setTimeout(() => {
+            loadingScreen.style.opacity = '0';
+            loadingScreen.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500);
+        }, 200);
+    });
+    
+    // Setup mobile navigation with event delegation
+    function setupMobileNav() {
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const body = document.body;
+        
+        if (!mobileToggle || !mobileMenu) return;
+        
+        mobileToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            body.classList.toggle('menu-open');
         });
+        
+        // Use event delegation for better performance
+        document.addEventListener('click', function(e) {
+            // Handle mobile links
+            if (e.target.closest('.mobile-link:not(.btn-contact)')) {
+                e.preventDefault();
+                const link = e.target.closest('.mobile-link');
+                const targetId = link.getAttribute('href');
+                
+                mobileToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                body.classList.remove('menu-open');
+                
+                if (targetId) {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) smoothScroll(targetElement);
+                }
+            }
+            
+            // Handle desktop nav buttons
+            if (e.target.closest('.nav-btn:not(.btn-contact)')) {
+                e.preventDefault();
+                const link = e.target.closest('.nav-btn');
+                const targetId = link.getAttribute('href');
+                
+                if (targetId) {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) smoothScroll(targetElement);
+                }
+            }
+            
+            // Logo click to top
+            if (e.target.closest('.logo')) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+    }
+    
+    // Smooth scroll with performance optimizations
+    function smoothScroll(targetElement) {
+        if (!targetElement) return;
+        
+        const headerHeight = document.querySelector('.site-header')?.offsetHeight || 0;
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+        
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+    }
+    
+    // Header scroll effect using requestAnimationFrame for performance
+    function setupHeaderScroll() {
+        const header = document.getElementById('header');
+        if (!header) return;
+        
+        let lastScrollPosition = 0;
+        let ticking = false;
+        
+        function onScroll() {
+            lastScrollPosition = window.scrollY;
+            
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    if (lastScrollPosition > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                    ticking = false;
+                });
+                
+                ticking = true;
+            }
+        }
+        
+        // Passive event listener for better scroll performance
+        window.addEventListener('scroll', onScroll, { passive: true });
+        
+        // Initial check
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        }
+    }
+});
+</script>
+
+<!-- Performance-optimized script loading -->
+<script>
+// Performance measurement
+const loadStart = performance.now();
+
+// Load critical scripts in proper order
+function loadScripts() {
+  // Helper function for script loading
+  function loadScript(src, priority = 'auto', async = true) {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = async;
+      
+      // Use fetchpriority if supported
+      if ('fetchpriority' in script) {
+        script.fetchpriority = priority;
       }
       
-      // First load core validation module
-      loadScript('js/form-validation.js', 'high')
-        .then(() => {
-          // Then load modal script
-          return loadScript('js/modal.js', 'high');
-        })
-        .then(() => {
-          // Finally load form handler script if needed
-          if (typeof emailjs !== 'undefined') {
-            console.log('EmailJS already loaded');
-          } else {
-            return loadScript('https://cdn.emailjs.com/dist/email.min.js');
-          }
-        })
-        .finally(() => {
-          // Record performance metric
-          const loadTime = Math.round(performance.now() - loadStart);
-          console.log(`Scripts loaded in ${loadTime}ms`);
-        });
-    }
+      script.onload = () => resolve(true);
+      script.onerror = () => {
+        console.warn(`Failed to load: ${src}`);
+        resolve(false);
+      };
+      
+      document.body.appendChild(script);
+    });
+  }
+  
+  // First load core validation module
+  loadScript('js/form-validation.js', 'high')
+    .then(() => {
+      // Then load modal script
+      return loadScript('js/modal.js', 'high');
+    })
+    .then(() => {
+      // No need to load EmailJS again as it's now included in the head
+      console.log('EmailJS already loaded');
+    })
+    .finally(() => {
+      // Record performance metric
+      const loadTime = Math.round(performance.now() - loadStart);
+      console.log(`Scripts loaded in ${loadTime}ms`);
+    });
+}
 
-    // Load scripts based on document ready state
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', loadScripts);
-    } else {
-      loadScripts();
-    }
-    </script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+// Load scripts based on document ready state
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadScripts);
+} else {
+  loadScripts();
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
-	<script async src="js/script-loader.js"></script>
-	<script async src="js/video-init.js"></script>
-	<script async src="js/modal.js"></script>
-	<script async src="js/animations.js"></script>
-	<script async src="js/form-handler.js"></script>
-</body>
-</html>
+<script async src="js/script-loader.js"></script>
+<script async src="js/video-init.js"></script>
+<script async src="js/modal.js"></script>
+<script async src="js/animations.js"></script>
+<script async src="js/form-handler.js"></script>
